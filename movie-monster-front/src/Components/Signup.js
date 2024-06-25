@@ -3,8 +3,10 @@ import React, {useState} from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import AuthService from '../Services/AuthService';
+import { useNavigate } from 'react-router-dom';
 
 const Signup = (props) => {
+    const navigate = useNavigate();
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
@@ -26,6 +28,7 @@ const Signup = (props) => {
         AuthService.register(username, password).then((response) => {
             console.log(response);
         });
+        navigate("/login")
     }
 
     return (
