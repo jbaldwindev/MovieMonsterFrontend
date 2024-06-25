@@ -2,8 +2,10 @@ import React, {useState} from 'react';
 import AuthService from "../Services/AuthService"
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import { useNavigate } from 'react-router-dom';
 
 const Login = (props) => {
+    const navigate = useNavigate();
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 
@@ -14,18 +16,23 @@ const Login = (props) => {
     const passwordChange = (e) => {
         setPassword(e.target.value);
     }
-    //TODO retrieve token from response and save in session storage
-    const submitRegistration = (e) => {
+
+    //TODO rememeber other requests will need to get the access token out of
+    //the session storage and put in request header
+    const submitLogin = (e) => {
         e.preventDefault();
         AuthService.login(username, password).then((res) => {
-            console.log(res);
+            let info = res.data;
+            let retrievedToken = info["tokenType"] + info["accessToken"];
+            sessionStorage.setItem("authToken", retrievedToken);
+            navigate("/dashboard");
         });
     }
 
     return (
         <div>
             <h1>log in</h1>
-            <Form onSubmit={submitRegistration}>
+            <Form onSubmit={submitLogin}>
                 <Form.Group className="mb-3" controlId="formUsername">
                     <Form.Label>Username</Form.Label>
                     <Form.Control type="text" placeholder="Username" onChange={usernameChange}/>
