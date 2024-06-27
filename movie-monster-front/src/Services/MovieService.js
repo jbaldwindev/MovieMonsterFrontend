@@ -10,6 +10,22 @@ class MovieService {
             }
         });
     }
+
+    getTop(page) {
+        return axios.get(BASE_URL + "top/" + page, {
+            headers: {
+                Authorization: sessionStorage.getItem("authToken")
+            }
+        });
+    }
+
+    getPlaying(page) {
+        return axios.get(BASE_URL + "playing/" + page, {
+            headers: {
+                Authorization: sessionStorage.getItem("authToken")
+            }
+        });
+    }
 }
 
 export default new MovieService();
