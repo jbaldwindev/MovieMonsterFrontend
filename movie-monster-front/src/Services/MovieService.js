@@ -1,10 +1,10 @@
 import axios from "axios";
 
-const BASE_URL = "http://localhost:8080/api/dash/";
+const BASE_URL = "http://localhost:8080/api/";
 class MovieService {
 
     getPopular(page) {
-        return axios.get(BASE_URL + "popular/" + page, {
+        return axios.get(BASE_URL + "dash/popular/" + page, {
             headers: {
                 Authorization: sessionStorage.getItem("authToken")
             }
@@ -12,7 +12,7 @@ class MovieService {
     }
 
     getTop(page) {
-        return axios.get(BASE_URL + "top/" + page, {
+        return axios.get(BASE_URL + "dash/top/" + page, {
             headers: {
                 Authorization: sessionStorage.getItem("authToken")
             }
@@ -20,7 +20,15 @@ class MovieService {
     }
 
     getPlaying(page) {
-        return axios.get(BASE_URL + "playing/" + page, {
+        return axios.get(BASE_URL + "dash/playing/" + page, {
+            headers: {
+                Authorization: sessionStorage.getItem("authToken")
+            }
+        });
+    }
+
+    getMovieById(id) {
+        return axios.get(BASE_URL + "movie/" + id, {
             headers: {
                 Authorization: sessionStorage.getItem("authToken")
             }

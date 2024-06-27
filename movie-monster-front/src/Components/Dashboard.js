@@ -8,13 +8,15 @@ import Container from 'react-bootstrap/Container';
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
 import Spinner from'react-bootstrap/Spinner';
-import '../Styles/Dashboard.css'
+import '../Styles/Dashboard.css';
+import { useNavigate } from 'react-router-dom';
 
 
 const Dashboard = (props) => {
     const [popularLoaded, setPopularLoaded] = useState(false);
     const [movieTitle, setMovieTitle] = useState("");
     const [movieList, setMovieList] = useState([]);
+    const navigate = useNavigate();
 
     useEffect(() => {
         MovieService.getPopular(1).then((res) => {
@@ -26,6 +28,11 @@ const Dashboard = (props) => {
             setPopularLoaded(true);
         });
     }, []);
+
+    const onCardClick = (movieId) => {
+        let newPath = "/movie/" + movieId;
+        navigate(newPath);
+    }
 
     const onTabSelect = (selectedTab, lastTab) => {
         if (selectedTab == "1") {
@@ -64,7 +71,7 @@ const Dashboard = (props) => {
                         <Row xs={2} md={5} className="g-4">
                             {popularLoaded ?  movieList.map((movie) => (
                                 <Col>
-                                    <Card className="hover-color hide-overflow">
+                                    <Card className="hover-color hide-overflow" onClick={() => {onCardClick(movie.id)}}>
                                         <Card.Img variant="top" src={movie.posterPath} className="movie-card-img "/>
                                     </Card>
                                 </Col>
@@ -82,7 +89,7 @@ const Dashboard = (props) => {
                         <Row xs={2} md={5} className="g-4">
                             {popularLoaded ?  movieList.map((movie) => (
                                 <Col>
-                                    <Card className="hover-color hide-overflow">
+                                    <Card className="hover-color hide-overflow" onClick={() => {onCardClick(movie.id)}}>
                                         <Card.Img variant="top" src={movie.posterPath} className="movie-card-img "/>
                                     </Card>
                                 </Col>
@@ -100,7 +107,7 @@ const Dashboard = (props) => {
                         <Row xs={2} md={5} className="g-4">
                             {popularLoaded ?  movieList.map((movie) => (
                                 <Col>
-                                    <Card className="hover-color hide-overflow">
+                                    <Card className="hover-color hide-overflow" onClick={() => {onCardClick(movie.id)}}>
                                         <Card.Img variant="top" src={movie.posterPath} className="movie-card-img "/>
                                     </Card>
                                 </Col>
