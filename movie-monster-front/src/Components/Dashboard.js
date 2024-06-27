@@ -61,15 +61,11 @@ const Dashboard = (props) => {
             <Container fluid="md">
                 <Tabs defaultActiveKey="1" id="uncontrolled-tab-example" className="mb-3" onSelect={(firstTab, lastTab) => onTabSelect(firstTab, lastTab)}>
                     <Tab eventKey="1" title="Popular">    
-                        <Row xs={1} md={4} className="g-4">
+                        <Row xs={2} md={5} className="g-4">
                             {popularLoaded ?  movieList.map((movie) => (
                                 <Col>
-                                    <Card>
-                                        <Card.Img variant="top" src={movie.posterPath} />
-                                        <Card.Body>
-                                            <Card.Title>{movie.originalTitle}</Card.Title>
-                                            <Card.Text>{movie.overview}</Card.Text>
-                                        </Card.Body>
+                                    <Card className="hover-color hide-overflow">
+                                        <Card.Img variant="top" src={movie.posterPath} className="movie-card-img "/>
                                     </Card>
                                 </Col>
                             )) 
@@ -83,15 +79,11 @@ const Dashboard = (props) => {
                         </Row>
                     </Tab>
                     <Tab eventKey="2" title="Top Rated">
-                        <Row xs={1} md={4} className="g-4">
+                        <Row xs={2} md={5} className="g-4">
                             {popularLoaded ?  movieList.map((movie) => (
                                 <Col>
-                                    <Card>
-                                        <Card.Img variant="top" src={movie.posterPath} />
-                                        <Card.Body>
-                                            <Card.Title>{movie.originalTitle}</Card.Title>
-                                            <Card.Text>{movie.overview}</Card.Text>
-                                        </Card.Body>
+                                    <Card className="hover-color hide-overflow">
+                                        <Card.Img variant="top" src={movie.posterPath} className="movie-card-img "/>
                                     </Card>
                                 </Col>
                             )) 
@@ -105,15 +97,11 @@ const Dashboard = (props) => {
                         </Row>
                     </Tab>
                     <Tab eventKey="3" title="Now Playing">
-                        <Row xs={1} md={4} className="g-4">
+                        <Row xs={2} md={5} className="g-4">
                             {popularLoaded ?  movieList.map((movie) => (
                                 <Col>
-                                    <Card>
-                                        <Card.Img variant="top" src={movie.posterPath} />
-                                        <Card.Body>
-                                            <Card.Title>{movie.originalTitle}</Card.Title>
-                                            <Card.Text>{movie.overview}</Card.Text>
-                                        </Card.Body>
+                                    <Card className="hover-color hide-overflow">
+                                        <Card.Img variant="top" src={movie.posterPath} className="movie-card-img "/>
                                     </Card>
                                 </Col>
                             )) 
