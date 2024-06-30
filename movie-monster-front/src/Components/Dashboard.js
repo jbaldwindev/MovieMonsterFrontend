@@ -10,6 +10,7 @@ import Tabs from 'react-bootstrap/Tabs';
 import Spinner from'react-bootstrap/Spinner';
 import '../Styles/Dashboard.css';
 import { useNavigate } from 'react-router-dom';
+import CustomNav from './CustomNav';
 
 
 const Dashboard = (props) => {
@@ -64,7 +65,7 @@ const Dashboard = (props) => {
 
     return (
         <div>
-            <h1>this is the dashboard</h1>
+            <CustomNav></CustomNav>
             <Container fluid="md">
                 <Tabs defaultActiveKey="1" id="uncontrolled-tab-example" className="mb-3" onSelect={(firstTab, lastTab) => onTabSelect(firstTab, lastTab)}>
                     <Tab eventKey="1" title="Popular">    
