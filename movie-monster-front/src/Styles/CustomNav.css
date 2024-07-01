@@ -3,3 +3,8 @@
     z-index: 2;
     background-color: white;
 }
+
+.suggestion:hover {
+    background-color: darkgrey;
+    cursor: pointer;
+}

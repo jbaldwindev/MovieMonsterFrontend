@@ -61,9 +61,9 @@ function CustomNav() {
             style={{ maxHeight: '100px' }}
             navbarScroll
           >
-            <Nav.Link href="#action1">Home</Nav.Link>
-            <Nav.Link href="#action2">Movies</Nav.Link>
-            <Nav.Link href="#">My List</Nav.Link>
+            <Nav.Link href="/Dashboard">Home</Nav.Link>
+            <Nav.Link href="/Dashboard">Movies</Nav.Link>
+            <Nav.Link href="/Dashboard">My List</Nav.Link>
           </Nav>
           <Form className="d-flex">
             <Form.Control
@@ -97,7 +97,7 @@ function CustomNav() {
             <Popover id="popover-contained">
                 { movieList[0] ? movieList.map((movieEntry) => (
                     <div onClick={() => {searchClick(movieEntry.id)}}>
-                        <Popover.Header as="h3">{movieEntry.title}</Popover.Header>
+                        <Popover.Header className='suggestion' as="h3">{movieEntry.title}</Popover.Header>
                     </div>
                 )) 
                 : 
