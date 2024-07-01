@@ -34,6 +34,14 @@ class MovieService {
             }
         });
     }
+
+    getSearch(title) {
+        return axios.get(BASE_URL + "movie/search/" + title, {
+            headers: {
+                Authorization: sessionStorage.getItem("authToken")
+            }
+        });
+    }
 }
 
 export default new MovieService();

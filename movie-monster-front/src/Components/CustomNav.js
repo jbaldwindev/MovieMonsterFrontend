@@ -9,30 +9,46 @@ import Tooltip from 'react-bootstrap/Tooltip';
 import Overlay from 'react-bootstrap/Overlay';
 import Popover from 'react-bootstrap/Popover';
 import React, { useState, useEffect, useRef } from 'react';
+import MovieService from '../Services/MovieService';
+import { useNavigate } from 'react-router-dom';
+import "../Styles/CustomNav.css";
 
 function CustomNav() {
     const [show, setShow] = useState(false);
-    const [tooltipMessage, setTooltipMessage] = useState("");
     const [target, setTarget] = useState(null);
+    const [movieList, setMovieList] = useState([]);
     const ref = useRef(null);
-
-    const renderTooltip = (props) => (
-        <Tooltip id="button-tooltip" {...props}>
-          {tooltipMessage}
-        </Tooltip>
-    );
+    const navigate = useNavigate();
 
     const searchFocus = (event) => {
-        setTooltipMessage("showing some text!");
         setTarget(event.target);
         setShow(true);
         
     }
 
     const searchBlur = (event) => {
-        setTooltipMessage("showing ");
         setShow(false);
+        setMovieList([]);
     }
+
+    const searchChange = (event) => {
+        if (event.target.value) {
+            MovieService.getSearch(event.target.value).then(res => {
+                setMovieList(res.data.movieSearchList);
+                // for (const movie of res.data.movieSearchList) {
+                //     setMovieList([...movieList, movie]);
+                // }
+            });
+        } else {
+            setMovieList([]);
+        }
+    }
+
+    const searchClick = (id) => {
+        navigate("/Movie/" + id);
+        navigate(0);
+    }
+
 
   return (
     <Navbar expand="lg" className="bg-body-tertiary" ref={ref}>
@@ -56,8 +72,16 @@ function CustomNav() {
               className="me-2"
               aria-label="Search"
               onFocus={searchFocus}
-              onBlur={searchBlur}
+              onChange={searchChange}
             />
+                {/* <div className="header-div">
+                    { movieList[0] ? movieList.map((movieEntry) => (
+                        <h5 onClick={() => {console.log("hello there")}}>{movieEntry.title}</h5>
+                    )) 
+                    : 
+                    <div></div>
+                    }
+                </div> */}
             
             <Button variant="outline-success">Search</Button>
           </Form>
@@ -71,9 +95,14 @@ function CustomNav() {
           containerPadding={20}
         >
             <Popover id="popover-contained">
-                <Popover.Header as="h3">Power Rangers</Popover.Header>
-                <Popover.Header as="h3">Guardians of the galaxy unite 3: the third</Popover.Header>
-                <Popover.Header as="h3">Transformers</Popover.Header>
+                { movieList[0] ? movieList.map((movieEntry) => (
+                    <div onClick={() => {searchClick(movieEntry.id)}}>
+                        <Popover.Header as="h3">{movieEntry.title}</Popover.Header>
+                    </div>
+                )) 
+                : 
+                <div></div>
+                }
             </Popover>
         </Overlay>
       </Container>
