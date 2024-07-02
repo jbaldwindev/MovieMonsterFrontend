@@ -25,6 +25,7 @@ const Login = (props) => {
             let info = res.data;
             let retrievedToken = info["tokenType"] + info["accessToken"];
             sessionStorage.setItem("authToken", retrievedToken);
+            sessionStorage.setItem("username", username);
             navigate("/dashboard");
         });
     }

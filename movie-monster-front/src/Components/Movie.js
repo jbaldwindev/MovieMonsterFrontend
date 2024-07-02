@@ -10,6 +10,9 @@ import Accordion from 'react-bootstrap/Accordion';
 import Card from 'react-bootstrap/Card';
 import { CardGroup } from 'react-bootstrap';
 import CustomNav from './CustomNav';
+import Form from 'react-bootstrap/Form';
+import InputGroup from 'react-bootstrap/InputGroup';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const Movie = (props) => {
     let { movieId } = useParams();
@@ -18,6 +21,11 @@ const Movie = (props) => {
     const [posterPath, setPosterPath]= useState("");
     const [backdropPath, setBackdropPath] = useState("");
     const [castList, setCastList] = useState([]);
+    const [fillS1, setfillS1] = useState(false);
+    const [fillS2, setfillS2] = useState(false);
+    const [fillS3, setfillS3] = useState(false);
+    const [fillS4, setfillS4] = useState(false);
+    const [fillS5, setfillS5] = useState(false);
 
     useEffect(() => {
         MovieService.getMovieById(movieId).then(res => {
@@ -28,7 +36,6 @@ const Movie = (props) => {
             setBackdropPath("https://image.tmdb.org/t/p/w1280" + jsonData.backdropPath);
             let retrievedCastMembers = [];
             for (const member of res.data.cast) {
-                console.log(member);
                 if (member.profilePath != null) {
                     retrievedCastMembers = [...retrievedCastMembers, member];
                 }
@@ -37,6 +44,35 @@ const Movie = (props) => {
         });
 
     }, []);
+
+    const starClicked = (e) => {
+        console.log(e.target.id);
+        switch(e.target.id) {
+            case "s5":
+                fillStars(true, true, true, true, true);
+                break;
+            case "s4":
+                fillStars(true, true, true, true, false);
+                break;
+            case "s3":
+                fillStars(true, true, true, false, false);
+                break;
+            case "s2":
+                fillStars(true, true, false, false, false);
+                break;
+            case "s1":
+                fillStars(true, false, false, false, false);
+                break;
+        }
+    }
+
+    const fillStars = (one, two, three, four, five) => {
+        setfillS1(one);
+        setfillS2(two);
+        setfillS3(three);
+        setfillS4(four);
+        setfillS5(five);
+    }
     
     return (
         <div>
@@ -77,6 +113,34 @@ const Movie = (props) => {
                                         </Accordion.Body>
                                     </Accordion.Item>
                                 </Accordion>
+                                <h6>Your rating</h6>
+                                <div className="star-container">
+                                    {fillS1 ? 
+                                    <FontAwesomeIcon id="s1" className="star" onClick={starClicked} icon="fa-star" />
+                                    :
+                                    <FontAwesomeIcon id="s1" className="star" onClick={starClicked} icon="fa-regular fa-star" />
+                                    }
+                                    {fillS2 ? 
+                                    <FontAwesomeIcon id="s2" className="star" onClick={starClicked} icon="fa-star" />
+                                    :
+                                    <FontAwesomeIcon id="s2" className="star" onClick={starClicked} icon="fa-regular fa-star" />
+                                    }
+                                    {fillS3 ? 
+                                    <FontAwesomeIcon id="s3" className="star" onClick={starClicked} icon="fa-star" />
+                                    :
+                                    <FontAwesomeIcon id="s3" className="star" onClick={starClicked} icon="fa-regular fa-star" />
+                                    }
+                                    {fillS4 ? 
+                                    <FontAwesomeIcon id="s4" className="star" onClick={starClicked} icon="fa-star" />
+                                    :
+                                    <FontAwesomeIcon id="s4" className="star" onClick={starClicked} icon="fa-regular fa-star" />
+                                    }
+                                    {fillS5 ? 
+                                    <FontAwesomeIcon id="s5" className="star" onClick={starClicked} icon="fa-star" />
+                                    :
+                                    <FontAwesomeIcon id="s5" className="star" onClick={starClicked} icon="fa-regular fa-star" />
+                                    }
+                                </div>
                             </Col>
                         </Row>
                         
@@ -99,7 +163,9 @@ const Movie = (props) => {
                             ))}
                         </div>
                     </Col>
-                    <Col md="auto" lg="auto"></Col>
+                    <Col md="auto" lg="auto">
+                        
+                    </Col>
                 </Row>
             </Container>
         </div>

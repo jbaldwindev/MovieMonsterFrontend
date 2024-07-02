@@ -6,6 +6,11 @@ import Login from './Components/Login';
 import Dashboard from './Components/Dashboard';
 import Movie from './Components/Movie';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { faRegular, library } from '@fortawesome/fontawesome-svg-core';
+import { faStar } from '@fortawesome/free-solid-svg-icons';
+import { faStar as farStar} from '@fortawesome/free-regular-svg-icons';
+
+library.add(farStar, faStar);
 
 function App() {
   return (
