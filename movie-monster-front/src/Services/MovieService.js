@@ -51,6 +51,14 @@ class MovieService {
         });
     }
 
+    getRating(username, movieId) {
+        return axios.get(BASE_URL + "movie/check-rating/" + username + "/" + movieId, {
+            headers: {
+                Authorization: sessionStorage.getItem("authToken")
+            }
+        });
+    }
+
     rateMovie(user, movieTitle, filmId, score) {
         return axios({
             method: 'post',
@@ -66,7 +74,6 @@ class MovieService {
             }
         });
     }
-
 }
 
 export default new MovieService();

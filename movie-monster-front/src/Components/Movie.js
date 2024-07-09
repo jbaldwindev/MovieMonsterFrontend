@@ -42,11 +42,16 @@ const Movie = (props) => {
             }
             setCastList(retrievedCastMembers);
         });
-
+        MovieService.getRating(sessionStorage.getItem("username"), movieId).then(res => {
+            if (res.data != null) {
+                setRating(res.data.movieRating);
+            }
+        }).catch(error => {
+            console.log("Not yet Reviewed");
+        });
     }, []);
 
-    const starClicked = (e, rating) => {
-        console.log(rating);
+    const setRating = (rating) => {
         switch(rating) {
             case 5:
                 fillStars(true, true, true, true, true);
@@ -64,6 +69,10 @@ const Movie = (props) => {
                 fillStars(true, false, false, false, false);
                 break;
         }
+    }
+
+    const starClicked = (e, rating) => {
+        setRating(rating);
         MovieService.rateMovie(sessionStorage.getItem("username"), movieTitle, movieId, rating);
     }
 
