@@ -5,6 +5,7 @@ import Signup from './Components/Signup';
 import Login from './Components/Login';
 import Dashboard from './Components/Dashboard';
 import Movie from './Components/Movie';
+import UserList from './Components/UserList';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { faRegular, library } from '@fortawesome/fontawesome-svg-core';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
@@ -20,6 +21,7 @@ function App() {
         <Route exact path="/Signup" element={<Signup/>}/>
         <Route exact path="/Login" element={<Login/>}/>
         <Route exact path="/Dashboard" element={<Dashboard/>}/>
+        <Route exact path="/MyList" element={<UserList/>}/>
         <Route exact path="/Movie/:movieId" element={<Movie/>}/>
       </Routes>
     </BrowserRouter>

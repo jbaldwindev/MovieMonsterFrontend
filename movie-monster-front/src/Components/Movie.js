@@ -45,25 +45,26 @@ const Movie = (props) => {
 
     }, []);
 
-    const starClicked = (e) => {
-        console.log(e.target.id);
-        switch(e.target.id) {
-            case "s5":
+    const starClicked = (e, rating) => {
+        console.log(rating);
+        switch(rating) {
+            case 5:
                 fillStars(true, true, true, true, true);
                 break;
-            case "s4":
+            case 4:
                 fillStars(true, true, true, true, false);
                 break;
-            case "s3":
+            case 3:
                 fillStars(true, true, true, false, false);
                 break;
-            case "s2":
+            case 2:
                 fillStars(true, true, false, false, false);
                 break;
-            case "s1":
+            case 1:
                 fillStars(true, false, false, false, false);
                 break;
         }
+        MovieService.rateMovie(sessionStorage.getItem("username"), movieTitle, movieId, rating);
     }
 
     const fillStars = (one, two, three, four, five) => {
@@ -116,29 +117,29 @@ const Movie = (props) => {
                                 <h6>Your rating</h6>
                                 <div className="star-container">
                                     {fillS1 ? 
-                                    <FontAwesomeIcon id="s1" className="star" onClick={starClicked} icon="fa-star" />
+                                    <FontAwesomeIcon id="s1" className="star" onClick={e => starClicked(e, 1)} icon="fa-star" />
                                     :
-                                    <FontAwesomeIcon id="s1" className="star" onClick={starClicked} icon="fa-regular fa-star" />
+                                    <FontAwesomeIcon id="s1" className="star" onClick={e => starClicked(e, 1)} icon="fa-regular fa-star" />
                                     }
                                     {fillS2 ? 
-                                    <FontAwesomeIcon id="s2" className="star" onClick={starClicked} icon="fa-star" />
+                                    <FontAwesomeIcon id="s2" className="star" onClick={e => starClicked(e, 2)} icon="fa-star" />
                                     :
-                                    <FontAwesomeIcon id="s2" className="star" onClick={starClicked} icon="fa-regular fa-star" />
+                                    <FontAwesomeIcon id="s2" className="star" onClick={e => starClicked(e, 2)} icon="fa-regular fa-star" />
                                     }
                                     {fillS3 ? 
-                                    <FontAwesomeIcon id="s3" className="star" onClick={starClicked} icon="fa-star" />
+                                    <FontAwesomeIcon id="s3" className="star" onClick={e => starClicked(e, 3)} icon="fa-star" />
                                     :
-                                    <FontAwesomeIcon id="s3" className="star" onClick={starClicked} icon="fa-regular fa-star" />
+                                    <FontAwesomeIcon id="s3" className="star" onClick={e => starClicked(e, 3)} icon="fa-regular fa-star" />
                                     }
                                     {fillS4 ? 
-                                    <FontAwesomeIcon id="s4" className="star" onClick={starClicked} icon="fa-star" />
+                                    <FontAwesomeIcon id="s4" className="star" onClick={e => starClicked(e, 4)} icon="fa-star" />
                                     :
-                                    <FontAwesomeIcon id="s4" className="star" onClick={starClicked} icon="fa-regular fa-star" />
+                                    <FontAwesomeIcon id="s4" className="star" onClick={e => starClicked(e, 4)} icon="fa-regular fa-star" />
                                     }
                                     {fillS5 ? 
-                                    <FontAwesomeIcon id="s5" className="star" onClick={starClicked} icon="fa-star" />
+                                    <FontAwesomeIcon id="s5" className="star" onClick={e => starClicked(e, 5)} icon="fa-star" />
                                     :
-                                    <FontAwesomeIcon id="s5" className="star" onClick={starClicked} icon="fa-regular fa-star" />
+                                    <FontAwesomeIcon id="s5" className="star" onClick={e => starClicked(e, 5)} icon="fa-regular fa-star" />
                                     }
                                 </div>
                             </Col>

@@ -42,6 +42,31 @@ class MovieService {
             }
         });
     }
+
+    getList(username) {
+        return axios.get(BASE_URL + "movie/list/" + username, {
+            headers: {
+                Authorization: sessionStorage.getItem("authToken")
+            }
+        });
+    }
+
+    rateMovie(user, movieTitle, filmId, score) {
+        return axios({
+            method: 'post',
+            url: BASE_URL + "movie/rate",
+            headers: {
+                Authorization: sessionStorage.getItem("authToken")
+            },
+            data: {
+                username: user,
+                movieTitle: movieTitle,
+                movieId: filmId,
+                movieRating: score
+            }
+        });
+    }
+
 }
 
 export default new MovieService();
