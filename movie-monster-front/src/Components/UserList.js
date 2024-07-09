@@ -2,8 +2,10 @@ import Table from 'react-bootstrap/Table';
 import React, {useState, useEffect} from 'react';
 import MovieService from '../Services/MovieService';
 import CustomNav from './CustomNav';
+import { useParams } from 'react-router-dom';
 
 const UserList = (props) => {
+    let { accountName } = useParams();
     const [ratingList, setRatingList] = useState([]);
     
     useEffect(() => {
@@ -11,7 +13,14 @@ const UserList = (props) => {
     }, []);
 
     const getRatings = () => {
-        MovieService.getList(sessionStorage.getItem("username")).then((res) => {
+        let user = "";
+        console.log(accountName);
+        if (accountName) {
+            user = accountName;
+        } else {
+            user = sessionStorage.getItem("username");
+        }
+        MovieService.getList(user).then((res) => {
             setRatingList(res.data);
         });
     }
