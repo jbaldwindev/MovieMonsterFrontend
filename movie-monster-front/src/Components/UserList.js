@@ -47,7 +47,7 @@ const UserList = (props) => {
                     {ratingList.map((rating) => (
                         <tr>
                             <td>1</td>
-                            <td>{rating.movieTitle}</td>
+                            <td><a href={"/Movie/" + rating.movieId}>{rating.movieTitle}</a></td>
                             <td>{rating.movieRating}</td>
                             <td>Watched</td>
                         </tr>
