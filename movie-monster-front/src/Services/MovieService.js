@@ -43,8 +43,8 @@ class MovieService {
         });
     }
 
-    getList(username) {
-        return axios.get(BASE_URL + "movie/list/" + username, {
+    getList(username, order) {
+        return axios.get(BASE_URL + "movie/list/" + username + "&sort=" + order, {
             headers: {
                 Authorization: sessionStorage.getItem("authToken")
             }

@@ -1,0 +1,8 @@
+.click-text:hover {
+    color: #a7f75c;
+    cursor: pointer;
+}
+
+.click-text {
+    transition: 0.1s all ease-in-out;
+}

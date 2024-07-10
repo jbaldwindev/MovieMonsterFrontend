@@ -42,6 +42,7 @@ const Movie = (props) => {
             }
             setCastList(retrievedCastMembers);
         });
+        
         MovieService.getRating(sessionStorage.getItem("username"), movieId).then(res => {
             if (res.data != null) {
                 setRating(res.data.movieRating);

@@ -8,10 +8,10 @@ import Movie from './Components/Movie';
 import UserList from './Components/UserList';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { faRegular, library } from '@fortawesome/fontawesome-svg-core';
-import { faStar } from '@fortawesome/free-solid-svg-icons';
+import { faStar, faAngleUp, faAngleDown } from '@fortawesome/free-solid-svg-icons';
 import { faStar as farStar} from '@fortawesome/free-regular-svg-icons';
 
-library.add(farStar, faStar);
+library.add(farStar, faStar, faAngleUp, faAngleDown);
 
 function App() {
   return (
