@@ -62,7 +62,7 @@ function CustomNav() {
             navbarScroll
           >
             <Nav.Link href="/Dashboard">Home</Nav.Link>
-            <Nav.Link href="/Dashboard">Movies</Nav.Link>
+            <Nav.Link href="/Movies">Movies</Nav.Link>
             <Nav.Link href="/MyList">My List</Nav.Link>
           </Nav>
           <Form className="d-flex">

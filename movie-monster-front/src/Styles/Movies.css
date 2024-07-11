@@ -1,0 +1,24 @@
+.centered {
+    text-align: center;
+    width: auto;
+    display: 'inline-block';
+}
+
+.hover-color:hover {
+    border: 5px solid #a7f75c;
+}
+
+.hide-overflow {
+    overflow: hidden;
+    width: 100%;
+    transition: 0.1s all ease-in-out;
+}
+
+.movie-card-img {
+    transition: 0.2s all ease-in-out;
+}
+
+.movie-card-img:hover {
+    transform: scale(1.01);
+    cursor: pointer;
+}
