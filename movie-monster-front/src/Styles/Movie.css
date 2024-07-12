@@ -11,6 +11,7 @@
     display: inline-block;
 }
 
+
 @media (min-width: 100px){
     .card-group.card-group-scroll {
         overflow-x: auto;
@@ -23,6 +24,7 @@
         max-width:150px;
     }
 }
+
 
 .backdrop-gradient {
     display: 'inline-block';

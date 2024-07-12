@@ -22,3 +22,7 @@
     transform: scale(1.01);
     cursor: pointer;
 }
+
+.side-button {
+    height: 50%;
+}

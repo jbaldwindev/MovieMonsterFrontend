@@ -11,6 +11,7 @@ import CustomNav from './CustomNav';
 import '../Styles/Movies.css';
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const Movies = (props) => {
     const [movieList, setMovieList] = useState([]);
@@ -117,80 +118,97 @@ const Movies = (props) => {
     return (
         <div>
             <CustomNav></CustomNav>
-            <Container fluid="md">
-                <Tabs defaultActiveKey="1" id="uncontrolled-tab-example" className="mb-3" onSelect={(firstTab, lastTab) => onTabSelect(firstTab, lastTab)}>
-                    <Tab eventKey="1" title="Popular">    
-                        <Row xs={2} md={5} className="g-4">
-                            {popularLoaded ?  movieList.map((movie) => (
-                                <Col>
-                                    <Card className="hover-color hide-overflow" onClick={() => {onCardClick(movie.id)}}>
-                                        <Card.Img variant="top" src={movie.posterPath} className="movie-card-img "/>
-                                    </Card>
-                                </Col>
-                            )) 
-                            :
-                            <div className="centered">
-                                <Spinner animation="border" role="status" variant="info" className="centered">
-                                    <span className="visually-hidden">Loading...</span>
-                                </Spinner>
-                            </div>
-                            }
-                        </Row>
-                        {currentPopularPage > 1 ? 
-                        <Button onClick={(e) => {changePage(e, "previous")}}>Previous</Button>
-                        : 
-                        <div></div>}
-                        
-                        <Button onClick={(e) => {changePage(e, "next")}}>Next</Button>
-                    </Tab>
-                    <Tab eventKey="2" title="Top Rated">
-                        <Row xs={2} md={5} className="g-4">
-                            {popularLoaded ?  movieList.map((movie) => (
-                                <Col>
-                                    <Card className="hover-color hide-overflow" onClick={() => {onCardClick(movie.id)}}>
-                                        <Card.Img variant="top" src={movie.posterPath} className="movie-card-img "/>
-                                    </Card>
-                                </Col>
-                            )) 
-                            :
-                            <div className="centered">
-                                <Spinner animation="border" role="status" variant="info" className="centered">
-                                    <span className="visually-hidden">Loading...</span>
-                                </Spinner>
-                            </div>
-                            }
-                        </Row>
-                        {currentTopPage > 1 ? 
-                        <Button onClick={(e) => {changePage(e, "previous")}}>Previous</Button> 
-                        : 
-                        <div></div>}
-                        <Button onClick={(e) => {changePage(e, "next")}}>Next</Button>
-                    </Tab>
-                    <Tab eventKey="3" title="Now Playing">
-                        <Row xs={2} md={5} className="g-4">
-                            {popularLoaded ?  movieList.map((movie) => (
-                                <Col>
-                                    <Card className="hover-color hide-overflow" onClick={() => {onCardClick(movie.id)}}>
-                                        <Card.Img variant="top" src={movie.posterPath} className="movie-card-img "/>
-                                    </Card>
-                                </Col>
-                            )) 
-                            :
-                            <div className="centered">
-                                <Spinner animation="border" role="status" variant="info" className="centered">
-                                    <span className="visually-hidden">Loading...</span>
-                                </Spinner>
-                            </div>
-                            }
-                        </Row>
-                        {currentPlayingPage  > 1 ? 
-                        <Button onClick={(e) => {changePage(e, "previous")}}>Previous</Button> 
-                        : 
-                        <div></div>}
-                        <Button onClick={(e) => {changePage(e, "next")}}>Next</Button>
-                    </Tab>
-                </Tabs>
-            </Container>
+            <Row className="justify-content-md-center">
+                <Col sm="auto d-flex 
+                        align-items-center 
+                        justify-content-center">
+                    <Button className="side-button"><FontAwesomeIcon icon="fa-angle-left" size="2x"/></Button>  
+                </Col>
+                <Col sm="auto">
+                    <Container fluid="md">
+                        <Tabs defaultActiveKey="1" id="uncontrolled-tab-example" className="mb-3" onSelect={(firstTab, lastTab) => onTabSelect(firstTab, lastTab)}>
+                            <Tab eventKey="1" title="Popular">
+                                
+                                <Row xs={2} md={5} className="g-4">
+                                    {popularLoaded ?  movieList.map((movie) => (
+                                        <Col>
+                                            <Card className="hover-color hide-overflow" onClick={() => {onCardClick(movie.id)}}>
+                                                <Card.Img variant="top" src={movie.posterPath} className="movie-card-img "/>
+                                            </Card>
+                                        </Col>
+                                    )) 
+                                    :
+                                    <div className="centered">
+                                        <Spinner animation="border" role="status" variant="info" className="centered">
+                                            <span className="visually-hidden">Loading...</span>
+                                        </Spinner>
+                                    </div>
+                                    }
+                                </Row>
+                                
+                                {currentPopularPage > 1 ? 
+                                <Button onClick={(e) => {changePage(e, "previous")}}>Previous</Button>
+                                : 
+                                <div></div>}
+                                
+                                <Button onClick={(e) => {changePage(e, "next")}}>Next</Button>
+                            </Tab>
+                            <Tab eventKey="2" title="Top Rated">
+                                <Row xs={2} md={5} className="g-4">
+                                    {popularLoaded ?  movieList.map((movie) => (
+                                        <Col>
+                                            <Card className="hover-color hide-overflow" onClick={() => {onCardClick(movie.id)}}>
+                                                <Card.Img variant="top" src={movie.posterPath} className="movie-card-img "/>
+                                            </Card>
+                                        </Col>
+                                    )) 
+                                    :
+                                    <div className="centered">
+                                        <Spinner animation="border" role="status" variant="info" className="centered">
+                                            <span className="visually-hidden">Loading...</span>
+                                        </Spinner>
+                                    </div>
+                                    }
+                                </Row>
+                                {currentTopPage > 1 ? 
+                                <Button onClick={(e) => {changePage(e, "previous")}}>Previous</Button> 
+                                : 
+                                <div></div>}
+                                <Button onClick={(e) => {changePage(e, "next")}}>Next</Button>
+                            </Tab>
+                            <Tab eventKey="3" title="Now Playing">
+                                <Row xs={2} md={5} className="g-4">
+                                    {popularLoaded ?  movieList.map((movie) => (
+                                        <Col>
+                                            <Card className="hover-color hide-overflow" onClick={() => {onCardClick(movie.id)}}>
+                                                <Card.Img variant="top" src={movie.posterPath} className="movie-card-img "/>
+                                            </Card>
+                                        </Col>
+                                    )) 
+                                    :
+                                    <div className="centered">
+                                        <Spinner animation="border" role="status" variant="info" className="centered">
+                                            <span className="visually-hidden">Loading...</span>
+                                        </Spinner>
+                                    </div>
+                                    }
+                                </Row>
+                                {currentPlayingPage  > 1 ? 
+                                <Button onClick={(e) => {changePage(e, "previous")}}>Previous</Button> 
+                                : 
+                                <div></div>}
+                                <Button onClick={(e) => {changePage(e, "next")}}>Next</Button>
+                            </Tab>
+                        </Tabs>
+                    </Container>
+                </Col>
+                <Col sm="auto d-flex 
+                        align-items-center 
+                        justify-content-center">
+                    <Button className="side-button"><FontAwesomeIcon icon="fa-angle-right" size="2x"/></Button> 
+                    
+                </Col>
+            </Row>
         </div>
     )
 }
