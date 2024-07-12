@@ -20,6 +20,7 @@ const Movies = (props) => {
     const [currentTopPage, setCurrentTopPage] = useState(1);
     const [currentPlayingPage, setCurrentPlayingPage] = useState(1);
     const [currentTab, setCurrentTab] = useState("popular");
+    const [currentTabPage, setCurrentTabPage] = useState(1);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -42,7 +43,7 @@ const Movies = (props) => {
     }
 
     const loadMovies = (page) => {
-        console.log(currentTab);
+        setCurrentTabPage(page);
         if (currentTab == "popular") {
             setCurrentPopularPage(page);
             MovieService.getPopular(page).then((res) => {
@@ -101,15 +102,15 @@ const Movies = (props) => {
 
     const onTabSelect = (selectedTab, lastTab) => {
         if (selectedTab == "1") {
-            //popular
+            setCurrentTabPage(currentPopularPage);
             setCurrentTab("popular");
             
         } else if (selectedTab == "2") {
-            //Top
+            setCurrentTabPage(currentTopPage);
             setCurrentTab("top");
             
         } else if (selectedTab == "3") {
-            //Playing
+            setCurrentTabPage(currentPlayingPage);
             setCurrentTab("playing");
             
         }
@@ -122,7 +123,16 @@ const Movies = (props) => {
                 <Col sm="auto d-flex 
                         align-items-center 
                         justify-content-center">
-                    <Button className="side-button"><FontAwesomeIcon icon="fa-angle-left" size="2x"/></Button>  
+                    {currentTabPage > 1 ? 
+                    <Button className="side-button" onClick={(e) => {changePage(e, "previous")}}>
+                        <FontAwesomeIcon icon="fa-angle-left" size="2x"/>
+                    </Button>
+                    :
+                    <Button className="side-button" disabled>
+                        <FontAwesomeIcon icon="fa-angle-left" size="2x"/>
+                    </Button> 
+                    }
+                     
                 </Col>
                 <Col sm="auto">
                     <Container fluid="md">
@@ -205,7 +215,9 @@ const Movies = (props) => {
                 <Col sm="auto d-flex 
                         align-items-center 
                         justify-content-center">
-                    <Button className="side-button"><FontAwesomeIcon icon="fa-angle-right" size="2x"/></Button> 
+                    <Button className="side-button" onClick={(e) => {changePage(e, "next")}}>
+                        <FontAwesomeIcon icon="fa-angle-right" size="2x"/>
+                    </Button> 
                     
                 </Col>
             </Row>
