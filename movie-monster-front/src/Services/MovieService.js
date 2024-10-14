@@ -74,6 +74,29 @@ class MovieService {
             }
         });
     }
+
+    getCommentList(filmId) {
+        return axios.get(BASE_URL + "movie/get-comments/" + filmId, {
+            headers: {
+                Authorization: sessionStorage.getItem("authToken")
+            }
+        });
+    }
+
+    submitComment(filmId, user, comment) {
+        return axios({
+            method: 'post',
+            url: BASE_URL + "movie/post-comment",
+            headers: {
+                Authorization: sessionStorage.getItem("authToken")
+            },
+            data: {
+                movieId: filmId,
+                username: user,
+                comment: comment
+            }
+        });
+    }
 }
 
 export default new MovieService();

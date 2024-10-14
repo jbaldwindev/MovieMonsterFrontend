@@ -12,6 +12,7 @@ import { CardGroup } from 'react-bootstrap';
 import CustomNav from './CustomNav';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
+import Button from 'react-bootstrap/Button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const Movie = (props) => {
@@ -26,6 +27,8 @@ const Movie = (props) => {
     const [fillS3, setfillS3] = useState(false);
     const [fillS4, setfillS4] = useState(false);
     const [fillS5, setfillS5] = useState(false);
+    const [writtenComment, setWrittenComment] = useState("");
+    const [commentList, setCommentList] = useState([]);
 
     useEffect(() => {
         MovieService.getMovieById(movieId).then(res => {
@@ -50,7 +53,44 @@ const Movie = (props) => {
         }).catch(error => {
             console.log("Not yet Reviewed");
         });
-    }, []);
+
+        loadCommentList();
+        }, []);
+
+    const submitComment = (e) => {
+        e.preventDefault();
+        MovieService.submitComment(
+            movieId, 
+            sessionStorage.getItem("username"),
+            writtenComment
+        );
+        let user = sessionStorage.getItem("username");
+        let newComment = {
+            username: user,
+            comment: writtenComment,
+            movieId: 1
+        }
+        setWrittenComment("");
+        
+        setCommentList([...commentList, newComment]);
+    }
+
+    const loadCommentList = () => {
+        MovieService.getCommentList(movieId).then(res => {
+            let movieComments = [];
+            for (const comment of res.data.commentList) {
+                movieComments = [...movieComments, comment];
+                console.log(comment);
+            }
+            setCommentList(movieComments);
+        }).catch(error => {
+            console.log("No comments retrieved");
+        })
+    }
+
+    const updateComment = (e) => {
+        setWrittenComment(e.target.value);
+    }
 
     const setRating = (rating) => {
         switch(rating) {
@@ -177,6 +217,27 @@ const Movie = (props) => {
                     <Col md="auto" lg="auto">
                         
                     </Col>
+                </Row>
+                <Row>
+                    <Col md="auto"></Col>
+                    <Col>
+                        {commentList.map((movieComment) => (
+                            <div>
+                                <p><b>{movieComment.username}</b></p>
+                                <p>{movieComment.comment}</p>
+                            </div>
+                        ))}
+                        <Form onSubmit={submitComment}>
+                            <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+                            <Form.Label>Add a comment!</Form.Label>
+                            <Form.Control as="textarea" rows={3} value={writtenComment} onChange={updateComment}/>
+                            </Form.Group>
+                            <Button variant="primary" type="submit">
+                                Post
+                            </Button>
+                        </Form>
+                    </Col>
+                    <Col md="auto"></Col>
                 </Row>
             </Container>
         </div>
