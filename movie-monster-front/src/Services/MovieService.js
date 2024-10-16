@@ -59,6 +59,20 @@ class MovieService {
         });
     }
 
+    likeComment(username, commentId) {
+        return axios({
+            method: 'post',
+            url: BASE_URL + "movie/like-comment",
+            headers: {
+                Authorization: sessionStorage.getItem("authToken")
+            },
+            data: {
+                username: username,
+                commentId: commentId
+            }
+        });
+    }
+
     rateMovie(user, movieTitle, filmId, score) {
         return axios({
             method: 'post',
@@ -75,8 +89,8 @@ class MovieService {
         });
     }
 
-    getCommentList(filmId) {
-        return axios.get(BASE_URL + "movie/get-comments/" + filmId, {
+    getCommentList(filmId, user) {
+        return axios.get(BASE_URL + "movie/get-comments/" + user + "&filmId=" + filmId, {
             headers: {
                 Authorization: sessionStorage.getItem("authToken")
             }

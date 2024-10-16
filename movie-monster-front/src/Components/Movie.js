@@ -76,7 +76,7 @@ const Movie = (props) => {
     }
 
     const loadCommentList = () => {
-        MovieService.getCommentList(movieId).then(res => {
+        MovieService.getCommentList(movieId, sessionStorage.getItem("username")).then(res => {
             let movieComments = [];
             for (const comment of res.data.commentList) {
                 movieComments = [...movieComments, comment];
@@ -123,6 +123,17 @@ const Movie = (props) => {
         setfillS3(three);
         setfillS4(four);
         setfillS5(five);
+    }
+
+    const likeComment = (comment) => {
+        MovieService.likeComment(comment.username, comment.commentId).then(res => {
+            console.log("The following is the comment id being passed in")
+            console.log(comment.commentId);
+            console.log(comment.username);
+            loadCommentList();
+        }).catch(error => {
+            console.log("Failed to like comment");
+        })
     }
     
     return (
@@ -225,6 +236,8 @@ const Movie = (props) => {
                             <div>
                                 <p><b>{movieComment.username}</b></p>
                                 <p>{movieComment.comment}</p>
+                                <p>Likes: {movieComment.likeCount}</p>
+                                <Button onClick={() => likeComment(movieComment)}>Like</Button>
                             </div>
                         ))}
                         <Form onSubmit={submitComment}>
