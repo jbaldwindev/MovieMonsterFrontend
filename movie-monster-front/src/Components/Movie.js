@@ -126,7 +126,7 @@ const Movie = (props) => {
     }
 
     const likeComment = (comment) => {
-        MovieService.likeComment(comment.username, comment.commentId).then(res => {
+        MovieService.likeComment(sessionStorage.getItem("username"), comment.commentId).then(res => {
             console.log("The following is the comment id being passed in")
             console.log(comment.commentId);
             console.log(comment.username);
@@ -237,7 +237,11 @@ const Movie = (props) => {
                                 <p><b>{movieComment.username}</b></p>
                                 <p>{movieComment.comment}</p>
                                 <p>Likes: {movieComment.likeCount}</p>
+                                {movieComment.currentUserLiked ? 
+                                <Button onClick={() => likeComment(movieComment)}>Already Liked</Button>
+                                :
                                 <Button onClick={() => likeComment(movieComment)}>Like</Button>
+                                }
                             </div>
                         ))}
                         <Form onSubmit={submitComment}>
