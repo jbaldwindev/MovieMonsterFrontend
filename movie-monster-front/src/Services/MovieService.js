@@ -73,6 +73,20 @@ class MovieService {
         });
     }
 
+    unlikeComment(username, commentId) {
+        return axios({
+            method: "post",
+            url: BASE_URL + "movie/unlike-comment",
+            headers: {
+                Authorization: sessionStorage.getItem("authToken")
+            },
+            data: {
+                username: username,
+                commentId: commentId
+            }
+        })
+    }
+
     rateMovie(user, movieTitle, filmId, score) {
         return axios({
             method: 'post',

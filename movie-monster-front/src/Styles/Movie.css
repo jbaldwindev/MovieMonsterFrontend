@@ -11,6 +11,10 @@
     display: inline-block;
 }
 
+.liked-button:hover{
+    background-color: red !important;
+}
+
 
 @media (min-width: 100px){
     .card-group.card-group-scroll {

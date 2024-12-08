@@ -127,14 +127,19 @@ const Movie = (props) => {
 
     const likeComment = (comment) => {
         MovieService.likeComment(sessionStorage.getItem("username"), comment.commentId).then(res => {
-            console.log("The following is the comment id being passed in")
-            console.log(comment.commentId);
-            console.log(comment.username);
             loadCommentList();
         }).catch(error => {
             console.log("Failed to like comment");
         })
     }
+
+     const unlikeComment = (comment) => {
+        MovieService.unlikeComment(sessionStorage.getItem("username"), comment.commentId).then(res => {
+            loadCommentList();
+        }).catch(error => {
+            console.log("Failed to remove like");
+        })
+     }
     
     return (
         <div>
@@ -238,7 +243,7 @@ const Movie = (props) => {
                                 <p>{movieComment.comment}</p>
                                 <p>Likes: {movieComment.likeCount}</p>
                                 {movieComment.currentUserLiked ? 
-                                <Button onClick={() => likeComment(movieComment)}>Already Liked</Button>
+                                <Button className="liked-button" onClick={() => unlikeComment(movieComment)}>Already Liked</Button>
                                 :
                                 <Button onClick={() => likeComment(movieComment)}>Like</Button>
                                 }
