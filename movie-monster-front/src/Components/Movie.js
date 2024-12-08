@@ -82,6 +82,7 @@ const Movie = (props) => {
                 movieComments = [...movieComments, comment];
                 console.log(comment);
             }
+            movieComments.sort((a, b) => b.likeCount - a.likeCount);
             setCommentList(movieComments);
         }).catch(error => {
             console.log("No comments retrieved");
