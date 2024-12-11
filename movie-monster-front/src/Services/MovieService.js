@@ -103,6 +103,16 @@ class MovieService {
         });
     }
 
+    removeRating(username, ratingId) {
+        return axios({
+            method: 'delete',
+            url: BASE_URL + "movie/delete-rating/" + username + "/" + ratingId,
+            headers: {
+                Authorization: sessionStorage.getItem("authToken")
+            }
+        });
+    }
+
     getCommentList(filmId, user) {
         return axios.get(BASE_URL + "movie/get-comments/" + user + "&filmId=" + filmId, {
             headers: {

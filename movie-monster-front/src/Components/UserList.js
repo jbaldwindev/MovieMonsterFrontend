@@ -5,6 +5,7 @@ import CustomNav from './CustomNav';
 import '../Styles/UserList.css';
 import { useParams } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import Button from 'react-bootstrap/Button';
 
 const UserList = (props) => {
     let { accountName } = useParams();
@@ -25,6 +26,13 @@ const UserList = (props) => {
         }
         MovieService.getList(user, order).then((res) => {
             setRatingList(res.data);
+        });
+    }
+
+    const deleteEntry = (ratingId) => {
+        console.log("deleting rating with id " + ratingId);
+        MovieService.removeRating(sessionStorage.getItem("username"), ratingId).then((res) => {
+            getRatings();
         });
     }
 
@@ -50,6 +58,7 @@ const UserList = (props) => {
                         <th><div className="click-text" onClick={sortChange}>Rating <FontAwesomeIcon icon="fa-angle-up"/></div></th>
                         }
                         <th>Status</th>
+                        <th></th>
                         
                     </tr>
                 </thead>
@@ -60,6 +69,7 @@ const UserList = (props) => {
                             <td><a href={"/Movie/" + rating.movieId}>{rating.movieTitle}</a></td>
                             <td>{rating.movieRating}</td>
                             <td>Watched</td>
+                            <td><div className="delete-button" onClick={() => deleteEntry(rating.ratingId)}><FontAwesomeIcon icon="fa-solid fa-trash-can" size="2x"/></div></td>
                         </tr>
                     ))}
                 </tbody>

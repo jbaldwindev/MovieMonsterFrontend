@@ -3,6 +3,15 @@
     cursor: pointer;
 }
 
+.delete-button:hover {
+    color: #d64c33;
+    cursor: pointer;
+}
+
 .click-text {
+    transition: 0.1s all ease-in-out;
+}
+
+.delete-button {
     transition: 0.1s all ease-in-out;
 }
