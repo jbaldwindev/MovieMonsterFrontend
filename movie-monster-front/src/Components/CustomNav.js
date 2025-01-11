@@ -64,6 +64,7 @@ function CustomNav() {
             <Nav.Link href="/Dashboard">Home</Nav.Link>
             <Nav.Link href="/Movies">Movies</Nav.Link>
             <Nav.Link href="/MyList">My List</Nav.Link>
+            <Nav.Link href="/Friends">Friends</Nav.Link>
           </Nav>
           <Form className="d-flex">
             <Form.Control

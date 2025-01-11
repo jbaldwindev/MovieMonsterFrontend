@@ -7,6 +7,7 @@ import Dashboard from './Components/Dashboard';
 import Movie from './Components/Movie';
 import Movies from './Components/Movies';
 import UserList from './Components/UserList';
+import Friends from './Components/Friends';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { faRegular, library } from '@fortawesome/fontawesome-svg-core';
 import { faStar, faAngleUp, faAngleDown, faAngleRight, faAngleLeft, faTrashCan } from '@fortawesome/free-solid-svg-icons';
@@ -26,6 +27,7 @@ function App() {
         <Route exact path="/List/:accountName" element={<UserList/>}/>
         <Route exact path="/MyList" element={<UserList/>}/>
         <Route exact path="/Movie/:movieId" element={<Movie/>}/>
+        <Route exact path="Friends" element={<Friends/>}></Route>
       </Routes>
     </BrowserRouter>
   );
