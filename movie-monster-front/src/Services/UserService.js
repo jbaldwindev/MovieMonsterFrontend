@@ -24,6 +24,16 @@ class UserService {
         });
     }
 
+    getReceivedRequests(username) {
+        return axios({
+            method: 'get',
+            url: BASE_URL + "/received-requests/" + username,
+            headers: {
+                Authorization: sessionStorage.getItem("authToken")
+            }
+        });
+    }
+
     cancelRequest(sender, receiver) {
         return axios({
             method: 'delete',

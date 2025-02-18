@@ -31,6 +31,8 @@ const Friends = (props) => {
             }
         }
     }
+
+    //TODO first, utilize userService.getReceivedRequests to list pending requests
     
     //TODO accept friend request
     //TODO deny friend request
