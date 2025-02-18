@@ -6,6 +6,7 @@ import UserService from '../Services/UserService';
 
 const Friends = (props) => {
     const [userSearchList, setUserSearchList] = useState([]);
+    const [pendingRequestList, setPendingRequestList] = useState([]);
     const searchRef = useRef(null);
 
     const searchChange = (e) => {
@@ -18,7 +19,6 @@ const Friends = (props) => {
         }
     }
 
-    //TODO finish
     const refreshSearch = () => {
         if (searchRef.current) {
             console.log(searchRef.current.value);
@@ -31,11 +31,24 @@ const Friends = (props) => {
             }
         }
     }
-
-    //todo cancel friend request
     
+    //TODO accept friend request
+    //TODO deny friend request
+    //TODO add links to users' profiles
+    //TODO list received friend requests
+    //TODO list send friend requests
+    //TODO remove friend option for if already friends
+    //TODO list of friends
+    const cancelFriendRequest = (targetUsername) => {
+        UserService.cancelRequest(sessionStorage.getItem('username'), targetUsername)
+        .then( res => {
+            refreshSearch();
+        });
+    }
+
     const sendFriendRequest = (targetUsername) => {
-        UserService.sendRequest(sessionStorage.getItem('username'), targetUsername).then(res => {
+        UserService.sendRequest(sessionStorage.getItem('username'), targetUsername)
+        .then(res => {
             refreshSearch();
         });
     }
@@ -49,7 +62,7 @@ const Friends = (props) => {
         } 
       
         if (hasPendingRequest) {
-          return <Button>Cancel Friend Request</Button>;
+          return <Button onClick={() => cancelFriendRequest(targetUsername)}>Cancel Friend Request</Button>;
         }
       
         return <Button onClick={() => sendFriendRequest(targetUsername)}>Add Friend</Button>;
@@ -69,6 +82,13 @@ const Friends = (props) => {
             <div>{user.requestedUsername} {renderFriendButton(user.isFriend, user.requestPending, user.requestedUsername)}</div>
             )) 
             : 
+            <div></div>
+            }
+            <h1>Pending requests TODO finish filling this out</h1>
+            { pendingRequestList[0] ? pendingRequestList.map((request) => (
+                <div></div>
+            ))
+            :
             <div></div>
             }
         </div>

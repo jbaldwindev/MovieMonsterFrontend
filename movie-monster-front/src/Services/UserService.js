@@ -23,5 +23,15 @@ class UserService {
             }
         });
     }
+
+    cancelRequest(sender, receiver) {
+        return axios({
+            method: 'delete',
+            url: BASE_URL + "/" + sender + "/requests/" + receiver,
+            headers: {
+                Authorization: sessionStorage.getItem("authToken")
+            }
+        });
+    }
 }
 export default new UserService();
