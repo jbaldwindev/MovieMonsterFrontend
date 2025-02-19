@@ -19,6 +19,16 @@ const Friends = (props) => {
         }
     }
 
+    const getPendingRequests = () => {
+        UserService.getReceivedRequests(sessionStorage.getItem('username')).then( res => {
+            setPendingRequestList(res.data.friendRequestList);
+        });
+    }
+
+    useEffect(() => {
+        getPendingRequests();
+    }, []);
+
     const refreshSearch = () => {
         if (searchRef.current) {
             console.log(searchRef.current.value);
@@ -88,10 +98,10 @@ const Friends = (props) => {
             }
             <h1>Pending requests TODO finish filling this out</h1>
             { pendingRequestList[0] ? pendingRequestList.map((request) => (
-                <div></div>
+                <div>{request.sender} {renderFriendButton(false, true, request.sender)}</div>
             ))
             :
-            <div></div>
+            <div>No requests currently pending</div>
             }
         </div>
         
