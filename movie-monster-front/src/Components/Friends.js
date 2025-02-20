@@ -42,15 +42,13 @@ const Friends = (props) => {
         }
     }
 
-    //TODO first, utilize userService.getReceivedRequests to list pending requests
-    
-    //TODO accept friend request
-    //TODO deny friend request
     //TODO add links to users' profiles
     //TODO list received friend requests
     //TODO list send friend requests
     //TODO remove friend option for if already friends
     //TODO list of friends
+    //TODO keeping track of which functions have to refresh which lists after completion
+    //might become a hassle, so create one function which calls refreshSearch, getPendingRequests, etc.
     const cancelFriendRequest = (targetUsername) => {
         UserService.cancelRequest(sessionStorage.getItem('username'), targetUsername)
         .then( res => {
@@ -65,16 +63,29 @@ const Friends = (props) => {
         });
     }
 
-    //TODO there's probably a bug here where when someone is the receiver of a request
-    //and searches the name of the sender, the displayed button will show "cancel friend request"
-    //instead of "accept friend request"
-    const renderFriendButton = (isFriend, hasPendingRequest, targetUsername) => {
+    const respondRequest = (requestId, isAccepted) => {
+        UserService.respondRequest(requestId, isAccepted).then( res => {
+            getPendingRequests();
+            refreshSearch();
+        });
+    }
+
+    const renderFriendButton = (isFriend, hasPendingRequest, targetUsername, senderUsername, requestId = -1) => {
         if (isFriend) {
           return <Button>Unfriend</Button>;
         } 
       
         if (hasPendingRequest) {
-          return <Button onClick={() => cancelFriendRequest(targetUsername)}>Cancel Friend Request</Button>;
+            if (senderUsername != null) {
+                if (senderUsername == sessionStorage.getItem('username')) {
+                    return <Button onClick={() => cancelFriendRequest(targetUsername)}>Cancel Friend Request</Button>;
+                } else {
+                    return (<>
+                                <Button onClick={() => respondRequest(requestId, true)}>Accept Request</Button> 
+                                <Button onClick={() => respondRequest(requestId, false)}>Deny Request</Button>
+                            </>);
+                }
+            }
         }
       
         return <Button onClick={() => sendFriendRequest(targetUsername)}>Add Friend</Button>;
@@ -91,14 +102,14 @@ const Friends = (props) => {
                 onChange={searchChange}
             />
             { userSearchList[0] ? userSearchList.map((user) => (
-            <div>{user.requestedUsername} {renderFriendButton(user.isFriend, user.requestPending, user.requestedUsername)}</div>
+            <div>{user.requestedUsername} {renderFriendButton(user.isFriend, user.requestPending, user.requestedUsername, user.senderUsername)}</div>
             )) 
             : 
             <div></div>
             }
             <h1>Pending requests TODO finish filling this out</h1>
             { pendingRequestList[0] ? pendingRequestList.map((request) => (
-                <div>{request.sender} {renderFriendButton(false, true, request.sender)}</div>
+                <div>{request.sender} {renderFriendButton(false, true, request.sender, request.sender, request.id)}</div>
             ))
             :
             <div>No requests currently pending</div>

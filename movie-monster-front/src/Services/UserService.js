@@ -24,6 +24,20 @@ class UserService {
         });
     }
 
+    respondRequest(requestId, isAccepted) {
+        return axios({
+            method: 'post',
+            url: BASE_URL + "/request-response",
+            headers: {
+                Authorization: sessionStorage.getItem("authToken")
+            },
+            data: {
+                requestId: requestId,
+                isAccepted: isAccepted
+            }
+        });
+    }
+
     getReceivedRequests(username) {
         return axios({
             method: 'get',
