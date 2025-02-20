@@ -38,6 +38,16 @@ class UserService {
         });
     }
 
+    getFriendList(username) {
+        return axios({
+            method: 'get',
+            url: BASE_URL + "/get-friends/" + username,
+            headers: {
+                Authorization: sessionStorage.getItem("authToken")
+            }
+        });
+    }
+
     getReceivedRequests(username) {
         return axios({
             method: 'get',

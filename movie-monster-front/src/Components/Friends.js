@@ -7,6 +7,7 @@ import UserService from '../Services/UserService';
 const Friends = (props) => {
     const [userSearchList, setUserSearchList] = useState([]);
     const [pendingRequestList, setPendingRequestList] = useState([]);
+    const [friendList, setFriendList] = useState([]);
     const searchRef = useRef(null);
 
     const searchChange = (e) => {
@@ -25,8 +26,15 @@ const Friends = (props) => {
         });
     }
 
+    const getFriendList = () => {
+        UserService.getFriendList(sessionStorage.getItem('username')).then(res => {
+            setFriendList(res.data.friends);
+        });
+    }
+
     useEffect(() => {
         getPendingRequests();
+        getFriendList();
     }, []);
 
     const refreshSearch = () => {
@@ -43,8 +51,7 @@ const Friends = (props) => {
     }
 
     //TODO add links to users' profiles
-    //TODO list received friend requests
-    //TODO list send friend requests
+    //TODO list sent friend requests
     //TODO remove friend option for if already friends
     //TODO list of friends
     //TODO keeping track of which functions have to refresh which lists after completion
@@ -70,7 +77,8 @@ const Friends = (props) => {
         });
     }
 
-    const renderFriendButton = (isFriend, hasPendingRequest, targetUsername, senderUsername, requestId = -1) => {
+    //TODO add unfriend functionality
+    const renderFriendButton = (isFriend, hasPendingRequest, targetUsername, senderUsername = "none", requestId = -1) => {
         if (isFriend) {
           return <Button>Unfriend</Button>;
         } 
@@ -107,13 +115,19 @@ const Friends = (props) => {
             : 
             <div></div>
             }
-            <h1>Pending requests TODO finish filling this out</h1>
+            <h1>Pending requests</h1>
             { pendingRequestList[0] ? pendingRequestList.map((request) => (
                 <div>{request.sender} {renderFriendButton(false, true, request.sender, request.sender, request.id)}</div>
             ))
             :
             <div>No requests currently pending</div>
             }
+            <h1>Friends</h1>
+            { friendList[0] ? friendList.map((friend) => (
+                <div>{friend} {renderFriendButton(true, false, friend)}</div>
+            )) 
+            : 
+            <div>You have no friends. It's okay, you're great, you'll find some soon!</div>}
         </div>
         
     );
