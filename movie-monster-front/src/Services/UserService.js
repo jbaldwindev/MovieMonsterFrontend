@@ -67,5 +67,25 @@ class UserService {
             }
         });
     }
+
+    unfriend(targetUsername) {
+        return axios({
+            method: 'delete',
+            url: BASE_URL + "/" + sessionStorage.getItem('username') + "/friends/" + targetUsername,
+            headers: {
+                Authorization: sessionStorage.getItem("authToken")
+            }
+        });
+    }
+
+    getSentRequests(username) {
+        return axios({
+            method: 'get',
+            url: BASE_URL + "/sent-requests/" + username,
+            headers: {
+                Authorization: sessionStorage.getItem("authToken")
+            }
+        })
+    }
 }
 export default new UserService();

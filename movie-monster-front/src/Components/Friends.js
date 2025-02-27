@@ -8,6 +8,7 @@ const Friends = (props) => {
     const [userSearchList, setUserSearchList] = useState([]);
     const [pendingRequestList, setPendingRequestList] = useState([]);
     const [friendList, setFriendList] = useState([]);
+    const [sentRequestsList, setSentRequestsList] = useState([]);
     const searchRef = useRef(null);
 
     const searchChange = (e) => {
@@ -26,6 +27,12 @@ const Friends = (props) => {
         });
     }
 
+    const getSentRequests = () => {
+        UserService.getSentRequests(sessionStorage.getItem('username')).then( res => {
+            setSentRequestsList(res.data.friendRequestList);
+        });
+    }
+
     const getFriendList = () => {
         UserService.getFriendList(sessionStorage.getItem('username')).then(res => {
             setFriendList(res.data.friends);
@@ -33,8 +40,7 @@ const Friends = (props) => {
     }
 
     useEffect(() => {
-        getPendingRequests();
-        getFriendList();
+        refreshLists();
     }, []);
 
     const refreshSearch = () => {
@@ -50,37 +56,42 @@ const Friends = (props) => {
         }
     }
 
-    //TODO add links to users' profiles
-    //TODO list sent friend requests
-    //TODO remove friend option for if already friends
-    //TODO list of friends
-    //TODO keeping track of which functions have to refresh which lists after completion
-    //might become a hassle, so create one function which calls refreshSearch, getPendingRequests, etc.
     const cancelFriendRequest = (targetUsername) => {
         UserService.cancelRequest(sessionStorage.getItem('username'), targetUsername)
         .then( res => {
-            refreshSearch();
+            refreshLists();
         });
     }
 
     const sendFriendRequest = (targetUsername) => {
         UserService.sendRequest(sessionStorage.getItem('username'), targetUsername)
         .then(res => {
-            refreshSearch();
+            refreshLists();
         });
     }
 
     const respondRequest = (requestId, isAccepted) => {
         UserService.respondRequest(requestId, isAccepted).then( res => {
-            getPendingRequests();
-            refreshSearch();
+            refreshLists();
         });
     }
 
-    //TODO add unfriend functionality
+    const refreshLists = () => {
+        getPendingRequests();
+        refreshSearch();
+        getFriendList();
+        getSentRequests();
+    }
+
+    const unfriend = (targetUsername) => {
+        UserService.unfriend(targetUsername).then(res => {
+            refreshLists();
+        });
+    }
+
     const renderFriendButton = (isFriend, hasPendingRequest, targetUsername, senderUsername = "none", requestId = -1) => {
         if (isFriend) {
-          return <Button>Unfriend</Button>;
+          return <Button onClick={() => unfriend(targetUsername)}>Unfriend</Button>;
         } 
       
         if (hasPendingRequest) {
@@ -117,17 +128,26 @@ const Friends = (props) => {
             }
             <h1>Pending requests</h1>
             { pendingRequestList[0] ? pendingRequestList.map((request) => (
-                <div>{request.sender} {renderFriendButton(false, true, request.sender, request.sender, request.id)}</div>
+                <div><a href={"/Profile/" + request.sender}>{request.sender}</a> {renderFriendButton(false, true, request.sender, request.sender, request.id)}</div>
             ))
             :
             <div>No requests currently pending</div>
             }
             <h1>Friends</h1>
             { friendList[0] ? friendList.map((friend) => (
-                <div>{friend} {renderFriendButton(true, false, friend)}</div>
+                <div><a href={"/Profile/" + friend}>{friend}</a> {renderFriendButton(true, false, friend)}</div>
             )) 
             : 
-            <div>You have no friends. It's okay, you're great, you'll find some soon!</div>}
+            <div>You have no friends. It's okay, you're great, you'll find some soon!</div>
+            }
+            <h1>Sent friend requests</h1>
+            { sentRequestsList[0] ? 
+                sentRequestsList.map((request) => (
+                    <div><a href={"/Profile/" + request.receiver}>{request.receiver}</a> {renderFriendButton(false, true, request.receiver, sessionStorage.getItem('username'))}</div>
+                ))
+                : 
+                <div>No friend requests have been sent</div>
+            }
         </div>
         
     );
