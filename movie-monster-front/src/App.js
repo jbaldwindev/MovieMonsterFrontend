@@ -10,6 +10,7 @@ import UserList from './Components/UserList';
 import Friends from './Components/Friends';
 import Profile from './Components/Profile';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import ImageUpload from './Components/ImageUpload';
 import { faRegular, library } from '@fortawesome/fontawesome-svg-core';
 import { faStar, faAngleUp, faAngleDown, faAngleRight, faAngleLeft, faTrashCan } from '@fortawesome/free-solid-svg-icons';
 import { faStar as farStar} from '@fortawesome/free-regular-svg-icons';
@@ -30,6 +31,7 @@ function App() {
         <Route exact path="/Movie/:movieId" element={<Movie/>}/>
         <Route exact path="Friends" element={<Friends/>}></Route>
         <Route exact path="Profile/:username" element={<Profile/>}/>
+        <Route exact path="profile-picture" element={<ImageUpload/>}/>
       </Routes>
     </BrowserRouter>
   );

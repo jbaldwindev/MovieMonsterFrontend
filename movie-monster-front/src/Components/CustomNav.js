@@ -3,6 +3,7 @@ import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
+import Image from 'react-bootstrap/Image';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Tooltip from 'react-bootstrap/Tooltip';
@@ -75,17 +76,10 @@ function CustomNav() {
               onFocus={searchFocus}
               onChange={searchChange}
             />
-                {/* <div className="header-div">
-                    { movieList[0] ? movieList.map((movieEntry) => (
-                        <h5 onClick={() => {console.log("hello there")}}>{movieEntry.title}</h5>
-                    )) 
-                    : 
-                    <div></div>
-                    }
-                </div> */}
-            
             <Button variant="outline-success">Search</Button>
+            
           </Form>
+          <Image src="C:\Users\jbald\Downloads\images.jpg" roundedCircle />
         </Navbar.Collapse>
         <Overlay
           show={show}
