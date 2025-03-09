@@ -87,5 +87,17 @@ class UserService {
             }
         })
     }
+
+    uploadImage(imageFormData) {
+        return axios({
+            method: 'post',
+            url: BASE_URL + "/upload-icon",
+            headers: {
+                Authorization: sessionStorage.getItem("authToken"),
+                "Content-Type": "multipart/form-data"
+            },
+            data: imageFormData
+        })
+    }
 }
 export default new UserService();

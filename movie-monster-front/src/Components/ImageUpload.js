@@ -6,10 +6,12 @@ import ReactCrop from 'react-image-crop';
 import 'react-image-crop/dist/ReactCrop.css';
 import Image from 'react-bootstrap/Image';
 import Button from 'react-bootstrap/Button';
+import UserService from "../Services/UserService";
 
 const ImageUpload = (props) => {
     const [uploadedImage, setUploadedImage] = useState();
     const [croppedImage, setCroppedImage] = useState();
+    const [croppedImageBlob, setCroppedImageBlob] = useState();
     const [file, setFile] = useState();
     const imageRef = useRef(null);
     const [crop, setCrop] = useState({
@@ -50,9 +52,20 @@ const ImageUpload = (props) => {
         //save canvas as data url
         canvas1.toBlob((blob) => {
             if (blob) {
+                setCroppedImageBlob(blob);
                 setCroppedImage(URL.createObjectURL(blob));
             }
         }, "image/png");
+    }
+
+    const sendCroppedImage = () => {
+        if (croppedImageBlob) {
+            const formData = new FormData();
+            formData.append("file", croppedImageBlob);
+            UserService.uploadImage(formData).then(() => {
+                console.log("Image successfully uploaded");
+            })
+        }
     }
 
     const imageLoaded = (e) => {
@@ -74,7 +87,7 @@ const ImageUpload = (props) => {
                 <ReactCrop crop={crop} onComplete={getCroppedImage} onChange={c => setCrop(c)} aspect={1} minHeight={25} minWidth={25} circularCrop={true} keepSelection={true}>
                     <img onLoad={imageLoaded} src={uploadedImage} ref={imageRef}/>
                 </ReactCrop>
-                <Button>Set profile picture</Button>
+                <Button onClick={sendCroppedImage}>Set profile picture</Button>
             </div>
             : 
             <div>No image uploaded yet</div>
