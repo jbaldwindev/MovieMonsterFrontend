@@ -88,10 +88,21 @@ class UserService {
         })
     }
 
-    uploadImage(imageFormData) {
+    getIcon(username) {
+        return axios({
+            method: 'get',
+            url: BASE_URL + "/icon/" + username,
+            headers: {
+                Authorization: sessionStorage.getItem("authToken")
+            },
+            responseType: "blob"
+        })
+    }
+
+    uploadImage(imageFormData, username) {
         return axios({
             method: 'post',
-            url: BASE_URL + "/upload-icon",
+            url: BASE_URL + "/upload-icon/" + username,
             headers: {
                 Authorization: sessionStorage.getItem("authToken"),
                 "Content-Type": "multipart/form-data"

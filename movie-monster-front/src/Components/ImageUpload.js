@@ -13,6 +13,7 @@ const ImageUpload = (props) => {
     const [croppedImage, setCroppedImage] = useState();
     const [croppedImageBlob, setCroppedImageBlob] = useState();
     const [file, setFile] = useState();
+    const [retrievedImageURL, setRetrievedImageUrl] = useState();
     const imageRef = useRef(null);
     const [crop, setCrop] = useState({
         unit: 'px',
@@ -62,11 +63,18 @@ const ImageUpload = (props) => {
         if (croppedImageBlob) {
             const formData = new FormData();
             formData.append("file", croppedImageBlob);
-            UserService.uploadImage(formData).then(() => {
+            UserService.uploadImage(formData, sessionStorage.getItem("username")).then(() => {
                 console.log("Image successfully uploaded");
             })
         }
     }
+    useEffect(() => {
+        UserService.getIcon(sessionStorage.getItem("username")).then((res) => {
+            setRetrievedImageUrl(URL.createObjectURL(res.data));
+        }).catch(error => {
+            console.error("Error fetching image:", error);
+        });
+    }, []);
 
     const imageLoaded = (e) => {
         const initialCrop = {
@@ -100,6 +108,15 @@ const ImageUpload = (props) => {
                 <Image src={croppedImage} roundedCircle/>
                 <Image style={{width: "5%"}} src={croppedImage} roundedCircle/>
             </div> : <div>No crop to display</div>}
+            <h6>Current profile picture</h6>
+            { retrievedImageURL ? 
+                <div>
+                    <Image style={{width: "5%"}} src={retrievedImageURL} roundedCircle/>
+                    <img src={retrievedImageURL}></img>
+                </div> 
+            : 
+                <div>no profile picture currently set</div>
+            }
         </div>
     );
 }
