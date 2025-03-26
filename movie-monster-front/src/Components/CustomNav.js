@@ -11,6 +11,7 @@ import Overlay from 'react-bootstrap/Overlay';
 import Popover from 'react-bootstrap/Popover';
 import React, { useState, useEffect, useRef } from 'react';
 import MovieService from '../Services/MovieService';
+import UserService from '../Services/UserService';
 import { useNavigate } from 'react-router-dom';
 import "../Styles/CustomNav.css";
 
@@ -18,6 +19,7 @@ function CustomNav() {
     const [show, setShow] = useState(false);
     const [target, setTarget] = useState(null);
     const [movieList, setMovieList] = useState([]);
+    const [iconUrl, setIconUrl] = useState();
     const ref = useRef(null);
     const navigate = useNavigate();
 
@@ -32,13 +34,18 @@ function CustomNav() {
         setMovieList([]);
     }
 
+    useEffect(() => {
+        UserService.getIcon(sessionStorage.getItem("username")).then((res) => {
+            setIconUrl(URL.createObjectURL(res.data));
+        }).catch(error => {
+            console.error("Error fetching image:", error);
+        });
+    }, []);
+
     const searchChange = (event) => {
         if (event.target.value) {
             MovieService.getSearch(event.target.value).then(res => {
                 setMovieList(res.data.movieSearchList);
-                // for (const movie of res.data.movieSearchList) {
-                //     setMovieList([...movieList, movie]);
-                // }
             });
         } else {
             setMovieList([]);
@@ -79,7 +86,7 @@ function CustomNav() {
             <Button variant="outline-success">Search</Button>
             
           </Form>
-          <Image src="C:\Users\jbald\Downloads\images.jpg" roundedCircle />
+          <Image src={iconUrl} style={{width: "5%"}} roundedCircle />
         </Navbar.Collapse>
         <Overlay
           show={show}

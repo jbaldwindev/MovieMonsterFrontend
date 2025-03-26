@@ -112,6 +112,7 @@ const ImageUpload = (props) => {
             { retrievedImageURL ? 
                 <div>
                     <Image style={{width: "5%"}} src={retrievedImageURL} roundedCircle/>
+                    <Image style={{width: "2%"}} src={retrievedImageURL} roundedCircle/>
                     <img src={retrievedImageURL}></img>
                 </div> 
             : 
