@@ -15,3 +15,13 @@
 .delete-button {
     transition: 0.1s all ease-in-out;
 }
+
+.list-container {
+    display: flex;
+    justify-content: center;
+}
+
+.list {
+    margin-top: 10px;
+    width: 75%;
+}

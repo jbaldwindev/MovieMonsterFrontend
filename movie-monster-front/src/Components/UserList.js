@@ -47,33 +47,37 @@ const UserList = (props) => {
     return (
         <div>
             <CustomNav/>
-            <Table striped bordered hover size="sm">
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Title</th>
-                        {order == "desc" ? 
-                        <th><div className="click-text" onClick={sortChange}>Rating <FontAwesomeIcon icon="fa-angle-down"/></div></th> 
-                        : 
-                        <th><div className="click-text" onClick={sortChange}>Rating <FontAwesomeIcon icon="fa-angle-up"/></div></th>
-                        }
-                        <th>Status</th>
-                        <th></th>
-                        
-                    </tr>
-                </thead>
-                    <tbody>
-                    {ratingList.map((rating, index) => (
-                        <tr key={rating}>
-                            <td>{index+1}</td>
-                            <td><a href={"/Movie/" + rating.movieId}>{rating.movieTitle}</a></td>
-                            <td>{rating.movieRating}</td>
-                            <td>Watched</td>
-                            <td><div className="delete-button" onClick={() => deleteEntry(rating.ratingId)}><FontAwesomeIcon icon="fa-solid fa-trash-can" size="2x"/></div></td>
-                        </tr>
-                    ))}
-                </tbody>
-            </Table>
+            <div className="list-container">
+                <div className="list">
+                    <Table striped bordered hover size="sm">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Title</th>
+                                {order == "desc" ? 
+                                <th><div className="click-text" onClick={sortChange}>Rating <FontAwesomeIcon icon="fa-angle-down"/></div></th> 
+                                : 
+                                <th><div className="click-text" onClick={sortChange}>Rating <FontAwesomeIcon icon="fa-angle-up"/></div></th>
+                                }
+                                <th>Status</th>
+                                <th></th>
+                                
+                            </tr>
+                        </thead>
+                            <tbody>
+                            {ratingList.map((rating, index) => (
+                                <tr key={rating}>
+                                    <td>{index+1}</td>
+                                    <td><a href={"/Movie/" + rating.movieId}>{rating.movieTitle}</a></td>
+                                    <td>{rating.movieRating}</td>
+                                    <td>Watched</td>
+                                    <td><div className="delete-button" onClick={() => deleteEntry(rating.ratingId)}><FontAwesomeIcon icon="fa-solid fa-trash-can" size="2x"/></div></td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </Table>
+                </div>
+            </div>
         </div>
     );
 }

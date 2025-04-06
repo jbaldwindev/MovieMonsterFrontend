@@ -8,3 +8,9 @@
     background-color: darkgrey;
     cursor: pointer;
 }
+
+.profile-pic {
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+}

@@ -22,6 +22,7 @@ function CustomNav() {
     const [iconUrl, setIconUrl] = useState();
     const ref = useRef(null);
     const navigate = useNavigate();
+    const [width, setWidth] = useState(window.innerWidth);
 
     const searchFocus = (event) => {
         setTarget(event.target);
@@ -34,12 +35,18 @@ function CustomNav() {
         setMovieList([]);
     }
 
+    const handleResize = (width) => {
+      setWidth(width);
+    }
+
     useEffect(() => {
-        UserService.getIcon(sessionStorage.getItem("username")).then((res) => {
-            setIconUrl(URL.createObjectURL(res.data));
-        }).catch(error => {
-            console.error("Error fetching image:", error);
-        });
+      const resizeListener = () => handleResize(window.innerWidth);
+      window.addEventListener("resize", resizeListener);
+      UserService.getIcon(sessionStorage.getItem("username")).then((res) => {
+          setIconUrl(URL.createObjectURL(res.data));
+      }).catch(error => {
+          console.error("Error fetching image:", error);
+      });
     }, []);
 
     const searchChange = (event) => {
@@ -86,7 +93,22 @@ function CustomNav() {
             <Button variant="outline-success">Search</Button>
             
           </Form>
-          <Image src={iconUrl} style={{width: "5%"}} roundedCircle />
+          {width > 990 ? 
+          <NavDropdown
+          className="ms-3"
+          align="end"
+          title={
+            <span><Image src={iconUrl} className="profile-pic" roundedCircle /></span>
+          }>
+            <NavDropdown.Item href={"/Profile/" + sessionStorage.getItem("username")}>Profile</NavDropdown.Item>
+            <NavDropdown.Divider/>
+            <NavDropdown.Item href="/Settings">Settings</NavDropdown.Item>
+            <NavDropdown.Divider/>
+            <NavDropdown.Item>Sign Out</NavDropdown.Item>
+          </NavDropdown>
+          : 
+          <></>
+          }
         </Navbar.Collapse>
         <Overlay
           show={show}
