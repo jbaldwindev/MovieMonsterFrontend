@@ -68,7 +68,7 @@ function CustomNav() {
   return (
     <Navbar expand="lg" className="bg-body-tertiary" ref={ref}>
       <Container fluid>
-        <Navbar.Brand href="#">MovieMonster</Navbar.Brand>
+        <Navbar.Brand href="/" className="colored">MovieMonster</Navbar.Brand>
         <Navbar.Toggle aria-controls="navbarScroll" />
         <Navbar.Collapse id="navbarScroll">
           <Nav

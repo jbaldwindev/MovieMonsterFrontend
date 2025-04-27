@@ -4,3 +4,32 @@
     width: auto;
     height: auto;
 }
+
+.icon-image {
+    max-height: 150px;
+    max-width: 150px;
+    width: 100%;
+    object-fit: contain;
+    height: auto;
+    box-shadow: 0 20px 10px -10px gray;
+}
+
+.link {
+    text-decoration: underline;
+}
+
+.link:hover {
+    cursor: pointer;
+    color: #a7f75c;
+    transition: 100ms;
+}
+
+.section-header {
+    margin-bottom: 5px;
+    border-bottom: 2px solid gray;
+    box-shadow: 0 8px 6px -6px;
+}
+
+.inverse-shadow {
+    box-shadow: inset 0 0 10px #f8a100 !important;
+}

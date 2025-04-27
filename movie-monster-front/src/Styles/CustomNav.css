@@ -14,3 +14,8 @@
     height: 40px;
     object-fit: cover;
 }
+
+.colored:hover {
+    color: #a7f75c !important;
+    transition: 150ms;
+}

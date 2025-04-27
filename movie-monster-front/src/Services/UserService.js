@@ -88,6 +88,16 @@ class UserService {
         })
     }
 
+    getProfileInfo(username) {
+        return axios({
+            method: 'get',
+            url: BASE_URL + "/profile/" + username,
+            headers: {
+                Authorization: sessionStorage.getItem("authToken")
+            }
+        })
+    }
+
     getIcon(username) {
         return axios({
             method: 'get',
