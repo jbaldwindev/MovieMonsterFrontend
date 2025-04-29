@@ -120,5 +120,15 @@ class UserService {
             data: imageFormData
         })
     }
+
+    getFavorites(username) {
+        return axios({
+            method: 'get',
+            url: BASE_URL + '/' + username + '/favorites/all',
+            headers: {
+                Authorization: sessionStorage.getItem('authToken')
+            }
+        })
+    }
 }
 export default new UserService();

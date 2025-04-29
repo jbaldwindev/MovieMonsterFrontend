@@ -59,7 +59,7 @@ const UserList = (props) => {
                                 : 
                                 <th><div className="click-text" onClick={sortChange}>Rating <FontAwesomeIcon icon="fa-angle-up"/></div></th>
                                 }
-                                <th>Status</th>
+                                
                                 <th></th>
                                 
                             </tr>
@@ -70,7 +70,7 @@ const UserList = (props) => {
                                     <td>{index+1}</td>
                                     <td><a href={"/Movie/" + rating.movieId}>{rating.movieTitle}</a></td>
                                     <td>{rating.movieRating}</td>
-                                    <td>Watched</td>
+                                    
                                     <td><div className="delete-button" onClick={() => deleteEntry(rating.ratingId)}><FontAwesomeIcon icon="fa-solid fa-trash-can" size="2x"/></div></td>
                                 </tr>
                             ))}

@@ -88,7 +88,8 @@ Nunc condimentum gravida mi at interdum. Donec placerat suscipit leo, at cursus 
                                 }
                                 
                             </div>
-                            <Table className="inverse-shadow" striped bordered hover>
+                            { favoriteMovies.length > 0 ? 
+                                <Table className="inverse-shadow" striped bordered hover>
                                 <thead>
                                     <tr>
                                         <th>#</th>
@@ -97,7 +98,7 @@ Nunc condimentum gravida mi at interdum. Donec placerat suscipit leo, at cursus 
                                 </thead>
                                 <tbody>
                                     {
-                                        favoriteMovies?.map((movie, index) => (
+                                        favoriteMovies.map((movie, index) => (
                                             <tr>
                                                 <td>{index + 1}</td>
                                                 <td>
@@ -107,7 +108,11 @@ Nunc condimentum gravida mi at interdum. Donec placerat suscipit leo, at cursus 
                                         ))
                                     }
                                 </tbody>
-                            </Table>
+                                </Table>
+                                : 
+                                <p>Nothing to show yet</p>
+                            }
+                            
                         </div>
                     </Col>
                 </Row>
