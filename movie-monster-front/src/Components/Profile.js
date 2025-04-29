@@ -79,7 +79,14 @@ Nunc condimentum gravida mi at interdum. Donec placerat suscipit leo, at cursus 
                     <Col className="">
                         <div>
                             <div className="section-header">
-                                Favorite Movies
+                                <span>Favorite Movies</span>
+                                {
+                                username == sessionStorage.getItem('username') ? 
+                                    <a href="/Favorites" className="settings-link">{"edit->"}</a> 
+                                    : 
+                                    <></>
+                                }
+                                
                             </div>
                             <Table className="inverse-shadow" striped bordered hover>
                                 <thead>
@@ -93,7 +100,9 @@ Nunc condimentum gravida mi at interdum. Donec placerat suscipit leo, at cursus 
                                         favoriteMovies?.map((movie, index) => (
                                             <tr>
                                                 <td>{index + 1}</td>
-                                                <td>{movie.data.title}</td>
+                                                <td>
+                                                    <a className="movie-link" href={"/Movie/" + movie.data.id}>{movie.data.title}</a>
+                                                </td>
                                             </tr>
                                         ))
                                     }

@@ -10,6 +10,7 @@ import UserList from './Components/UserList';
 import Friends from './Components/Friends';
 import Profile from './Components/Profile';
 import Settings from './Components/Settings';
+import Favorites from './Components/Favorites';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import ImageUpload from './Components/ImageUpload';
 import { faRegular, library } from '@fortawesome/fontawesome-svg-core';
@@ -34,6 +35,7 @@ function App() {
         <Route exact path="Profile/:username" element={<Profile/>}/>
         <Route exact path="profile-picture" element={<ImageUpload/>}/>
         <Route exact path="Settings" element={<Settings/>}/>
+        <Route exact path="/Favorites" element={<Favorites/>}/>
       </Routes>
     </BrowserRouter>
   );

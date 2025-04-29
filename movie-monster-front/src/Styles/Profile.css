@@ -28,8 +28,30 @@
     margin-bottom: 5px;
     border-bottom: 2px solid gray;
     box-shadow: 0 8px 6px -6px;
+    display: flex;
+    justify-content: space-between;
 }
 
 .inverse-shadow {
     box-shadow: inset 0 0 10px #f8a100 !important;
+}
+
+.movie-link {
+    color: inherit;
+    text-decoration: none;
+}
+
+.movie-link:hover {
+    color: #93e645;
+    transition: 150ms;
+}
+
+.settings-link {
+    text-decoration: none;
+}
+
+.settings-link:hover {
+    cursor: pointer;
+    color: #a7f75c;
+    transition: 100ms;
 }
