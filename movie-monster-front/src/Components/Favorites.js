@@ -4,19 +4,36 @@ import Form from 'react-bootstrap/Form';
 import UserService from "../Services/UserService";
 import MovieService from "../Services/MovieService";
 import Table from 'react-bootstrap/Table';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import "../Styles/Favorites.css";
+
 const Favorites = (props) => {
     const [searchText, setSearchText] = useState("");
     const [favoriteIds, setFavoriteIds] = useState([]);
     const [favoriteMovies, setFavoriteMovies] = useState([]);
+    const rankDirection = {
+        UP: "UP",
+        DOWN: "DOWN"
+    }
 
     const searchChange = (e) => {
         setSearchText(e.target.value);
     }
 
-    useEffect(() => {
+    const rank = (movieId, direction) => {
+        UserService.rankFavorite(movieId, direction).then((res) => {
+            reloadFavorites();
+        });
+    }
+
+    const reloadFavorites = () => {
         UserService.getFavorites(sessionStorage.getItem('username')).then((res) => {
             setFavoriteIds(res.data);
         });
+    }
+
+    useEffect(() => {
+        reloadFavorites();
     }, []);
 
     useEffect(() => {
@@ -50,6 +67,7 @@ const Favorites = (props) => {
                         <tr>
                             <th>#</th>
                             <th>Title</th>
+                            <th>Change Rank</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -59,6 +77,14 @@ const Favorites = (props) => {
                                     <td>{index + 1}</td>
                                     <td>
                                         <a className="movie-link" href={"/Movie/" + movie.data.id}>{movie.data.title}</a>
+                                    </td>
+                                    <td>
+                                        <span className="monster-green" onClick={() => rank(movie.data.id, rankDirection.DOWN)}>
+                                            <FontAwesomeIcon icon="fa-solid fa-angle-down" />
+                                        </span>
+                                        <span className = "monster-green" onClick={() => rank(movie.data.id, rankDirection.UP)}>
+                                            <FontAwesomeIcon icon="fa-solid fa-angle-up" />
+                                        </span>
                                     </td>
                                 </tr>
                             ))

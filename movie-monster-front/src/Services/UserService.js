@@ -130,5 +130,20 @@ class UserService {
             }
         })
     }
+
+    rankFavorite(movieId, direction) {
+        return axios({
+            method: 'post',
+            url: BASE_URL + "/favorites/rank",
+            headers: {
+                Authorization: sessionStorage.getItem('authToken')
+            },
+            data: {
+                username: sessionStorage.getItem('username'),
+                movieId: movieId,
+                rankingDirection: direction
+            }
+        })
+    }
 }
 export default new UserService();

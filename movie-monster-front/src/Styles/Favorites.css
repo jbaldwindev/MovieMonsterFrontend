@@ -1,0 +1,5 @@
+.monster-green:hover {
+    color: #a7f75c;
+    transition: 150ms;
+    cursor: pointer;
+}
