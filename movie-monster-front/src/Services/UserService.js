@@ -145,5 +145,32 @@ class UserService {
             }
         })
     }
+
+    removeFavorite(movieId) {
+        return axios({
+            method: "delete",
+            url: BASE_URL 
+                + "/" 
+                + sessionStorage.getItem('username') 
+                + "/favorites/remove?movieId=" + movieId,
+            headers: {
+                Authorization: sessionStorage.getItem('authToken')
+            }
+        })
+    }
+
+    addFavorite(movieId) {
+        return axios({
+            method: 'post',
+            url: BASE_URL 
+                + "/" 
+                + sessionStorage.getItem('username') 
+                + "/favorites/add?movieId=" 
+                + movieId,
+            headers: {
+                Authorization: sessionStorage.getItem('authToken')
+            }
+        })
+    }
 }
 export default new UserService();

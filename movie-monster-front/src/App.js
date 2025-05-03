@@ -14,10 +14,10 @@ import Favorites from './Components/Favorites';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import ImageUpload from './Components/ImageUpload';
 import { faRegular, library } from '@fortawesome/fontawesome-svg-core';
-import { faStar, faAngleUp, faAngleDown, faAngleRight, faAngleLeft, faTrashCan } from '@fortawesome/free-solid-svg-icons';
+import { faStar, faAngleUp, faAngleDown, faAngleRight, faAngleLeft, faTrashCan, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { faStar as farStar} from '@fortawesome/free-regular-svg-icons';
 
-library.add(farStar, faStar, faAngleUp, faAngleDown, faAngleRight, faAngleLeft, faTrashCan);
+library.add(farStar, faStar, faAngleUp, faAngleDown, faAngleRight, faAngleLeft, faTrashCan, faPlus);
 
 function App() {
   return (
