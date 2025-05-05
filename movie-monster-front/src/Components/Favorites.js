@@ -48,6 +48,8 @@ const Favorites = (props) => {
     const addFavorite = (movieId) => {
         UserService.addFavorite(movieId).then((res) => {
             reloadFavorites();
+        }).catch((error) => {
+            console.log("Failed to add favorite: " + error.response.data);
         });
     }
 
@@ -74,11 +76,9 @@ const Favorites = (props) => {
     return (
         <div>
             <CustomNav/>
-            <h1>Edit favorites page</h1>
             <Form onChange={searchChange}>
-                <Form.Control type="text" placeholder="Search movies to add..." />
+                <Form.Control className="search-bar center" type="text" placeholder="Search movies to add..." />
             </Form>
-            <div>Current Search: {searchText}</div>
             { movieList[0] ?
                 <Table className="inverse-shadow favorites-list center" striped bordered hover>
                     <tbody>
@@ -86,12 +86,18 @@ const Favorites = (props) => {
                             movieList.map((movieEntry) => (
                                 <tr>
                                     <td>
-                                        {movieEntry.title}
+                                    <a className="movie-link" href={"/Movie/" + movieEntry.id}>{movieEntry.title}</a>
                                     </td>
-                                    <td className="text-centered">
-                                        <span className="monster-green" onClick={() => addFavorite(movieEntry.id)}>
-                                            <FontAwesomeIcon className="add-button" icon="fa-solid fa-plus"/>
-                                        </span>
+                                    <td className="text-centered control-col">
+                                        
+                                            {favoriteIds.length < 10 ?
+                                                <span className="monster-green" onClick={() => addFavorite(movieEntry.id)}>
+                                                    <FontAwesomeIcon className="add-button" icon="fa-solid fa-plus"/>
+                                                </span>
+                                                : 
+                                                <FontAwesomeIcon className="disabled add-button-disabled" icon="fa-solid fa-plus"/>
+                                            }
+                                            
                                     </td>
                                 </tr>
                             ))
@@ -101,7 +107,7 @@ const Favorites = (props) => {
             : 
                 <div></div>
             }
-            <div className="flex-center">
+            <div className="flex-center favorites-section-header">
                 <h2>Current Favorites</h2>
             </div>
             { favoriteMovies.length > 0 ? 
@@ -122,17 +128,27 @@ const Favorites = (props) => {
                                     <td>
                                         <a className="movie-link" href={"/Movie/" + movie.data.id}>{movie.data.title}</a>
                                     </td>
-                                    <td className="text-centered">
+                                    <td className="text-centered control-col">
                                         <div className="inline-buttons">
-                                            <span className="monster-green" onClick={() => rank(movie.data.id, rankDirection.DOWN)}>
-                                                <FontAwesomeIcon className="rank-button" icon="fa-solid fa-angle-down"/>
-                                            </span>
-                                            <span className = "monster-green" onClick={() => rank(movie.data.id, rankDirection.UP)}>
-                                                <FontAwesomeIcon className="rank-button" icon="fa-solid fa-angle-up"/>
-                                            </span>
+                                            
+                                            {index == 9 ? 
+                                                <></>
+                                                :
+                                                <span className="monster-green" onClick={() => rank(movie.data.id, rankDirection.DOWN)}>
+                                                    <FontAwesomeIcon className="rank-button" icon="fa-solid fa-angle-down"/>
+                                                </span>
+                                            }
+
+                                            {index == 0 ? 
+                                                <></>
+                                                :
+                                                <span className="monster-green" onClick={() => rank(movie.data.id, rankDirection.DOWN)}>
+                                                    <FontAwesomeIcon className="rank-button" icon="fa-solid fa-angle-up"/>
+                                                </span>
+                                            }
                                         </div>
                                     </td>
-                                    <td className="text-centered">
+                                    <td className="text-centered control-col">
                                         <span className="delete-button" onClick={() => removeFavorite(movie.data.id)}><FontAwesomeIcon icon="fa-solid fa-trash-can" className="delete-button"/></span>
                                     </td>
                                 </tr>
@@ -141,7 +157,7 @@ const Favorites = (props) => {
                     </tbody>
                 </Table>
                 : 
-                <p>Nothing to show yet</p>
+                <p className="centered">Nothing to show yet</p>
             }
         </div>
     )
