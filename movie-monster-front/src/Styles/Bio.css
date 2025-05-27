@@ -1,0 +1,12 @@
+.space-top {
+    margin-top: 10px;
+}
+
+.space-top-double {
+    margin-top: 20px;
+}
+
+.flex-right-align {
+    display: flex !important;
+    justify-content: flex-end !important;
+}
