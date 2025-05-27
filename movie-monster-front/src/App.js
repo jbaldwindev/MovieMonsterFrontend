@@ -13,6 +13,7 @@ import Settings from './Components/Settings';
 import Favorites from './Components/Favorites';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import ImageUpload from './Components/ImageUpload';
+import Bio from './Components/Bio';
 import { faRegular, library } from '@fortawesome/fontawesome-svg-core';
 import { faStar, faAngleUp, faAngleDown, faAngleRight, faAngleLeft, faTrashCan, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { faStar as farStar} from '@fortawesome/free-regular-svg-icons';
@@ -36,6 +37,7 @@ function App() {
         <Route exact path="profile-picture" element={<ImageUpload/>}/>
         <Route exact path="Settings" element={<Settings/>}/>
         <Route exact path="/Favorites" element={<Favorites/>}/>
+        <Route exact path="/Bio" element={<Bio/>}/>
       </Routes>
     </BrowserRouter>
   );

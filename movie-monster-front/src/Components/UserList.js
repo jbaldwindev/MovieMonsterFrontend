@@ -71,7 +71,7 @@ const UserList = (props) => {
                                     <td><a href={"/Movie/" + rating.movieId}>{rating.movieTitle}</a></td>
                                     <td>{rating.movieRating}</td>
                                     
-                                    <td><div className="delete-button" onClick={() => deleteEntry(rating.ratingId)}><FontAwesomeIcon icon="fa-solid fa-trash-can" size="2x"/></div></td>
+                                    <td className="text-centered control-col"><div className="delete-button" onClick={() => deleteEntry(rating.ratingId)}><FontAwesomeIcon className="resized-button" icon="fa-solid fa-trash-can"/></div></td>
                                 </tr>
                             ))}
                         </tbody>

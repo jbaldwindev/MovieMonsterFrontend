@@ -32,8 +32,18 @@
     justify-content: space-between;
 }
 
+.header-underline {
+    margin-bottom: 5px;
+    border-bottom: 2px solid gray;
+    box-shadow: 0 8px 6px -6px;
+}
+
 .inverse-shadow {
     box-shadow: inset 0 0 10px #f8a100 !important;
+}
+
+.inline {
+    display: inline;
 }
 
 .movie-link {
@@ -54,4 +64,8 @@
     cursor: pointer;
     color: #a7f75c;
     transition: 100ms;
+}
+
+.right-align {
+    float: right;
 }

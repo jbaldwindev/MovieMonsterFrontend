@@ -16,6 +16,7 @@ const Profile = (props) => {
     const [dateJoined, setDateJoined] = useState();
     const [friendCount, setFriendCount] = useState(0);
     const [favoriteIds, setFavoriteIds] = useState();
+    const [bio, setBio] = useState();
     const [favoriteMovies, setFavoriteMovies] = useState([]);
 
     useEffect(() => {
@@ -34,6 +35,7 @@ const Profile = (props) => {
             setDateJoined(dateFormatted);
             setFriendCount(res.data.friendCount);
             setFavoriteIds(res.data.favoriteIds);
+            setBio(res.data.bio);
         });
     }, []);
 
@@ -70,9 +72,16 @@ const Profile = (props) => {
                     </Col>
                     <Col xs={6} className="">
                         <div>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam tempus auctor neque id molestie. Integer convallis urna bibendum turpis malesuada facilisis. Maecenas sit amet risus blandit, condimentum augue vitae, efficitur quam. Nunc vulputate ipsum a arcu tincidunt, in efficitur elit pharetra. Nulla facilisi. Maecenas blandit libero a ex maximus auctor. Fusce elementum dui eu volutpat elementum. Praesent egestas, justo quis ullamcorper malesuada, tortor dolor condimentum ipsum, vitae semper ante orci at lacus. Sed sed dolor non diam porttitor aliquet vitae sit amet ante. Nulla faucibus suscipit diam, gravida rutrum lorem dignissim in. Vivamus et nibh at odio porta tristique. Ut elit elit, pharetra vitae lorem tristique, pharetra feugiat lorem. Proin mollis libero a enim accumsan dictum. Pellentesque pellentesque massa nisl, non efficitur est sagittis ut. Integer id volutpat tortor. Aliquam imperdiet eu lectus ut condimentum.
-
-Nunc condimentum gravida mi at interdum. Donec placerat suscipit leo, at cursus nisi elementum sit amet. Mauris ac libero et ipsum facilisis lacinia. Proin consectetur posuere elit. Phasellus neque velit, ultricies dapibus neque quis, semper pharetra lorem. Phasellus nec arcu consequat, posuere orci in, tempor turpis. Aenean at nisi ac erat luctus ullamcorper. Nunc sed felis elementum, vulputate libero eget, elementum metus. Nullam placerat euismod ligula molestie consequat. Praesent sit amet mi in ex facilisis auctor. Mauris non urna feugiat, facilisis purus sed, mollis justo. Vestibulum quis ex ac erat lobortis porta sed at eros. In hac habitasse platea dictumst.
+                            <div className="header-underline text-centered">
+                                <h6 className="inline">Bio</h6>
+                                {
+                                username == sessionStorage.getItem('username') ? 
+                                    <a href="/Bio" className="right-align settings-link">{"edit->"}</a> 
+                                    : 
+                                    <></>
+                                }
+                            </div>
+                            {bio ? bio : <></>}
                         </div>
                         
                     </Col>

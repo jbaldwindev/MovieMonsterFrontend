@@ -172,5 +172,31 @@ class UserService {
             }
         })
     }
+
+    getBio(username) {
+        return axios({
+            method: 'get',
+            url: BASE_URL + "/" + username + "/bio",
+            headers: {
+                Authorization: sessionStorage.getItem('authToken')
+            }
+        })
+    }
+
+    setBio(username, bio) {
+        return axios({
+                method: 'post',
+                url: BASE_URL + '/bio',
+                headers: {
+                    Authorization: sessionStorage.getItem('authToken')
+                },
+                data: {
+                    username: username,
+                    bio: bio
+                }
+            }
+        );
+    }
 }
+
 export default new UserService();
