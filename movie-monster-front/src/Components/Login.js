@@ -17,8 +17,6 @@ const Login = (props) => {
         setPassword(e.target.value);
     }
 
-    //TODO rememeber other requests will need to get the access token out of
-    //the session storage and put in request header
     const submitLogin = (e) => {
         e.preventDefault();
         AuthService.login(username, password).then((res) => {

@@ -3,6 +3,12 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import CustomNav from './CustomNav';
 import UserService from '../Services/UserService';
+import Tab from 'react-bootstrap/Tab';
+import Tabs from 'react-bootstrap/Tabs';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import Image from 'react-bootstrap/Image';
 
 const Friends = (props) => {
     const [userSearchList, setUserSearchList] = useState([]);
@@ -100,8 +106,8 @@ const Friends = (props) => {
                     return <Button onClick={() => cancelFriendRequest(targetUsername)}>Cancel Friend Request</Button>;
                 } else {
                     return (<>
-                                <Button onClick={() => respondRequest(requestId, true)}>Accept Request</Button> 
-                                <Button onClick={() => respondRequest(requestId, false)}>Deny Request</Button>
+                                <Button onClick={() => respondRequest(requestId, true)}>Accept</Button> 
+                                <Button onClick={() => respondRequest(requestId, false)}>Deny</Button>
                             </>);
                 }
             }
@@ -113,41 +119,59 @@ const Friends = (props) => {
     return (
         <div>
             <CustomNav/>
-            <Form.Label htmlFor="searchbar">Search for users</Form.Label>
-            <Form.Control
-                type="search"
-                id="searchbar"
-                ref={searchRef}
-                onChange={searchChange}
-            />
-            { userSearchList[0] ? userSearchList.map((user) => (
-            <div>{user.requestedUsername} {renderFriendButton(user.isFriend, user.requestPending, user.requestedUsername, user.senderUsername)}</div>
-            )) 
-            : 
-            <div></div>
-            }
-            <h1>Pending requests</h1>
-            { pendingRequestList[0] ? pendingRequestList.map((request) => (
-                <div><a href={"/Profile/" + request.sender}>{request.sender}</a> {renderFriendButton(false, true, request.sender, request.sender, request.id)}</div>
-            ))
-            :
-            <div>No requests currently pending</div>
-            }
-            <h1>Friends</h1>
-            { friendList[0] ? friendList.map((friend) => (
-                <div><a href={"/Profile/" + friend}>{friend}</a> {renderFriendButton(true, false, friend)}</div>
-            )) 
-            : 
-            <div>You have no friends. It's okay, you're great, you'll find some soon!</div>
-            }
-            <h1>Sent friend requests</h1>
-            { sentRequestsList[0] ? 
-                sentRequestsList.map((request) => (
-                    <div><a href={"/Profile/" + request.receiver}>{request.receiver}</a> {renderFriendButton(false, true, request.receiver, sessionStorage.getItem('username'))}</div>
-                ))
-                : 
-                <div>No friend requests have been sent</div>
-            }
+            <Container>
+                <Row>
+                    <Col>1 of 3</Col>
+                    <Col xs={6}>
+                        <Form.Label htmlFor="searchbar">Search for users</Form.Label>
+                        <Form.Control
+                            type="search"
+                            id="searchbar"
+                            ref={searchRef}
+                            onChange={searchChange}
+                        />
+                        { userSearchList[0] ? userSearchList.map((user) => (
+                        <div>{user.requestedUsername} {renderFriendButton(user.isFriend, user.requestPending, user.requestedUsername, user.senderUsername)}</div>
+                        )) 
+                        : 
+                        <div></div>
+                        }
+                        <Tabs
+                            defaultActiveKey="friends"
+                            id="justify-tab-example"
+                            className="mb-3"
+                            justify
+                        >
+                            <Tab eventKey="friends" title="Friends">
+                            { friendList[0] ? friendList.map((friend) => (
+                                <div><span><Image src={friend.iconPath} className="profile-pic" roundedCircle /></span><a href={"/Profile/" + friend}>{friend.username}</a> {renderFriendButton(true, false, friend.username)}</div>
+                            )) 
+                            : 
+                                <div>You have no friends. It's okay, you're great, you'll find some soon!</div>
+                            }
+                            </Tab>
+                            <Tab eventKey="pending" title="Pending Requests">
+                                { pendingRequestList[0] ? pendingRequestList.map((request) => (
+                                    <div><a href={"/Profile/" + request.sender}>{request.sender}</a> {renderFriendButton(false, true, request.sender, request.sender, request.id)}</div>
+                                ))
+                                :
+                                    <div>No requests currently pending</div>
+                                }
+                            </Tab>
+                            <Tab eventKey="sent-requests" title="Sent Friend Requests">
+                                { sentRequestsList[0] ? 
+                                    sentRequestsList.map((request) => (
+                                        <div><a href={"/Profile/" + request.receiver}>{request.receiver}</a> {renderFriendButton(false, true, request.receiver, sessionStorage.getItem('username'))}</div>
+                                    ))
+                                    : 
+                                    <div>No friend requests have been sent</div>
+                                }
+                            </Tab>
+                        </Tabs>
+                    </Col>
+                    <Col>3 of 3</Col>
+                </Row>
+            </Container>
         </div>
         
     );

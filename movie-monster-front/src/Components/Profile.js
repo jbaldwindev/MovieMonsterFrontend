@@ -5,6 +5,7 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/col";
 import Image from "react-bootstrap/Image";
+import { useNavigate } from 'react-router-dom';
 import UserService from '../Services/UserService';
 import MovieService from '../Services/MovieService';
 import Table from "react-bootstrap/Table";
@@ -18,6 +19,7 @@ const Profile = (props) => {
     const [favoriteIds, setFavoriteIds] = useState();
     const [bio, setBio] = useState();
     const [favoriteMovies, setFavoriteMovies] = useState([]);
+    const navigate = useNavigate();
 
     useEffect(() => {
         UserService.getIcon(username).then((res) => {
@@ -59,6 +61,18 @@ const Profile = (props) => {
         console.log(favoriteMovies);
     }, [favoriteMovies]);
 
+    const openList = () => {
+        navigate("/List/" + username);
+    }
+
+    const openFriends = () => {
+        if (username == sessionStorage.getItem("username")) {
+            navigate("/friends");
+        } else {
+            navigate("/display-friends/" + username);
+        }
+    }
+
     return (
         <div>
             <CustomNav></CustomNav>
@@ -68,7 +82,8 @@ const Profile = (props) => {
                         <Image className="icon-image" src={iconUrl} roundedCircle></Image>
                         <h3>{username}</h3>
                         <h6>Joined {dateJoined}</h6>
-                        <h6 className="link">Friends: {friendCount}</h6>
+                        <h6 className="link" onClick={openFriends}>Friends: {friendCount}</h6>
+                        <h6 className="link" onClick={openList}>{username}'s List</h6>
                     </Col>
                     <Col xs={6} className="">
                         <div>

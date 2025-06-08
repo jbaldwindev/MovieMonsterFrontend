@@ -11,6 +11,7 @@ import Friends from './Components/Friends';
 import Profile from './Components/Profile';
 import Settings from './Components/Settings';
 import Favorites from './Components/Favorites';
+import DisplayFriends from './Components/DisplayFriends';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import ImageUpload from './Components/ImageUpload';
 import Bio from './Components/Bio';
@@ -32,6 +33,7 @@ function App() {
         <Route exact path="/List/:accountName" element={<UserList/>}/>
         <Route exact path="/MyList" element={<UserList/>}/>
         <Route exact path="/Movie/:movieId" element={<Movie/>}/>
+        <Route exact path="/display-friends/:username" element={<DisplayFriends/>}/>
         <Route exact path="Friends" element={<Friends/>}></Route>
         <Route exact path="Profile/:username" element={<Profile/>}/>
         <Route exact path="profile-picture" element={<ImageUpload/>}/>
