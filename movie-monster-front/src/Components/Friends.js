@@ -9,6 +9,7 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Image from 'react-bootstrap/Image';
+import '../Styles/Friends.css';
 
 const Friends = (props) => {
     const [userSearchList, setUserSearchList] = useState([]);
@@ -130,8 +131,8 @@ const Friends = (props) => {
                             ref={searchRef}
                             onChange={searchChange}
                         />
-                        { userSearchList[0] ? userSearchList.map((user) => (
-                        <div>{user.requestedUsername} {renderFriendButton(user.isFriend, user.requestPending, user.requestedUsername, user.senderUsername)}</div>
+                        { userSearchList[0] ? userSearchList.map((user, index) => (
+                        <div key={`friend-${user.requestedUsername}`} className={userSearchList.length - 1 !== index ? "friend-element friend-padding" : "friend-padding"}>{user.requestedUsername} {renderFriendButton(user.isFriend, user.requestPending, user.requestedUsername, user.senderUsername)}</div>
                         )) 
                         : 
                         <div></div>
@@ -139,20 +140,20 @@ const Friends = (props) => {
                         <Tabs
                             defaultActiveKey="friends"
                             id="justify-tab-example"
-                            className="mb-3"
+                            className="mb-3 friend-tabs"
                             justify
                         >
                             <Tab eventKey="friends" title="Friends">
-                            { friendList[0] ? friendList.map((friend) => (
-                                <div><span><Image src={friend.iconPath} className="profile-pic" roundedCircle /></span><a href={"/Profile/" + friend}>{friend.username}</a> {renderFriendButton(true, false, friend.username)}</div>
+                            { friendList[0] ? friendList.map((friend, index) => (
+                                <div className={index !== friendList.length - 1 ? "friend-element friend-padding" : "friend-padding"}><span><Image src={friend.iconPath} className="profile-pic" roundedCircle /></span><a href={"/Profile/" + friend}>{friend.username}</a> {renderFriendButton(true, false, friend.username)}</div>
                             )) 
                             : 
                                 <div>You have no friends. It's okay, you're great, you'll find some soon!</div>
                             }
                             </Tab>
                             <Tab eventKey="pending" title="Pending Requests">
-                                { pendingRequestList[0] ? pendingRequestList.map((request) => (
-                                    <div><a href={"/Profile/" + request.sender}>{request.sender}</a> {renderFriendButton(false, true, request.sender, request.sender, request.id)}</div>
+                                { pendingRequestList[0] ? pendingRequestList.map((request, index) => (
+                                    <div className={index !== pendingRequestList.length - 1 ? "friend-element friend-padding" : "friend-padding"}><a href={"/Profile/" + request.sender}>{request.sender}</a> {renderFriendButton(false, true, request.sender, request.sender, request.id)}</div>
                                 ))
                                 :
                                     <div>No requests currently pending</div>
@@ -160,8 +161,8 @@ const Friends = (props) => {
                             </Tab>
                             <Tab eventKey="sent-requests" title="Sent Friend Requests">
                                 { sentRequestsList[0] ? 
-                                    sentRequestsList.map((request) => (
-                                        <div><a href={"/Profile/" + request.receiver}>{request.receiver}</a> {renderFriendButton(false, true, request.receiver, sessionStorage.getItem('username'))}</div>
+                                    sentRequestsList.map((request, index) => (
+                                        <div className={index !== sentRequestsList.length - 1 ? "friend-element friend-padding" : "friend-padding"}><a href={"/Profile/" + request.receiver}>{request.receiver}</a> {renderFriendButton(false, true, request.receiver, sessionStorage.getItem('username'))}</div>
                                     ))
                                     : 
                                     <div>No friend requests have been sent</div>
