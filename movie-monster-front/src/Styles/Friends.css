@@ -1,0 +1,16 @@
+.friend-element {
+    border-bottom: solid #ded2d1 1px;
+}
+.friend-padding {
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.friend-tabs {
+    margin-top: 20px;
+}
+
+.space-between-container {
+    display: flex;
+    justify-content: space-between;
+}
