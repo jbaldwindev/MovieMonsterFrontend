@@ -1,0 +1,40 @@
+.display-inline {
+    display: inline;
+}
+
+.padded-header {
+    padding: 5px 0 5px;
+}
+
+.centered-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.block {
+    display: block;
+}
+
+.friend-disp-w {
+    width: 25%;
+}
+
+@media (max-width: 640px) {
+    .friend-disp-w {
+        width: 50%;
+    }
+}
+
+.display-friend-element {
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-bottom: solid #ded2d1 1px;
+}
+
+.friend-username {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}

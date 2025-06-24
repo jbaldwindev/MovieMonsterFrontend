@@ -13,4 +13,23 @@
 .space-between-container {
     display: flex;
     justify-content: space-between;
+    padding-left: 5%;
+    padding-right: 5%;
+}
+
+.friend-pic {
+    margin-right: 10px;
+}
+
+.mr-5 {
+    margin-right: 5px;
+}
+
+.friend-content-size {
+    width: 75%;
+}
+@media (min-width: 768px) {
+    .friend-content-size {
+        width: 50%;
+    }
 }

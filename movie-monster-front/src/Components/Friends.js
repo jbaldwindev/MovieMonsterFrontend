@@ -104,10 +104,10 @@ const Friends = (props) => {
         if (hasPendingRequest) {
             if (senderUsername != null) {
                 if (senderUsername == sessionStorage.getItem('username')) {
-                    return <Button onClick={() => cancelFriendRequest(targetUsername)}>Cancel Friend Request</Button>;
+                    return <Button onClick={() => cancelFriendRequest(targetUsername)}>Cancel Request</Button>;
                 } else {
                     return (<>
-                                <Button onClick={() => respondRequest(requestId, true)}>Accept</Button> 
+                                <Button className="mr-5" onClick={() => respondRequest(requestId, true)}>Accept</Button> 
                                 <Button onClick={() => respondRequest(requestId, false)}>Deny</Button>
                             </>);
                 }
@@ -120,11 +120,8 @@ const Friends = (props) => {
     return (
         <div>
             <CustomNav/>
-            <Container>
-                <Row>
-                    <Col>1 of 3</Col>
-                    <Col xs={6}>
-                        <Form.Label htmlFor="searchbar">Search for users</Form.Label>
+            <div className="friend-content-size center">
+                        <Form.Label htmlFor="searchbar">Search for users:</Form.Label>
                         <Form.Control
                             type="search"
                             id="searchbar"
@@ -132,10 +129,18 @@ const Friends = (props) => {
                             onChange={searchChange}
                         />
                         { userSearchList[0] ? userSearchList.map((user, index) => (
-                        <div key={`friend-${user.requestedUsername}`} className={userSearchList.length - 1 !== index ? "friend-element friend-padding" : "friend-padding"}>{user.requestedUsername} {renderFriendButton(user.isFriend, user.requestPending, user.requestedUsername, user.senderUsername)}</div>
+                            <div key={`friend-${user.requestedUsername}`} className={userSearchList.length - 1 !== index ? "friend-element friend-padding space-between-container" : "friend-padding space-between-container"}>
+                                <div>
+                                    <Image src={user.searchedUserIcon} className="profile-pic friend-pic" roundedCircle />
+                                    <a href={"/Profile/" + user.requestedUsername}> {user.requestedUsername} </a>
+                                </div>
+                                <div>
+                                    {renderFriendButton(user.isFriend, user.requestPending, user.requestedUsername, user.senderUsername)}
+                                </div>
+                            </div>
                         )) 
                         : 
-                        <div></div>
+                            <div></div>
                         }
                         <Tabs
                             defaultActiveKey="friends"
@@ -147,8 +152,8 @@ const Friends = (props) => {
                             { friendList[0] ? friendList.map((friend, index) => (
                                 <div className={index !== friendList.length - 1 ? "friend-element friend-padding space-between-container" : "friend-padding space-between-container"}>
                                     <div>
-                                        <Image src={friend.iconPath} className="profile-pic" roundedCircle />
-                                        <a href={"/Profile/" + friend}>{friend.username}</a> 
+                                        <Image src={friend.iconPath} className="profile-pic friend-pic" roundedCircle />
+                                        <a href={"/Profile/" + friend.username}>{friend.username}</a> 
                                     </div>
                                     <div>
                                         {renderFriendButton(true, false, friend.username)}
@@ -163,7 +168,7 @@ const Friends = (props) => {
                                 { pendingRequestList[0] ? pendingRequestList.map((request, index) => (
                                     <div className={index !== pendingRequestList.length - 1 ? "friend-element friend-padding space-between-container" : "friend-padding space-between-container"}>
                                         <div>
-                                            <Image src={request.senderIcon} className="profile-pic" roundedCircle />
+                                            <Image src={request.senderIcon} className="profile-pic friend-pic" roundedCircle />
                                             <a href={"/Profile/" + request.sender}>{request.sender}</a> 
                                         </div>
                                         <div>
@@ -175,12 +180,12 @@ const Friends = (props) => {
                                     <div>No requests currently pending</div>
                                 }
                             </Tab>
-                            <Tab eventKey="sent-requests" title="Sent Friend Requests">
+                            <Tab eventKey="sent-requests" title="Sent Requests">
                                 { sentRequestsList[0] ? 
                                     sentRequestsList.map((request, index) => (
                                         <div className={index !== sentRequestsList.length - 1 ? "friend-element friend-padding space-between-container" : "friend-padding space-between-container"}>
                                             <div>
-                                                <Image src={request.receiverIcon} className="profile-pic" roundedCircle />
+                                                <Image src={request.receiverIcon} className="profile-pic friend-pic" roundedCircle />
                                                 <a href={"/Profile/" + request.receiver}>{request.receiver}</a> 
                                             </div>
                                             <div>
@@ -193,10 +198,7 @@ const Friends = (props) => {
                                 }
                             </Tab>
                         </Tabs>
-                    </Col>
-                    <Col>3 of 3</Col>
-                </Row>
-            </Container>
+            </div>
         </div>
         
     );
