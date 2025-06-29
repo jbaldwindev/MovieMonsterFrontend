@@ -43,6 +43,14 @@ class MovieService {
         });
     }
 
+    getAdvancedSearch(title, page) {
+        return axios.get(BASE_URL + "movie/search/" + title + "/" + page, {
+            headers: {
+                Authorization: sessionStorage.getItem("authToken")
+            }
+        });
+    }
+
     getList(username, order) {
         return axios.get(BASE_URL + "movie/list/" + username + "&sort=" + order, {
             headers: {

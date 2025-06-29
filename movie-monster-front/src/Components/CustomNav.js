@@ -23,6 +23,7 @@ function CustomNav() {
     const ref = useRef(null);
     const navigate = useNavigate();
     const [width, setWidth] = useState(window.innerWidth);
+    const [searchValue, setSearchValue] = useState("");
 
     const searchFocus = (event) => {
         setTarget(event.target);
@@ -51,10 +52,12 @@ function CustomNav() {
 
     const searchChange = (event) => {
         if (event.target.value) {
+            setSearchValue(event.target.value);
             MovieService.getSearch(event.target.value).then(res => {
                 setMovieList(res.data.movieSearchList);
             });
         } else {
+            setSearchValue("");
             setMovieList([]);
         }
     }
@@ -62,6 +65,12 @@ function CustomNav() {
     const searchClick = (id) => {
         navigate("/Movie/" + id);
         navigate(0);
+    }
+
+    const searchMovie = () => {
+      if (searchValue) {
+        navigate("/MovieSearch/" + searchValue);
+      }
     }
 
 
@@ -90,7 +99,7 @@ function CustomNav() {
               onFocus={searchFocus}
               onChange={searchChange}
             />
-            <Button variant="outline-success">Search</Button>
+            <Button variant="outline-success" onClick={searchMovie}>Search</Button>
             
           </Form>
           {width > 990 ? 

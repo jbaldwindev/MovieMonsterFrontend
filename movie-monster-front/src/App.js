@@ -12,6 +12,7 @@ import Profile from './Components/Profile';
 import Settings from './Components/Settings';
 import Favorites from './Components/Favorites';
 import DisplayFriends from './Components/DisplayFriends';
+import MovieSearch from './Components/MovieSearch';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import ImageUpload from './Components/ImageUpload';
 import Bio from './Components/Bio';
@@ -30,6 +31,7 @@ function App() {
         <Route exact path="/Login" element={<Login/>}/>
         <Route exact path="/Dashboard" element={<Dashboard/>}/>
         <Route exact path="/Movies" element={<Movies/>}/>
+        <Route exact path="MovieSearch/:title" element={<MovieSearch/>}/>
         <Route exact path="/List/:accountName" element={<UserList/>}/>
         <Route exact path="/MyList" element={<UserList/>}/>
         <Route exact path="/Movie/:movieId" element={<Movie/>}/>
