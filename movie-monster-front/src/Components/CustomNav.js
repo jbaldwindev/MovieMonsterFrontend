@@ -90,7 +90,7 @@ function CustomNav() {
             <Nav.Link href="/MyList">My List</Nav.Link>
             <Nav.Link href="/Friends">Friends</Nav.Link>
           </Nav>
-          <Form className="d-flex">
+          <Form className="d-flex" onSubmit={searchMovie} >
             <Form.Control
               type="search"
               placeholder="Search"

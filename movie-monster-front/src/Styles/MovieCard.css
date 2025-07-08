@@ -1,0 +1,31 @@
+.card-image {
+    aspect-ratio: 2/3;
+    width: 200px;
+    border-radius: 6px;
+}
+
+@media (max-width: 768px) {
+  .card-image {
+    width: 120px;
+  }
+}
+
+@media (max-width: 480px) {
+  .card-image {
+    width: 80px;
+  }
+}
+
+.card-image:hover {
+    transform: scale(.99);
+    cursor: pointer;
+}
+
+.hover-color:hover {
+    border: 5px solid #a7f75c;
+}
+
+.hide-overflow {
+    overflow: hidden;
+    transition: 0.1s all ease-in-out;
+}

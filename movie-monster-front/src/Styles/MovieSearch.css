@@ -1,0 +1,36 @@
+.card-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 16px; /* This sets both column and row spacing */
+    max-width: 90%;
+    margin: 0 auto;
+    padding: 16px;
+    justify-content: space-between;
+}
+
+@media(max-width: 768px) {
+    .card-container {
+        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+        gap: 8px; /* This sets both column and row spacing */
+        max-width: 90%;
+    }
+}
+
+@media(max-width: 480px) {
+    .card-container {
+        grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+        gap: 8px; /* This sets both column and row spacing */
+        max-width: 90%;
+    }
+}
+
+.mw-90 {
+    max-width: 90%;
+    margin: 10px auto 0px;
+    padding: 0px 9px;
+}
+
+
+.bold {
+    font-weight: bold;
+}
