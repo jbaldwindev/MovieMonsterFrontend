@@ -144,16 +144,19 @@ const Movie = (props) => {
     
     return (
         <div>
-            <CustomNav></CustomNav>
+            <CustomNav/>
+            <div className="movie-content-container">
+                <div className="backdrop-wrapper">
+                    <img className="backdrop" src={backdropPath}></img>
+                    <img className="poster" src={posterPath}></img>
+                    <h1>{movieTitle}</h1>
+                </div>
+            </div>
             <Container>
                 <Row>
                     <Col Col md="auto"></Col>
                     <Col>
                     <div>
-                        <div className="image-preview-container">
-                            <div style={{position: "relative", width: "100%", height: "650px", backgroundColor: "blue", backgroundImage: "url("+ backdropPath + ")"}}>
-                            </div>
-                        </div>
                         {/* <h1>{movieTitle}</h1> */}
                         <p></p>
                         <Row>

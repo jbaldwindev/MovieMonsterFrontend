@@ -42,10 +42,10 @@ const MovieSearch = () => {
             </div>
             <div className="card-container">
                 {movieList.map((movie) => (
-                    <MovieCard key={movie.title} title={movie.title} movieId={movie.id} posterPath={movie.posterPath}/>
+                    movie.posterPath && <MovieCard key={movie.id} title={movie.title} movieId={movie.id} posterPath={movie.posterPath}/>
                 ))}
             </div>
-            <div>
+            <div className="mw-90 mb-10 centered">
                 {!(searchPage >= totalPages) && <Button onClick={showMore}>Show More</Button>}
             </div>
         </div>
