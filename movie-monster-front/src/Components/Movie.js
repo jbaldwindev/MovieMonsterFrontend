@@ -148,8 +148,28 @@ const Movie = (props) => {
             <div className="movie-content-container">
                 <div className="backdrop-wrapper">
                     <img className="backdrop" src={backdropPath}></img>
-                    <img className="poster" src={posterPath}></img>
-                    <h1>{movieTitle}</h1>
+                    <div className="grid">
+                        <div className="poster-child centered-cell">
+                            <img className="movie-poster" src={posterPath}></img>
+                        </div>
+                        <div className="title-child centered-cell">
+                            <p className="movie-title">{movieTitle}</p>
+                            <p className="movie-tagline">This is a fake tagline. For a butt movie.</p>
+                            <p>{movieOverview}</p>
+                        </div>
+                        <div className="child">Content</div>
+                        <div className="child">Content</div>
+                        <div className="child">Content</div>
+                        <div className="child">Content</div>
+                        <div className="child">Content</div>
+                        <div className="child">Content</div>
+                        <div className="child">Content</div>
+                        <div className="child">Content</div>
+                        <div className="child">Content</div>
+                        <div className="child">Content</div>
+                    </div>
+                    
+                    
                 </div>
             </div>
             <Container>
