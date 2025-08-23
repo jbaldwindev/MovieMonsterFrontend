@@ -21,6 +21,7 @@ const Movie = (props) => {
     const [movieOverview, setMovieOverview] = useState("");
     const [posterPath, setPosterPath]= useState("");
     const [backdropPath, setBackdropPath] = useState("");
+    const [tagline, setTagline] = useState("");
     const [castList, setCastList] = useState([]);
     const [fillS1, setfillS1] = useState(false);
     const [fillS2, setfillS2] = useState(false);
@@ -29,6 +30,10 @@ const Movie = (props) => {
     const [fillS5, setfillS5] = useState(false);
     const [writtenComment, setWrittenComment] = useState("");
     const [commentList, setCommentList] = useState([]);
+    const [releaseDate, setReleaseDate] = useState();
+    const [runtime, setRuntime] = useState(0);
+    const [productionCompanies, setProductionCompanies] = useState([]);
+    const [genres, setGenres] = useState([]);
 
     useEffect(() => {
         MovieService.getMovieById(movieId).then(res => {
@@ -37,6 +42,11 @@ const Movie = (props) => {
             setMovieOverview(jsonData.overview);
             setPosterPath("https://image.tmdb.org/t/p/w500" + jsonData.posterPath);
             setBackdropPath("https://image.tmdb.org/t/p/w1280" + jsonData.backdropPath);
+            setTagline(jsonData.tagline);
+            setReleaseDate(jsonData.releaseDate);
+            setRuntime(jsonData.runtime);
+            setProductionCompanies(jsonData.productionCompanies);
+            setGenres(jsonData.genres);
             let retrievedCastMembers = [];
             for (const member of res.data.cast) {
                 if (member.profilePath != null) {
@@ -154,8 +164,45 @@ const Movie = (props) => {
                         </div>
                         <div className="title-child centered-cell">
                             <p className="movie-title">{movieTitle}</p>
-                            <p className="movie-tagline">This is a fake tagline. For a butt movie.</p>
+                            <p className="movie-tagline">{tagline}</p>
                             <p>{movieOverview}</p>
+                        </div>
+                        <div className="centered-cell info-child">
+                            <div className="info-box info-child">
+                                <div className="info-header"><p className="bold">Information</p></div>
+                                <div className="info-item"><span className="bold">Release Date:</span> {releaseDate}</div>
+                                <div className="info-item">
+                                    <span className="bold">Genres: </span>
+                                    <span>
+                                        {genres.map((genre, index) => (
+                                            <span>{genre}{index != genres.length - 1 ? <>,</> : <></>}</span>
+                                        ))}
+                                    </span>
+                                </div>
+                                <div className="info-item">
+                                    <span className="bold">Production Companies: </span>
+                                    {productionCompanies.map((company, index) => (
+                                        <span>{company}{index != productionCompanies.length - 1 ? <>,</> : <></>} </span>
+                                    ))}
+                                </div>
+                                <div className="info-item"><span className="bold">Runtime:</span> <span>{runtime} mins</span></div>
+                            </div>
+                        </div>
+                        <div className="cast-child">
+                            <div className="section-header">
+                                <span>Cast</span>
+                            </div>
+                            <div className="cast-container">
+                                {castList.map((castMember) => (
+                                    <div className="cast-card">
+                                        <img className="cast-img" src={"https://image.tmdb.org/t/p/w500" + castMember.profilePath}/>
+                                        <div className="cast-card-body">
+                                            <h5 className="card-title">{castMember.name}</h5>
+                                            <p className="card-text">{castMember.character}</p>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
                         </div>
                         <div className="child">Content</div>
                         <div className="child">Content</div>
@@ -181,29 +228,6 @@ const Movie = (props) => {
                         <p></p>
                         <Row>
                             <Col>
-                                <Card style={{ width: '22rem' }}>
-                                    <Card.Img variant="top" src={posterPath} />
-                                    <Card.Body>
-                                        <Card.Title className='text-center'><h2>{movieTitle}</h2></Card.Title>
-                                    </Card.Body>
-                                </Card>
-                                
-                            </Col>
-                            <Col>
-                                <Accordion defaultActiveKey={['0']} alwaysOpen>
-                                    <Accordion.Item eventKey="0">
-                                        <Accordion.Header>Details</Accordion.Header>
-                                        <Accordion.Body>
-                                            {movieOverview}
-                                        </Accordion.Body>
-                                    </Accordion.Item>
-                                    <Accordion.Item eventKey="1">
-                                        <Accordion.Header>Production</Accordion.Header>
-                                        <Accordion.Body>
-                                            more details
-                                        </Accordion.Body>
-                                    </Accordion.Item>
-                                </Accordion>
                                 <h6>Your rating</h6>
                                 <div className="star-container">
                                     {fillS1 ? 
@@ -242,17 +266,7 @@ const Movie = (props) => {
                 <Row>
                     <Col md="auto" lg="auto"></Col>
                     <Col md="auto" lg="10">
-                        <div className='card-group card-group-scroll'>
-                            {castList.map((castMember) => (
-                                <div className="card">
-                                    <img className="card-img-top" src={"https://image.tmdb.org/t/p/w500" + castMember.profilePath} />
-                                    <div className="card-body">
-                                        <h5 className="card-title">{castMember.name}</h5>
-                                        <p className="card-text">{castMember.character}</p>
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
+                        
                     </Col>
                     <Col md="auto" lg="auto">
                         
