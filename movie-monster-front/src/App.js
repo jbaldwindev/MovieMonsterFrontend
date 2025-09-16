@@ -17,10 +17,10 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import ImageUpload from './Components/ImageUpload';
 import Bio from './Components/Bio';
 import { faRegular, library } from '@fortawesome/fontawesome-svg-core';
-import { faStar, faAngleUp, faAngleDown, faAngleRight, faAngleLeft, faTrashCan, faPlus } from '@fortawesome/free-solid-svg-icons';
-import { faStar as farStar} from '@fortawesome/free-regular-svg-icons';
+import { faThumbsUp as fasThumbsUp, faStar, faAngleUp, faAngleDown, faAngleRight, faAngleLeft, faTrashCan, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faStar as farStar, faThumbsUp} from '@fortawesome/free-regular-svg-icons';
 
-library.add(farStar, faStar, faAngleUp, faAngleDown, faAngleRight, faAngleLeft, faTrashCan, faPlus);
+library.add(farStar, faStar, faAngleUp, faAngleDown, faAngleRight, faAngleLeft, faTrashCan, faPlus, faThumbsUp, fasThumbsUp);
 
 function App() {
   return (

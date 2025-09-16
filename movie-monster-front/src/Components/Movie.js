@@ -90,7 +90,6 @@ const Movie = (props) => {
             let movieComments = [];
             for (const comment of res.data.commentList) {
                 movieComments = [...movieComments, comment];
-                console.log(comment);
             }
             movieComments.sort((a, b) => b.likeCount - a.likeCount);
             setCommentList(movieComments);
@@ -204,16 +203,47 @@ const Movie = (props) => {
                                 ))}
                             </div>
                         </div>
-                        <div className="child">Content</div>
-                        <div className="child">Content</div>
-                        <div className="child">Content</div>
-                        <div className="child">Content</div>
-                        <div className="child">Content</div>
-                        <div className="child">Content</div>
-                        <div className="child">Content</div>
-                        <div className="child">Content</div>
-                        <div className="child">Content</div>
-                        <div className="child">Content</div>
+                        <div className="comments-child">
+                            <div id="centered-header" className="section-header">
+                                <span>Comments</span>
+                            </div>
+                            <div className="comments-container">
+                                {commentList.length > 0 ? 
+                                    commentList.map((movieComment) => (
+                                        <div className="comment">
+                                            <div className="comment-user">
+                                                <Image
+                                                    className="comment-user-icon"
+                                                    src={movieComment.userIconPath}
+                                                    roundedCircle
+                                                />
+                                                <p className="comment-username">{movieComment.username}</p>
+                                            </div>
+
+                                            <div className="comment-text">
+                                                <p>{movieComment.comment}</p>
+                                            </div>
+                                            <div className="like-container">
+                                                {
+                                                    movieComment.currentUserLiked ? 
+                                                    <button className="like-button" onClick={() => unlikeComment(movieComment)}>
+                                                        <FontAwesomeIcon className="liked-icon" icon="fa-solid fa-thumbs-up"/>
+                                                    </button>
+                                                    : 
+                                                    <button className="like-button" onClick={() => likeComment(movieComment)}>
+                                                        <FontAwesomeIcon className="like-icon" icon="fa-regular fa-thumbs-up"/>
+                                                    </button>
+                                                }
+                                                <span>{movieComment.likeCount}</span>
+                                            </div>
+                                        </div>
+                                    ))
+                                : 
+                                    <p>No one has commented yet. Be the first!</p>
+                                }
+                                
+                            </div>
+                        </div>
                     </div>
                     
                     
