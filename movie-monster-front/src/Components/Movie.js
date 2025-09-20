@@ -14,6 +14,7 @@ import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import Button from 'react-bootstrap/Button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import UserService from '../Services/UserService';
 
 const Movie = (props) => {
     let { movieId } = useParams();
@@ -34,6 +35,7 @@ const Movie = (props) => {
     const [runtime, setRuntime] = useState(0);
     const [productionCompanies, setProductionCompanies] = useState([]);
     const [genres, setGenres] = useState([]);
+    const api_url = process.env.REACT_APP_API_URL;
 
     useEffect(() => {
         MovieService.getMovieById(movieId).then(res => {
@@ -75,14 +77,21 @@ const Movie = (props) => {
             writtenComment
         );
         let user = sessionStorage.getItem("username");
-        let newComment = {
-            username: user,
-            comment: writtenComment,
-            movieId: 1
-        }
+        let iconUrl;
+        UserService.getIcon(sessionStorage.getItem("username")).then((res) => {
+            iconUrl = URL.createObjectURL(res.data);
+            let newComment = {
+                username: user,
+                comment: writtenComment,
+                movieId: 1,
+                userIconPath: iconUrl,
+                likeCount: 0
+            }
+            setCommentList([...commentList, newComment]);
+        }).catch(error => {
+          console.error("Error fetching image:", error);
+        });
         setWrittenComment("");
-        
-        setCommentList([...commentList, newComment]);
     }
 
     const loadCommentList = () => {
@@ -243,6 +252,15 @@ const Movie = (props) => {
                                 }
                                 
                             </div>
+                            <div className="comment-form-container">
+                                <form className="comment-form" onSubmit={submitComment}>
+                                    <label>Submit a comment!</label>
+                                    <textarea className="write-comment-box" value={writtenComment} onChange={updateComment}></textarea>
+                                    <div className="form-button-container">
+                                        <input type="submit" value="Submit" className="btn btn-success"></input>
+                                    </div>
+                                </form>
+                            </div>
                         </div>
                     </div>
                     
@@ -301,33 +319,6 @@ const Movie = (props) => {
                     <Col md="auto" lg="auto">
                         
                     </Col>
-                </Row>
-                <Row>
-                    <Col md="auto"></Col>
-                    <Col>
-                        {commentList.map((movieComment) => (
-                            <div>
-                                <p><b>{movieComment.username}</b></p>
-                                <p>{movieComment.comment}</p>
-                                <p>Likes: {movieComment.likeCount}</p>
-                                {movieComment.currentUserLiked ? 
-                                <Button className="liked-button" onClick={() => unlikeComment(movieComment)}>Already Liked</Button>
-                                :
-                                <Button onClick={() => likeComment(movieComment)}>Like</Button>
-                                }
-                            </div>
-                        ))}
-                        <Form onSubmit={submitComment}>
-                            <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-                            <Form.Label>Add a comment!</Form.Label>
-                            <Form.Control as="textarea" rows={3} value={writtenComment} onChange={updateComment}/>
-                            </Form.Group>
-                            <Button variant="primary" type="submit">
-                                Post
-                            </Button>
-                        </Form>
-                    </Col>
-                    <Col md="auto"></Col>
                 </Row>
             </Container>
         </div>
