@@ -16,6 +16,7 @@ import MovieSearch from './Components/MovieSearch';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import ImageUpload from './Components/ImageUpload';
 import Bio from './Components/Bio';
+import StarRating from './Components/StarRating';
 import { faRegular, library } from '@fortawesome/fontawesome-svg-core';
 import { faThumbsUp as fasThumbsUp, faStar, faAngleUp, faAngleDown, faAngleRight, faAngleLeft, faTrashCan, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { faStar as farStar, faThumbsUp} from '@fortawesome/free-regular-svg-icons';
@@ -42,6 +43,7 @@ function App() {
         <Route exact path="Settings" element={<Settings/>}/>
         <Route exact path="/Favorites" element={<Favorites/>}/>
         <Route exact path="/Bio" element={<Bio/>}/>
+        <Route exact path="/Stars" element={<StarRating/>}/>
       </Routes>
     </BrowserRouter>
   );
