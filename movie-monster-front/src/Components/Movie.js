@@ -15,6 +15,7 @@ import InputGroup from 'react-bootstrap/InputGroup';
 import Button from 'react-bootstrap/Button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import UserService from '../Services/UserService';
+import StarRating from './StarRating';
 
 const Movie = (props) => {
     let { movieId } = useParams();
@@ -276,33 +277,9 @@ const Movie = (props) => {
                         <p></p>
                         <Row>
                             <Col>
-                                <h6>Your rating</h6>
-                                <div className="star-container">
-                                    {fillS1 ? 
-                                    <FontAwesomeIcon id="s1" className="star" onClick={e => starClicked(e, 1)} icon="fa-star" />
-                                    :
-                                    <FontAwesomeIcon id="s1" className="star" onClick={e => starClicked(e, 1)} icon="fa-regular fa-star" />
-                                    }
-                                    {fillS2 ? 
-                                    <FontAwesomeIcon id="s2" className="star" onClick={e => starClicked(e, 2)} icon="fa-star" />
-                                    :
-                                    <FontAwesomeIcon id="s2" className="star" onClick={e => starClicked(e, 2)} icon="fa-regular fa-star" />
-                                    }
-                                    {fillS3 ? 
-                                    <FontAwesomeIcon id="s3" className="star" onClick={e => starClicked(e, 3)} icon="fa-star" />
-                                    :
-                                    <FontAwesomeIcon id="s3" className="star" onClick={e => starClicked(e, 3)} icon="fa-regular fa-star" />
-                                    }
-                                    {fillS4 ? 
-                                    <FontAwesomeIcon id="s4" className="star" onClick={e => starClicked(e, 4)} icon="fa-star" />
-                                    :
-                                    <FontAwesomeIcon id="s4" className="star" onClick={e => starClicked(e, 4)} icon="fa-regular fa-star" />
-                                    }
-                                    {fillS5 ? 
-                                    <FontAwesomeIcon id="s5" className="star" onClick={e => starClicked(e, 5)} icon="fa-star" />
-                                    :
-                                    <FontAwesomeIcon id="s5" className="star" onClick={e => starClicked(e, 5)} icon="fa-regular fa-star" />
-                                    }
+                                <div>
+                                    New Star thing
+                                    <StarRating movieTitle={movieTitle} movieId={movieId} />
                                 </div>
                             </Col>
                         </Row>

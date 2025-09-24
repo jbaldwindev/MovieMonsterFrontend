@@ -43,7 +43,6 @@ function App() {
         <Route exact path="Settings" element={<Settings/>}/>
         <Route exact path="/Favorites" element={<Favorites/>}/>
         <Route exact path="/Bio" element={<Bio/>}/>
-        <Route exact path="/Stars" element={<StarRating/>}/>
       </Routes>
     </BrowserRouter>
   );
