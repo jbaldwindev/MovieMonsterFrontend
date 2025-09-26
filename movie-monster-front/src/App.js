@@ -18,10 +18,31 @@ import ImageUpload from './Components/ImageUpload';
 import Bio from './Components/Bio';
 import StarRating from './Components/StarRating';
 import { faRegular, library } from '@fortawesome/fontawesome-svg-core';
-import { faThumbsUp as fasThumbsUp, faStar, faAngleUp, faAngleDown, faAngleRight, faAngleLeft, faTrashCan, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { 
+  faThumbsUp as fasThumbsUp, 
+  faStar, 
+  faAngleUp, 
+  faAngleDown, 
+  faAngleRight, 
+  faAngleLeft, 
+  faTrashCan, 
+  faPlus, 
+  faXmark } from '@fortawesome/free-solid-svg-icons';
 import { faStar as farStar, faThumbsUp} from '@fortawesome/free-regular-svg-icons';
 
-library.add(farStar, faStar, faAngleUp, faAngleDown, faAngleRight, faAngleLeft, faTrashCan, faPlus, faThumbsUp, fasThumbsUp);
+library.add(
+  farStar, 
+  faStar, 
+  faAngleUp, 
+  faAngleDown, 
+  faAngleRight, 
+  faAngleLeft, 
+  faTrashCan, 
+  faPlus, 
+  faThumbsUp, 
+  fasThumbsUp, 
+  faXmark
+);
 
 function App() {
   return (

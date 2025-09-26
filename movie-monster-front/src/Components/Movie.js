@@ -1,18 +1,9 @@
 import { useParams } from 'react-router-dom';
-import React, {useEffect, useState} from 'react';
+import {useEffect, useState} from 'react';
 import MovieService from '../Services/MovieService';
 import Image from 'react-bootstrap/Image';
 import "../Styles/Movie.css";
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import Accordion from 'react-bootstrap/Accordion';
-import Card from 'react-bootstrap/Card';
-import { CardGroup } from 'react-bootstrap';
 import CustomNav from './CustomNav';
-import Form from 'react-bootstrap/Form';
-import InputGroup from 'react-bootstrap/InputGroup';
-import Button from 'react-bootstrap/Button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import UserService from '../Services/UserService';
 import StarRating from './StarRating';
@@ -25,18 +16,12 @@ const Movie = (props) => {
     const [backdropPath, setBackdropPath] = useState("");
     const [tagline, setTagline] = useState("");
     const [castList, setCastList] = useState([]);
-    const [fillS1, setfillS1] = useState(false);
-    const [fillS2, setfillS2] = useState(false);
-    const [fillS3, setfillS3] = useState(false);
-    const [fillS4, setfillS4] = useState(false);
-    const [fillS5, setfillS5] = useState(false);
     const [writtenComment, setWrittenComment] = useState("");
     const [commentList, setCommentList] = useState([]);
     const [releaseDate, setReleaseDate] = useState();
     const [runtime, setRuntime] = useState(0);
     const [productionCompanies, setProductionCompanies] = useState([]);
     const [genres, setGenres] = useState([]);
-    const api_url = process.env.REACT_APP_API_URL;
 
     useEffect(() => {
         MovieService.getMovieById(movieId).then(res => {
@@ -57,14 +42,6 @@ const Movie = (props) => {
                 }
             }
             setCastList(retrievedCastMembers);
-        });
-        
-        MovieService.getRating(sessionStorage.getItem("username"), movieId).then(res => {
-            if (res.data != null) {
-                setRating(res.data.movieRating);
-            }
-        }).catch(error => {
-            console.log("Not yet Reviewed");
         });
 
         loadCommentList();
@@ -112,39 +89,6 @@ const Movie = (props) => {
         setWrittenComment(e.target.value);
     }
 
-    const setRating = (rating) => {
-        switch(rating) {
-            case 5:
-                fillStars(true, true, true, true, true);
-                break;
-            case 4:
-                fillStars(true, true, true, true, false);
-                break;
-            case 3:
-                fillStars(true, true, true, false, false);
-                break;
-            case 2:
-                fillStars(true, true, false, false, false);
-                break;
-            case 1:
-                fillStars(true, false, false, false, false);
-                break;
-        }
-    }
-
-    const starClicked = (e, rating) => {
-        setRating(rating);
-        MovieService.rateMovie(sessionStorage.getItem("username"), movieTitle, movieId, rating);
-    }
-
-    const fillStars = (one, two, three, four, five) => {
-        setfillS1(one);
-        setfillS2(two);
-        setfillS3(three);
-        setfillS4(four);
-        setfillS5(five);
-    }
-
     const likeComment = (comment) => {
         MovieService.likeComment(sessionStorage.getItem("username"), comment.commentId).then(res => {
             loadCommentList();
@@ -177,6 +121,7 @@ const Movie = (props) => {
                             <p>{movieOverview}</p>
                         </div>
                         <div className="centered-cell info-child">
+                            <StarRating movieTitle={movieTitle} movieId={movieId} />
                             <div className="info-box info-child">
                                 <div className="info-header"><p className="bold">Information</p></div>
                                 <div className="info-item"><span className="bold">Release Date:</span> {releaseDate}</div>
@@ -264,42 +209,9 @@ const Movie = (props) => {
                             </div>
                         </div>
                     </div>
-                    
-                    
                 </div>
             </div>
-            <Container>
-                <Row>
-                    <Col Col md="auto"></Col>
-                    <Col>
-                    <div>
-                        {/* <h1>{movieTitle}</h1> */}
-                        <p></p>
-                        <Row>
-                            <Col>
-                                <div>
-                                    New Star thing
-                                    <StarRating movieTitle={movieTitle} movieId={movieId} />
-                                </div>
-                            </Col>
-                        </Row>
-                        
-                    </div>
-                    </Col>
-                    <Col md="auto"></Col>
-                </Row>
-                <Row>
-                    <Col md="auto" lg="auto"></Col>
-                    <Col md="auto" lg="10">
-                        
-                    </Col>
-                    <Col md="auto" lg="auto">
-                        
-                    </Col>
-                </Row>
-            </Container>
-        </div>
-        
+        </div>  
     );
 }
 

@@ -1,7 +1,36 @@
+.rating-container {
+    border: 1px solid #c7c5c1;
+    border-radius: 12px;
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-weight: bold;
+    font-style: italic;
+}
+
+.star-container {
+    font-size: 1.15em;
+}
+
+.star {
+    cursor: pointer;
+}
+
 .filled-star {
     color: #a7f75c;
 }
 
 .hollow-star {
     color: #50782b;
+}
+
+.rating-x {
+    transition: 0.1s all ease-in-out;
+    margin-left: 5px;
+}
+
+.rating-x:hover {
+    cursor: pointer;
+    color: #d64c33;
 }

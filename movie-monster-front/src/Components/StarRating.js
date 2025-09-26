@@ -3,15 +3,17 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import MovieService from '../Services/MovieService';
 import '../Styles/StarRating.css';
 
-//TODO add X button to remove rating if rated
 const StarRating = (props) => {
     const [rating, setRating] = useState(0);
+    const [ratingId, setRatingId] = useState();
     const [hoverRating, setHoverRating] = useState(0);
 
     useEffect(() => {
         MovieService.getRating(sessionStorage.getItem("username"), props.movieId).then(res => {
             if (res.data != null) {
                 setRating(res.data.movieRating);
+                console.log(res.data.ratingId);
+                setRatingId(res.data.ratingId);
             }
         }).catch(error => {
             console.log("Not yet Reviewed");
@@ -28,29 +30,43 @@ const StarRating = (props) => {
             });
     }
 
+    const removeRating = () => {
+        setRating(0);
+        MovieService.removeRating(sessionStorage.getItem("username"), ratingId)
+            .then((res) => {
+                console.log("Rating successfully removed");
+            }).catch((err) => {
+                console.log("Failed to remove rating: " + err);
+            })
+    }
+
     return (
-        <div>
-            {[1,2,3,4,5].map((star) => {
-                let isFilled = star <= (hoverRating || rating);
-                return (
-                    isFilled ? 
-                            <FontAwesomeIcon 
-                                onMouseEnter={() => {setHoverRating(star)}}
-                                onMouseLeave={() => {setHoverRating(0)}}
-                                onClick={() => {starClicked(star)}}
-                                className="filled-star"
-                                icon="fa-solid fa-star"
-                            /> 
-                            : 
-                            <FontAwesomeIcon
-                                onMouseEnter={() => {setHoverRating(star)}}
-                                onMouseLeave={() => {setHoverRating(0)}}
-                                onClick={() => {starClicked(star)}}
-                                className="hollow-star"
-                                icon="fa-regular fa-star"
-                            />
-                )
-            })}
+        <div className="rating-container">
+            <div>Your Rating</div>
+            <div className="star-container">
+                {[1,2,3,4,5].map((star) => {
+                    let isFilled = star <= (hoverRating || rating);
+                    return (
+                        isFilled ?
+                                <FontAwesomeIcon 
+                                    onMouseEnter={() => {setHoverRating(star)}}
+                                    onMouseLeave={() => {setHoverRating(0)}}
+                                    onClick={() => {starClicked(star)}}
+                                    className="star filled-star"
+                                    icon="fa-solid fa-star"
+                                /> 
+                                : 
+                                <FontAwesomeIcon
+                                    onMouseEnter={() => {setHoverRating(star)}}
+                                    onMouseLeave={() => {setHoverRating(0)}}
+                                    onClick={() => {starClicked(star)}}
+                                    className="star hollow-star"
+                                    icon="fa-regular fa-star"
+                                />
+                    )
+                })}
+                {rating ? <FontAwesomeIcon onClick={() => {removeRating()}} className="rating-x" icon="fa-solid fa-xmark"/> : <></>}
+            </div>
         </div>
     )
 }

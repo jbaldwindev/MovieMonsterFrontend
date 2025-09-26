@@ -60,11 +60,6 @@
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00ffffff', endColorstr='#ffffff',GradientType=0 );
 }
 
-.star:hover {
-    color: yellow;
-    cursor: pointer;
-}
-
 .backdrop {
     width: 100%;
     height: auto;
