@@ -8,10 +8,12 @@ import Container from 'react-bootstrap/Container';
 import Spinner from'react-bootstrap/Spinner';
 import { useNavigate } from 'react-router-dom';
 import CustomNav from './CustomNav';
+import MoviePagination from './MoviePagination';
 import '../Styles/Movies.css';
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+//import Pagination from 'react-bootstrap/Pagination';
 
 const Movies = (props) => {
     const [movieList, setMovieList] = useState([]);
@@ -21,7 +23,12 @@ const Movies = (props) => {
     const [currentPlayingPage, setCurrentPlayingPage] = useState(1);
     const [currentTab, setCurrentTab] = useState("popular");
     const [currentTabPage, setCurrentTabPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(1);
     const navigate = useNavigate();
+
+    //TODO delete the following states, used for testing purposes only
+    const [pagCurrentPage, setPagCurrentPage] = useState(1);
+    const [pagMaxPage, setPagMaxPage] = useState(100);
 
     useEffect(() => {
         loadMovies(1);
@@ -42,13 +49,24 @@ const Movies = (props) => {
         navigate(newPath);
     }
 
+    const pageChangeDebug = (page) => {
+        setCurrentTabPage(page);
+        loadMovies(page);
+        console.log("page was changed!");
+    }
+
     const loadMovies = (page) => {
         setCurrentTabPage(page);
         if (currentTab == "popular") {
             setCurrentPopularPage(page);
             MovieService.getPopular(page).then((res) => {
                 let retrievedMoviesList = [];
-                for (const movie of res.data.movieList) { 
+                if (res.data.totalPages < 500) {
+                    setTotalPages(res.data.totalPages); 
+                } else {
+                    setTotalPages(500);
+                }
+                for (const movie of res.data.movieList) {
                     retrievedMoviesList = [...retrievedMoviesList, movie];
                 }
                 setMovieList(retrievedMoviesList);
@@ -58,6 +76,11 @@ const Movies = (props) => {
             setCurrentTopPage(page);
             MovieService.getTop(page).then((res) => {
                 let retrievedMoviesList = [];
+                if (res.data.totalPages < 500) {
+                    setTotalPages(res.data.totalPages); 
+                } else {
+                    setTotalPages(500);
+                } 
                 for (const movie of res.data.movieList) { 
                     retrievedMoviesList = [...retrievedMoviesList, movie];
                 }
@@ -68,35 +91,17 @@ const Movies = (props) => {
             setCurrentPlayingPage(page);
             MovieService.getPlaying(page).then((res) => {
                 let retrievedMoviesList = [];
+                if (res.data.totalPages < 500) {
+                    setTotalPages(res.data.totalPages); 
+                } else {
+                    setTotalPages(500);
+                }
                 for (const movie of res.data.movieList) { 
                     retrievedMoviesList = [...retrievedMoviesList, movie];
                 }
                 setMovieList(retrievedMoviesList);
                 setPopularLoaded(true);
             });
-        }
-    }
-
-    const changePage = (e, direction) => {
-        switch(direction) {
-            case "next":
-                if (currentTab == "popular") {
-                    loadMovies(currentPopularPage + 1);
-                } else if (currentTab == "top") {
-                    loadMovies(currentTopPage + 1);
-                } else if (currentTab == "playing") {
-                    loadMovies(currentPlayingPage + 1);
-                }
-                break;
-            case "previous":
-                if (currentTab == "popular") {
-                    loadMovies(currentPopularPage - 1);
-                } else if (currentTab == "top") {
-                    loadMovies(currentTopPage - 1);
-                } else if (currentTab == "playing") {
-                    loadMovies(currentPlayingPage - 1);
-                }
-                break;
         }
     }
 
@@ -123,16 +128,6 @@ const Movies = (props) => {
                 <Col sm="auto d-flex 
                         align-items-center 
                         justify-content-center">
-                    {currentTabPage > 1 ? 
-                    <Button className="side-button" onClick={(e) => {changePage(e, "previous")}}>
-                        <FontAwesomeIcon icon="fa-angle-left" size="2x"/>
-                    </Button>
-                    :
-                    <Button className="side-button" disabled>
-                        <FontAwesomeIcon icon="fa-angle-left" size="2x"/>
-                    </Button> 
-                    }
-                     
                 </Col>
                 <Col sm="auto">
                     <Container fluid="md">
@@ -155,13 +150,6 @@ const Movies = (props) => {
                                     </div>
                                     }
                                 </Row>
-                                
-                                {currentPopularPage > 1 ? 
-                                <Button onClick={(e) => {changePage(e, "previous")}}>Previous</Button>
-                                : 
-                                <div></div>}
-                                
-                                <Button onClick={(e) => {changePage(e, "next")}}>Next</Button>
                             </Tab>
                             <Tab eventKey="2" title="Top Rated">
                                 <Row xs={2} md={5} className="g-4">
@@ -180,11 +168,6 @@ const Movies = (props) => {
                                     </div>
                                     }
                                 </Row>
-                                {currentTopPage > 1 ? 
-                                <Button onClick={(e) => {changePage(e, "previous")}}>Previous</Button> 
-                                : 
-                                <div></div>}
-                                <Button onClick={(e) => {changePage(e, "next")}}>Next</Button>
                             </Tab>
                             <Tab eventKey="3" title="Now Playing">
                                 <Row xs={2} md={5} className="g-4">
@@ -203,24 +186,14 @@ const Movies = (props) => {
                                     </div>
                                     }
                                 </Row>
-                                {currentPlayingPage  > 1 ? 
-                                <Button onClick={(e) => {changePage(e, "previous")}}>Previous</Button> 
-                                : 
-                                <div></div>}
-                                <Button onClick={(e) => {changePage(e, "next")}}>Next</Button>
                             </Tab>
                         </Tabs>
                     </Container>
                 </Col>
-                <Col sm="auto d-flex 
-                        align-items-center 
-                        justify-content-center">
-                    <Button className="side-button" onClick={(e) => {changePage(e, "next")}}>
-                        <FontAwesomeIcon icon="fa-angle-right" size="2x"/>
-                    </Button> 
-                    
-                </Col>
             </Row>
+            <div className="movies-pag-container">
+                <MoviePagination currentPage={currentTabPage} maxPage={totalPages} onPageChange={pageChangeDebug}/>
+            </div>
         </div>
     )
 }

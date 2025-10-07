@@ -26,3 +26,9 @@
 .side-button {
     height: 50%;
 }
+
+.movies-pag-container {
+    display:flex;
+    justify-content: center;
+    margin-top: 30px;
+}
