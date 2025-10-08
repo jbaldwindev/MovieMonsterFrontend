@@ -23,3 +23,17 @@
     cursor: pointer;
 }
 
+.carousel-container {
+    display: flex;
+    justify-content: center;
+}
+
+.tabs-container {
+    width: 80%;
+}
+
+@media(max-width: 768px) {
+    .tabs-container {
+        width: 100%;
+    }
+}

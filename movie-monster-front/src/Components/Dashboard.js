@@ -10,6 +10,7 @@ import Spinner from'react-bootstrap/Spinner';
 import '../Styles/Dashboard.css';
 import { useNavigate } from 'react-router-dom';
 import CustomNav from './CustomNav';
+import MovieCarousel from './MovieCarousel';
 
 
 const Dashboard = (props) => {
@@ -66,62 +67,69 @@ const Dashboard = (props) => {
         <div>
             <CustomNav></CustomNav>
             <Container fluid="md">
-                <Tabs defaultActiveKey="1" id="uncontrolled-tab-example" className="mb-3" onSelect={(firstTab, lastTab) => onTabSelect(firstTab, lastTab)}>
-                    <Tab eventKey="1" title="Popular">    
-                        <Row xs={2} md={5} className="g-4">
-                            {popularLoaded ?  movieList.map((movie) => (
-                                <Col>
-                                    <Card className="hover-color hide-overflow" onClick={() => {onCardClick(movie.id)}}>
-                                        <Card.Img variant="top" src={movie.posterPath} className="movie-card-img "/>
-                                    </Card>
-                                </Col>
-                            )) 
-                            :
-                            <div className="centered">
-                                <Spinner animation="border" role="status" variant="info" className="centered">
-                                    <span className="visually-hidden">Loading...</span>
-                                </Spinner>
-                            </div>
-                            }
-                        </Row>
-                    </Tab>
-                    <Tab eventKey="2" title="Top Rated">
-                        <Row xs={2} md={5} className="g-4">
-                            {popularLoaded ?  movieList.map((movie) => (
-                                <Col>
-                                    <Card className="hover-color hide-overflow" onClick={() => {onCardClick(movie.id)}}>
-                                        <Card.Img variant="top" src={movie.posterPath} className="movie-card-img "/>
-                                    </Card>
-                                </Col>
-                            )) 
-                            :
-                            <div className="centered">
-                                <Spinner animation="border" role="status" variant="info" className="centered">
-                                    <span className="visually-hidden">Loading...</span>
-                                </Spinner>
-                            </div>
-                            }
-                        </Row>
-                    </Tab>
-                    <Tab eventKey="3" title="Now Playing">
-                        <Row xs={2} md={5} className="g-4">
-                            {popularLoaded ?  movieList.map((movie) => (
-                                <Col>
-                                    <Card className="hover-color hide-overflow" onClick={() => {onCardClick(movie.id)}}>
-                                        <Card.Img variant="top" src={movie.posterPath} className="movie-card-img "/>
-                                    </Card>
-                                </Col>
-                            )) 
-                            :
-                            <div className="centered">
-                                <Spinner animation="border" role="status" variant="info" className="centered">
-                                    <span className="visually-hidden">Loading...</span>
-                                </Spinner>
-                            </div>
-                            }
-                        </Row>
-                    </Tab>
-                </Tabs>
+                <div className="carousel-container">
+                    <MovieCarousel/>
+                </div>
+                <div className="flex-center">
+                    <div className="tabs-container">
+                        <Tabs defaultActiveKey="1" id="uncontrolled-tab-example" className="mb-3" onSelect={(firstTab, lastTab) => onTabSelect(firstTab, lastTab)}>
+                            <Tab eventKey="1" title="Popular">    
+                                <Row xs={3} md={5} className="g-4">
+                                    {popularLoaded ?  movieList.map((movie) => (
+                                        <Col>
+                                            <Card className="hover-color hide-overflow" onClick={() => {onCardClick(movie.id)}}>
+                                                <Card.Img variant="top" src={movie.posterPath} className="movie-card-img "/>
+                                            </Card>
+                                        </Col>
+                                    )) 
+                                    :
+                                    <div className="centered">
+                                        <Spinner animation="border" role="status" variant="info" className="centered">
+                                            <span className="visually-hidden">Loading...</span>
+                                        </Spinner>
+                                    </div>
+                                    }
+                                </Row>
+                            </Tab>
+                            <Tab eventKey="2" title="Top Rated">
+                                <Row xs={3} md={5} className="g-4">
+                                    {popularLoaded ?  movieList.map((movie) => (
+                                        <Col>
+                                            <Card className="hover-color hide-overflow" onClick={() => {onCardClick(movie.id)}}>
+                                                <Card.Img variant="top" src={movie.posterPath} className="movie-card-img "/>
+                                            </Card>
+                                        </Col>
+                                    )) 
+                                    :
+                                    <div className="centered">
+                                        <Spinner animation="border" role="status" variant="info" className="centered">
+                                            <span className="visually-hidden">Loading...</span>
+                                        </Spinner>
+                                    </div>
+                                    }
+                                </Row>
+                            </Tab>
+                            <Tab eventKey="3" title="Now Playing">
+                                <Row xs={3} md={5} className="g-4">
+                                    {popularLoaded ?  movieList.map((movie) => (
+                                        <Col>
+                                            <Card className="hover-color hide-overflow" onClick={() => {onCardClick(movie.id)}}>
+                                                <Card.Img variant="top" src={movie.posterPath} className="movie-card-img "/>
+                                            </Card>
+                                        </Col>
+                                    )) 
+                                    :
+                                    <div className="centered">
+                                        <Spinner animation="border" role="status" variant="info" className="centered">
+                                            <span className="visually-hidden">Loading...</span>
+                                        </Spinner>
+                                    </div>
+                                    }
+                                </Row>
+                            </Tab>
+                        </Tabs>
+                    </div>
+                </div>
             </Container>
         </div>
     );
