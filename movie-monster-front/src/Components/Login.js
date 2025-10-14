@@ -1,17 +1,27 @@
-import React, {useState} from 'react';
+import {useState, useEffect} from 'react';
 import AuthService from "../Services/AuthService"
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { useNavigate } from 'react-router-dom';
+import "../Styles/Login.css";
 
 const Login = (props) => {
     const navigate = useNavigate();
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [canSubmit, setCanSubmit] = useState(false);
 
     const usernameChange = (e) => {
         setUsername(e.target.value);
     }
+
+    useEffect(() => {
+        if (username.length > 0 && password.length > 0) {
+            setCanSubmit(true);
+        } else {
+            setCanSubmit(false);
+        }
+    }, [username, password]);
 
     const passwordChange = (e) => {
         setPassword(e.target.value);
@@ -25,12 +35,17 @@ const Login = (props) => {
             sessionStorage.setItem("authToken", retrievedToken);
             sessionStorage.setItem("username", username);
             navigate("/dashboard");
+        }).catch(err => {
+            console.log(err);
+            props.errorFn();
         });
     }
 
     return (
         <div>
-            <h1>log in</h1>
+            <div className="centered">
+                <h3>Log In</h3>
+            </div>
             <Form onSubmit={submitLogin}>
                 <Form.Group className="mb-3" controlId="formUsername">
                     <Form.Label>Username</Form.Label>
@@ -40,9 +55,11 @@ const Login = (props) => {
                     <Form.Label>Password</Form.Label>
                     <Form.Control type="password" placeholder="Password" onChange={passwordChange}/>
                 </Form.Group>
-                <Button variant="primary" type="submit">
-                Submit
-                </Button>
+                <div className="login-btn-container">
+                    <Button variant="success" disabled={!canSubmit} type="submit">
+                    Submit
+                    </Button>
+                </div>
             </Form>
         </div>
     );

@@ -197,6 +197,17 @@ class UserService {
             }
         );
     }
+
+    isUsernameTaken(username) {
+        return axios({
+                method: 'get',
+                url: BASE_URL + '/auth/user-exists/' + username,
+                headers: {
+                    Authorization: sessionStorage.getItem('authToken')
+                }
+            }
+        );
+    }
 }
 
 export default new UserService();

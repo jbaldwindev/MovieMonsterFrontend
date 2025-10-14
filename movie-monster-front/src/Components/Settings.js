@@ -8,9 +8,7 @@ function Settings() {
     const [iconUrl, setIconUrl] = useState();
     const [show, setShow] = useState(false);
     const [uploadedImage, setUploadedImage] = useState();
-    const [croppedImage, setCroppedImage] = useState();
     const [croppedImageBlob, setCroppedImageBlob] = useState();
-    const [file, setFile] = useState();
     const imageRef = useRef(null);
     const [crop, setCrop] = useState({
         unit: 'px',
@@ -64,7 +62,6 @@ function Settings() {
         canvas1.toBlob((blob) => {
             if (blob) {
                 setCroppedImageBlob(blob);
-                setCroppedImage(URL.createObjectURL(blob));
             }
         }, "image/png");
     }
@@ -75,7 +72,6 @@ function Settings() {
             URL.revokeObjectURL(uploadedImage);
         }
         if (e.target.files[0]) {
-            setFile(e.target.files[0]);
             setUploadedImage(URL.createObjectURL(e.target.files[0]));
         }
     }

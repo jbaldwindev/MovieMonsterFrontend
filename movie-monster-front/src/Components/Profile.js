@@ -11,7 +11,7 @@ import MovieService from '../Services/MovieService';
 import Table from "react-bootstrap/Table";
 import '../Styles/Profile.css';
 
-const Profile = (props) => {
+const Profile = () => {
     let { username } = useParams();
     const [iconUrl, setIconUrl] = useState();
     const [dateJoined, setDateJoined] = useState();
@@ -123,7 +123,7 @@ const Profile = (props) => {
                                 <tbody>
                                     {
                                         favoriteMovies.map((movie, index) => (
-                                            <tr>
+                                            <tr key={movie.data.id}>
                                                 <td>{index + 1}</td>
                                                 <td>
                                                     <a className="movie-link" href={"/Movie/" + movie.data.id}>{movie.data.title}</a>

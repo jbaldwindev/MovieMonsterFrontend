@@ -13,9 +13,8 @@ import CustomNav from './CustomNav';
 import MovieCarousel from './MovieCarousel';
 
 
-const Dashboard = (props) => {
+const Dashboard = () => {
     const [popularLoaded, setPopularLoaded] = useState(false);
-    const [movieTitle, setMovieTitle] = useState("");
     const [movieList, setMovieList] = useState([]);
     const navigate = useNavigate();
 
@@ -35,7 +34,7 @@ const Dashboard = (props) => {
         navigate(newPath);
     }
 
-    const onTabSelect = (selectedTab, lastTab) => {
+    const onTabSelect = (selectedTab) => {
         if (selectedTab == "1") {
             MovieService.getPopular(1).then((res) => {
                 let retrievedMoviesList = [];

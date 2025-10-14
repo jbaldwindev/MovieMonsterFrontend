@@ -1,15 +1,85 @@
-import axios from 'axios';
-import React, {useState} from 'react';
+import { useState, useEffect } from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import AuthService from '../Services/AuthService';
+import UserService from '../Services/UserService';
 import { useNavigate } from 'react-router-dom';
+import '../Styles/Signup.css';
 
-const Signup = (props) => {
+const Signup = () => {
     const navigate = useNavigate();
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
+    const [usernameErrorExists, setUsernameErrorExists] = useState(false);
+    const [usernameErrorMessage, setUsernameErrorMessage] = useState(null);
+    const [passwordErrorExists, setPasswordErrorExists] = useState(false);
+    const [passwordErrorMessage, setPasswordErrorMessage] = useState(null);
+    const [confirmErrorExists, setConfirmErrorExists] = useState(false);
+    const [confirmErrorMessage, setConfirmErrorMessage] = useState(null);
+    const [submitDisabled, setSubmitDisabled] = useState(true);
+
+    useEffect(() => {
+        if (usernameErrorExists || passwordErrorExists || confirmErrorExists) {
+            setSubmitDisabled(true);
+        } else {
+            if (username.length > 0 && password.length > 0 && confirmPassword.length > 0) {
+                setSubmitDisabled(false);
+            } else {
+                setSubmitDisabled(true);
+            }
+        }
+    }, [
+        usernameErrorExists, 
+        passwordErrorExists, 
+        confirmErrorExists,
+        username.length,
+        password.length,
+        confirmPassword.length
+    ]);
+
+    useEffect(() => {
+        const delayDebounce = setTimeout(() => {
+            if (username.length > 0 && username.length < 3) {
+                setUsernameErrorExists(true);
+                setUsernameErrorMessage("Username must be greater than 3 characters");
+                return;
+            }
+            UserService.isUsernameTaken(username)
+                .then(res => {
+                    setUsernameErrorMessage("Username is taken");
+                    setUsernameErrorExists(res.data);
+                })
+                .catch(() => setUsernameErrorExists(null))
+        }, 1000);
+    return () => clearTimeout(delayDebounce);
+    }, [username]);
+
+    useEffect(() => {
+        const delayDebounce = setTimeout(() => {
+            if (password.length > 0 && password.length < 8) {
+                setPasswordErrorExists(true);
+                setPasswordErrorMessage("Password must contain at least 8 characters")
+            } else {
+                setPasswordErrorExists(false);
+                setPasswordErrorMessage(null);
+            }
+        }, 1000);
+        return () => clearTimeout(delayDebounce);
+    }, [password]);
+
+    useEffect(() => {
+        const delayDebounce = setTimeout(() => {
+            if (confirmPassword.length > 0 && confirmPassword !== password) {
+                setConfirmErrorExists(true);
+                setConfirmErrorMessage("Passwords do not match");
+            } else {
+                setConfirmErrorExists(false);
+                setConfirmErrorMessage(null);
+            }
+        }, 1000);
+        return () => clearTimeout(delayDebounce);
+    }, [confirmPassword, password]);
     
     const passwordConfirmChange = (e) => {
         setConfirmPassword(e.target.value);
@@ -23,33 +93,50 @@ const Signup = (props) => {
         setUsername(e.target.value);
     }
 
+    //TODO instead of redirecting, show success message since forms will be on 1 page
     const submitRegistration = (e) => {
         e.preventDefault();
         AuthService.register(username, password).then((response) => {
             console.log(response);
+        }).then(() => {
+            navigate("/login")
+        }).catch(err => {
+            console.log(err);
         });
-        navigate("/login")
     }
 
     return (
         <div>
-            <h1>Sign up</h1>
+            <div className="centered">
+                <h3>Sign Up</h3>
+            </div>
             <Form onSubmit={submitRegistration}>
                 <Form.Group className="mb-3" controlId="formUsername">
                     <Form.Label>Username</Form.Label>
-                    <Form.Control type="text" placeholder="Username" onChange={usernameChange}/>
+                    <Form.Control type="text" placeholder="Username" isInvalid={usernameErrorExists} onChange={usernameChange}/>
+                    <Form.Control.Feedback type="invalid">
+                        {usernameErrorMessage}
+                    </Form.Control.Feedback>
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="formPassword">
                     <Form.Label>Password</Form.Label>
-                    <Form.Control type="password" placeholder="Password" onChange={passwordChange}/>
+                    <Form.Control type="password" placeholder="Password" isInvalid={passwordErrorExists} onChange={passwordChange}/>
+                    <Form.Control.Feedback type="invalid">
+                        {passwordErrorMessage}
+                    </Form.Control.Feedback>
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="formConfirmPassword">
                     <Form.Label>Confirm Password</Form.Label>
-                    <Form.Control type="password" placeholder="Confirm Password" onChange={passwordConfirmChange}/>
+                    <Form.Control type="password" placeholder="Confirm Password" isInvalid={confirmErrorExists} onChange={passwordConfirmChange}/>
+                    <Form.Control.Feedback type="invalid">
+                        {confirmErrorMessage}
+                    </Form.Control.Feedback>
                 </Form.Group>
-                <Button variant="primary" type="submit">
-                Submit
-                </Button>
+                <div className="signup-btn-container">
+                    <Button variant="success" disabled={submitDisabled} type="submit">
+                    Submit
+                    </Button>
+                </div>
             </Form>
         </div>
     );
