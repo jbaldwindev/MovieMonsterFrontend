@@ -31,8 +31,10 @@ const Login = (props) => {
         e.preventDefault();
         AuthService.login(username, password).then((res) => {
             let info = res.data;
-            let retrievedToken = info["tokenType"] + info["accessToken"];
+            let retrievedToken = info["accessToken"];
+            let refreshToken = info["refreshToken"];
             sessionStorage.setItem("authToken", retrievedToken);
+            sessionStorage.setItem("refreshToken", refreshToken);
             sessionStorage.setItem("username", username);
             navigate("/dashboard");
         }).catch(err => {

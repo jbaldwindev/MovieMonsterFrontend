@@ -14,6 +14,7 @@ import MovieSearch from './Components/MovieSearch';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import ImageUpload from './Components/ImageUpload';
 import Bio from './Components/Bio';
+import './Services/AxiosSetup';
 import { faRegular, library } from '@fortawesome/fontawesome-svg-core';
 import { 
   faThumbsUp as fasThumbsUp, 
