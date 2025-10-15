@@ -66,7 +66,7 @@ const Profile = () => {
     }
 
     const openFriends = () => {
-        if (username == sessionStorage.getItem("username")) {
+        if (username === sessionStorage.getItem("username")) {
             navigate("/friends");
         } else {
             navigate("/display-friends/" + username);
@@ -90,7 +90,7 @@ const Profile = () => {
                             <div className="header-underline text-centered">
                                 <h6 className="inline">Bio</h6>
                                 {
-                                username == sessionStorage.getItem('username') ? 
+                                username === sessionStorage.getItem('username') ? 
                                     <a href="/Bio" className="right-align settings-link">{"edit->"}</a> 
                                     : 
                                     <></>
@@ -105,7 +105,7 @@ const Profile = () => {
                             <div className="section-header">
                                 <span>Favorite Movies</span>
                                 {
-                                username == sessionStorage.getItem('username') ? 
+                                username === sessionStorage.getItem('username') ? 
                                     <a href="/Favorites" className="settings-link">{"edit->"}</a> 
                                     : 
                                     <></>
