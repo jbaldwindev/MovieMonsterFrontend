@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import CustomNav from "./CustomNav";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/col";
+import Col from "react-bootstrap/Col";
 import Image from "react-bootstrap/Image";
 import { useNavigate } from 'react-router-dom';
 import UserService from '../Services/UserService';
