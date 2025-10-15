@@ -40,7 +40,12 @@ const Signup = () => {
 
     useEffect(() => {
         const delayDebounce = setTimeout(() => {
-            console.log(username.length);
+
+            if (username.length === 0) {
+                setUsernameErrorExists(false);
+                setUsernameErrorMessage(null);
+                return;
+            }
             if (username.length > 0 && username.length < 3) {
                 setUsernameErrorExists(true);
                 setUsernameErrorMessage("Username must be greater than 3 characters");
@@ -48,8 +53,10 @@ const Signup = () => {
             }
             UserService.isUsernameTaken(username)
                 .then(res => {
-                    setUsernameErrorMessage("Username is taken");
-                    setUsernameErrorExists(res.data);
+                    if (res.data === true) {
+                        setUsernameErrorMessage("Username is taken");
+                        setUsernameErrorExists(res.data);
+                    }
                 })
                 .catch(() => setUsernameErrorExists(null))
         }, 1000);
