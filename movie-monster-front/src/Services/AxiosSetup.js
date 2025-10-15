@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BASE_URL = process.env.REACT_APP_API_URL + "/api/";
+const BASE_URL = process.env.REACT_APP_API_URL + "api/";
 axios.defaults.baseURL = BASE_URL;
 
 // Attach Authorization header to every request

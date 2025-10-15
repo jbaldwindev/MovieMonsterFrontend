@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BASE_URL = process.env.REACT_APP_API_URL + "/api/user";
+const BASE_URL = process.env.REACT_APP_API_URL + "api/user";
 class UserService { 
     searchUsers(searchTerm, username) {
         return axios.get(BASE_URL + "/" + username +  "/search-users/" + searchTerm, {
