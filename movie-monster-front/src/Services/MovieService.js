@@ -4,6 +4,7 @@ const BASE_URL = process.env.REACT_APP_API_URL + "api/";
 class MovieService {
 
     getPopular(page) {
+        console.log(sessionStorage.getItem("authToken"));
         return axios.get(BASE_URL + "dash/popular/" + page, {
             headers: {
                 Authorization: sessionStorage.getItem("authToken")
