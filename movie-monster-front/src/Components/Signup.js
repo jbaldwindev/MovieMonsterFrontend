@@ -40,6 +40,7 @@ const Signup = () => {
 
     useEffect(() => {
         const delayDebounce = setTimeout(() => {
+            console.log(username.length);
             if (username.length > 0 && username.length < 3) {
                 setUsernameErrorExists(true);
                 setUsernameErrorMessage("Username must be greater than 3 characters");
