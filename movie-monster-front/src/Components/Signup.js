@@ -121,21 +121,21 @@ const Signup = () => {
             <Form onSubmit={submitRegistration}>
                 <Form.Group className="mb-3" controlId="formUsername">
                     <Form.Label>Username</Form.Label>
-                    <Form.Control type="text" placeholder="Username" isInvalid={usernameErrorExists} onChange={usernameChange}/>
+                    <Form.Control value={username} type="text" placeholder="Username" isInvalid={usernameErrorExists} onChange={usernameChange}/>
                     <Form.Control.Feedback type="invalid">
                         {usernameErrorMessage}
                     </Form.Control.Feedback>
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="formPassword">
                     <Form.Label>Password</Form.Label>
-                    <Form.Control type="password" placeholder="Password" isInvalid={passwordErrorExists} onChange={passwordChange}/>
+                    <Form.Control value={password} type="password" placeholder="Password" isInvalid={passwordErrorExists} onChange={passwordChange}/>
                     <Form.Control.Feedback type="invalid">
                         {passwordErrorMessage}
                     </Form.Control.Feedback>
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="formConfirmPassword">
                     <Form.Label>Confirm Password</Form.Label>
-                    <Form.Control type="password" placeholder="Confirm Password" isInvalid={confirmErrorExists} onChange={passwordConfirmChange}/>
+                    <Form.Control value={confirmPassword} type="password" placeholder="Confirm Password" isInvalid={confirmErrorExists} onChange={passwordConfirmChange}/>
                     <Form.Control.Feedback type="invalid">
                         {confirmErrorMessage}
                     </Form.Control.Feedback>
