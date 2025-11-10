@@ -7,7 +7,7 @@ class MovieService {
         console.log(sessionStorage.getItem("authToken"));
         return axios.get(BASE_URL + "dash/popular/" + page, {
             headers: {
-                Authorization: sessionStorage.getItem("authToken")
+                Authorization: `Bearer ${sessionStorage.getItem("authToken")}`
             }
         });
     }

@@ -5,7 +5,7 @@ class UserService {
     searchUsers(searchTerm, username) {
         return axios.get(BASE_URL + "/" + username +  "/search-users/" + searchTerm, {
             headers: {
-                Authorization: sessionStorage.getItem("authToken")
+                Authorization: `Bearer ${sessionStorage.getItem("authToken")}`
             }
         });
     }
@@ -15,7 +15,7 @@ class UserService {
             method: 'post',
             url: BASE_URL + "/send-request",
             headers: {
-                Authorization: sessionStorage.getItem("authToken")
+                Authorization: `Bearer ${sessionStorage.getItem("authToken")}`
             },
             data: {
                 senderUsername: sender,
@@ -29,7 +29,7 @@ class UserService {
             method: 'post',
             url: BASE_URL + "/request-response",
             headers: {
-                Authorization: sessionStorage.getItem("authToken")
+                Authorization: `Bearer ${sessionStorage.getItem("authToken")}`
             },
             data: {
                 requestId: requestId,
@@ -43,7 +43,7 @@ class UserService {
             method: 'get',
             url: BASE_URL + "/get-friends/" + username,
             headers: {
-                Authorization: sessionStorage.getItem("authToken")
+                Authorization: `Bearer ${sessionStorage.getItem("authToken")}`
             }
         });
     }
@@ -53,7 +53,7 @@ class UserService {
             method: 'get',
             url: BASE_URL + "/received-requests/" + username,
             headers: {
-                Authorization: sessionStorage.getItem("authToken")
+                Authorization: `Bearer ${sessionStorage.getItem("authToken")}`
             }
         });
     }
@@ -63,7 +63,7 @@ class UserService {
             method: 'delete',
             url: BASE_URL + "/" + sender + "/requests/" + receiver,
             headers: {
-                Authorization: sessionStorage.getItem("authToken")
+                Authorization: `Bearer ${sessionStorage.getItem("authToken")}`
             }
         });
     }
@@ -73,7 +73,7 @@ class UserService {
             method: 'delete',
             url: BASE_URL + "/" + sessionStorage.getItem('username') + "/friends/" + targetUsername,
             headers: {
-                Authorization: sessionStorage.getItem("authToken")
+                Authorization: `Bearer ${sessionStorage.getItem("authToken")}`
             }
         });
     }
@@ -83,7 +83,7 @@ class UserService {
             method: 'get',
             url: BASE_URL + "/sent-requests/" + username,
             headers: {
-                Authorization: sessionStorage.getItem("authToken")
+                Authorization: `Bearer ${sessionStorage.getItem("authToken")}`
             }
         })
     }
@@ -93,7 +93,7 @@ class UserService {
             method: 'get',
             url: BASE_URL + "/profile/" + username,
             headers: {
-                Authorization: sessionStorage.getItem("authToken")
+                Authorization: `Bearer ${sessionStorage.getItem("authToken")}`
             }
         })
     }
@@ -103,7 +103,7 @@ class UserService {
             method: 'get',
             url: BASE_URL + "/icon/" + username,
             headers: {
-                Authorization: sessionStorage.getItem("authToken")
+                Authorization: `Bearer ${sessionStorage.getItem("authToken")}`
             },
             responseType: "blob"
         })
@@ -114,7 +114,7 @@ class UserService {
             method: 'post',
             url: BASE_URL + "/upload-icon/" + username,
             headers: {
-                Authorization: sessionStorage.getItem("authToken"),
+                Authorization: `Bearer ${sessionStorage.getItem("authToken")}`,
                 "Content-Type": "multipart/form-data"
             },
             data: imageFormData
@@ -126,7 +126,7 @@ class UserService {
             method: 'get',
             url: BASE_URL + '/' + username + '/favorites/all',
             headers: {
-                Authorization: sessionStorage.getItem('authToken')
+                Authorization: `Bearer ${sessionStorage.getItem("authToken")}`
             }
         })
     }
@@ -136,7 +136,7 @@ class UserService {
             method: 'post',
             url: BASE_URL + "/favorites/rank",
             headers: {
-                Authorization: sessionStorage.getItem('authToken')
+                Authorization: `Bearer ${sessionStorage.getItem("authToken")}`
             },
             data: {
                 username: sessionStorage.getItem('username'),
@@ -154,7 +154,7 @@ class UserService {
                 + sessionStorage.getItem('username') 
                 + "/favorites/remove?movieId=" + movieId,
             headers: {
-                Authorization: sessionStorage.getItem('authToken')
+                Authorization: `Bearer ${sessionStorage.getItem("authToken")}`
             }
         })
     }
@@ -168,7 +168,7 @@ class UserService {
                 + "/favorites/add?movieId=" 
                 + movieId,
             headers: {
-                Authorization: sessionStorage.getItem('authToken')
+                Authorization: `Bearer ${sessionStorage.getItem("authToken")}`
             }
         })
     }
@@ -178,7 +178,7 @@ class UserService {
             method: 'get',
             url: BASE_URL + "/" + username + "/bio",
             headers: {
-                Authorization: sessionStorage.getItem('authToken')
+                Authorization: `Bearer ${sessionStorage.getItem("authToken")}`
             }
         })
     }
@@ -188,7 +188,7 @@ class UserService {
                 method: 'post',
                 url: BASE_URL + '/bio',
                 headers: {
-                    Authorization: sessionStorage.getItem('authToken')
+                    Authorization: `Bearer ${sessionStorage.getItem("authToken")}`
                 },
                 data: {
                     username: username,
@@ -203,11 +203,11 @@ class UserService {
                 method: 'get',
                 url: BASE_URL + '/auth/user-exists/' + username,
                 headers: {
-                    Authorization: sessionStorage.getItem('authToken')
+                    Authorization: `Bearer ${sessionStorage.getItem("authToken")}`
                 }
             }
         );
     }
 }
-
-export default new UserService();
+const userService = new UserService();
+export default userService;

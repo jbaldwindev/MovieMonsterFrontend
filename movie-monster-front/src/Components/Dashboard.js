@@ -35,7 +35,7 @@ const Dashboard = () => {
     }
 
     const onTabSelect = (selectedTab) => {
-        if (selectedTab == "1") {
+        if (selectedTab === "1") {
             MovieService.getPopular(1).then((res) => {
                 let retrievedMoviesList = [];
                 for (const movie of res.data.movieList) { 
@@ -43,7 +43,7 @@ const Dashboard = () => {
                 }
                 setMovieList(retrievedMoviesList);
             });
-        } else if (selectedTab == "2") {
+        } else if (selectedTab === "2") {
             MovieService.getTop(1).then((res) => {
                 let retrievedMoviesList = [];
                 for (const movie of res.data.movieList) { 
