@@ -5,9 +5,6 @@ import CustomNav from './CustomNav';
 import UserService from '../Services/UserService';
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
 import Image from 'react-bootstrap/Image';
 import '../Styles/Friends.css';
 

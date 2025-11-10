@@ -51,7 +51,7 @@ const Dashboard = () => {
                 }
                 setMovieList(retrievedMoviesList);
             });
-        } else if (selectedTab == "3") {
+        } else if (selectedTab === "3") {
             MovieService.getPlaying(1).then((res) => {
                 let retrievedMoviesList = [];
                 for (const movie of res.data.movieList) { 

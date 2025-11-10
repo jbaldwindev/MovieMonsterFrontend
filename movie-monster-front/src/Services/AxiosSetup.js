@@ -34,7 +34,7 @@ axios.interceptors.response.use(
         const { accessToken } = res.data;
 
         // Save new access token
-        sessionStorage.setItem("authToken", `Bearer ${accessToken}`);
+        sessionStorage.setItem("authToken", accessToken);
 
         // Update header and retry original request
         originalRequest.headers.Authorization = `Bearer ${accessToken}`;
