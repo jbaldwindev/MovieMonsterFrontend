@@ -15,7 +15,7 @@ class MovieService {
     getTop(page) {
         return axios.get(BASE_URL + "dash/top/" + page, {
             headers: {
-                Authorization: sessionStorage.getItem("authToken")
+                Authorization: `Bearer ${sessionStorage.getItem("authToken")}`
             }
         });
     }
@@ -23,7 +23,7 @@ class MovieService {
     getPlaying(page) {
         return axios.get(BASE_URL + "dash/playing/" + page, {
             headers: {
-                Authorization: sessionStorage.getItem("authToken")
+                Authorization: `Bearer ${sessionStorage.getItem("authToken")}`
             }
         });
     }
@@ -31,7 +31,7 @@ class MovieService {
     getMovieById(id) {
         return axios.get(BASE_URL + "movie/" + id, {
             headers: {
-                Authorization: sessionStorage.getItem("authToken")
+                Authorization: `Bearer ${sessionStorage.getItem("authToken")}`
             }
         });
     }
@@ -39,7 +39,7 @@ class MovieService {
     getSearch(title) {
         return axios.get(BASE_URL + "movie/search/" + title, {
             headers: {
-                Authorization: sessionStorage.getItem("authToken")
+                Authorization: `Bearer ${sessionStorage.getItem("authToken")}`
             }
         });
     }
@@ -47,7 +47,7 @@ class MovieService {
     getAdvancedSearch(title, page) {
         return axios.get(BASE_URL + "movie/search/" + title + "/" + page, {
             headers: {
-                Authorization: sessionStorage.getItem("authToken")
+                Authorization: `Bearer ${sessionStorage.getItem("authToken")}`
             }
         });
     }
@@ -55,7 +55,7 @@ class MovieService {
     getList(username, order) {
         return axios.get(BASE_URL + "movie/list/" + username + "&sort=" + order, {
             headers: {
-                Authorization: sessionStorage.getItem("authToken")
+                Authorization: `Bearer ${sessionStorage.getItem("authToken")}`
             }
         });
     }
@@ -63,7 +63,7 @@ class MovieService {
     getRating(username, movieId) {
         return axios.get(BASE_URL + "movie/check-rating/" + username + "/" + movieId, {
             headers: {
-                Authorization: sessionStorage.getItem("authToken")
+                Authorization: `Bearer ${sessionStorage.getItem("authToken")}`
             }
         });
     }
@@ -73,7 +73,7 @@ class MovieService {
             method: 'post',
             url: BASE_URL + "movie/like-comment",
             headers: {
-                Authorization: sessionStorage.getItem("authToken")
+                Authorization: `Bearer ${sessionStorage.getItem("authToken")}`
             },
             data: {
                 username: username,
@@ -87,7 +87,7 @@ class MovieService {
             method: "post",
             url: BASE_URL + "movie/unlike-comment",
             headers: {
-                Authorization: sessionStorage.getItem("authToken")
+                Authorization: `Bearer ${sessionStorage.getItem("authToken")}`
             },
             data: {
                 username: username,
@@ -101,7 +101,7 @@ class MovieService {
             method: 'post',
             url: BASE_URL + "movie/rate",
             headers: {
-                Authorization: sessionStorage.getItem("authToken")
+                Authorization: `Bearer ${sessionStorage.getItem("authToken")}`
             },
             data: {
                 username: user,
@@ -117,7 +117,7 @@ class MovieService {
             method: 'delete',
             url: BASE_URL + "movie/delete-rating/" + username + "/" + ratingId,
             headers: {
-                Authorization: sessionStorage.getItem("authToken")
+                Authorization: `Bearer ${sessionStorage.getItem("authToken")}`
             }
         });
     }
@@ -125,7 +125,7 @@ class MovieService {
     getCommentList(filmId, user) {
         return axios.get(BASE_URL + "movie/get-comments/" + user + "&filmId=" + filmId, {
             headers: {
-                Authorization: sessionStorage.getItem("authToken")
+                Authorization: `Bearer ${sessionStorage.getItem("authToken")}`
             }
         });
     }
@@ -135,7 +135,7 @@ class MovieService {
             method: 'post',
             url: BASE_URL + "movie/post-comment",
             headers: {
-                Authorization: sessionStorage.getItem("authToken")
+                Authorization: `Bearer ${sessionStorage.getItem("authToken")}`
             },
             data: {
                 movieId: filmId,

@@ -201,10 +201,7 @@ class UserService {
     isUsernameTaken(username) {
         return axios({
                 method: 'get',
-                url: BASE_URL + '/auth/user-exists/' + username,
-                headers: {
-                    Authorization: `Bearer ${sessionStorage.getItem("authToken")}`
-                }
+                url: BASE_URL + '/auth/user-exists/' + username
             }
         );
     }
