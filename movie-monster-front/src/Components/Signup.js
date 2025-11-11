@@ -3,11 +3,9 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import AuthService from '../Services/AuthService';
 import UserService from '../Services/UserService';
-import { useNavigate } from 'react-router-dom';
 import '../Styles/Signup.css';
 
-const Signup = () => {
-    const navigate = useNavigate();
+const Signup = (props) => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
@@ -104,13 +102,15 @@ const Signup = () => {
         setUsername(e.target.value);
     }
 
-    //TODO instead of redirecting, show success message since forms will be on 1 page
     const submitRegistration = (e) => {
         e.preventDefault();
         AuthService.register(username, password).then((response) => {
             console.log(response);
         }).then(() => {
-            navigate("/login")
+            props.successFn();
+            setUsername("");
+            setPassword("");
+            setConfirmPassword("");
         }).catch(err => {
             console.log(err);
         });

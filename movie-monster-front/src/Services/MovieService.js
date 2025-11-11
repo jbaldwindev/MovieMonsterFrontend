@@ -145,5 +145,5 @@ class MovieService {
         });
     }
 }
-
-export default new MovieService();
+const movieService = new MovieService();
+export default movieService;
