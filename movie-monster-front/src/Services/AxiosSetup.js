@@ -43,7 +43,9 @@ axios.interceptors.response.use(
         console.error("Refresh token expired or invalid:", refreshError);
         sessionStorage.removeItem("authToken");
         sessionStorage.removeItem("refreshToken");
-        window.location.href = "/login";
+        if (window.location.pathname !== "/login" && window.location.pathname !== "/") {
+          window.location.href = "/login";
+        }
       }
     }
 
