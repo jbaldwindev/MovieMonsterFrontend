@@ -56,6 +56,9 @@ const Signup = () => {
                     if (res.data === true) {
                         setUsernameErrorMessage("Username is taken");
                         setUsernameErrorExists(res.data);
+                    } else {
+                        setUsernameErrorExists(false);
+                        setUsernameErrorMessage(null);
                     }
                 })
                 .catch(() => setUsernameErrorExists(null))
