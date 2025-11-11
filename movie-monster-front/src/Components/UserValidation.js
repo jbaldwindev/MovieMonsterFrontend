@@ -22,7 +22,7 @@ const UserValidation = () => {
             <Alert show={signupOccured} variant="success">Account successfully created. Please log in!</Alert>
             <div className="validation-container">
                 <div className="signup-container">
-                    <Signup signupFn={successfulSignup}/>
+                    <Signup successFn={successfulSignup}/>
                 </div>
                 <div className="divider"></div>
                 <div className="login-container">
