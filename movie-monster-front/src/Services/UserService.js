@@ -104,8 +104,7 @@ class UserService {
             url: BASE_URL + "/icon/" + username,
             headers: {
                 Authorization: `Bearer ${sessionStorage.getItem("authToken")}`
-            },
-            responseType: "blob"
+            }
         })
     }
 
