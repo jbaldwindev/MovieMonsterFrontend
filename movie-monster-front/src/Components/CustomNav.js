@@ -44,6 +44,8 @@ function CustomNav() {
       const resizeListener = () => handleResize(window.innerWidth);
       window.addEventListener("resize", resizeListener);
       UserService.getIcon(sessionStorage.getItem("username")).then((res) => {
+          console.log("The following should be the icon url")
+          console.log(res.data)
           setIconUrl(res.data);
       }).catch(error => {
           console.error("Error fetching image:", error);
