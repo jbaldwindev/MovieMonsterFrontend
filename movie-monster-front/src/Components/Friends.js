@@ -19,6 +19,7 @@ const Friends = (props) => {
         if (e.target.value) {
             UserService.searchUsers(e.target.value, sessionStorage.getItem('username')).then( res => {
                 setUserSearchList(res.data.userConnections);
+                console.log(res.data)
             });
         } else {
             setUserSearchList([]);
