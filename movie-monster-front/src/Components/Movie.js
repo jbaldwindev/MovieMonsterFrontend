@@ -57,7 +57,7 @@ const Movie = (props) => {
         let user = sessionStorage.getItem("username");
         let iconUrl;
         UserService.getIcon(sessionStorage.getItem("username")).then((res) => {
-            iconUrl = URL.createObjectURL(res.data);
+            iconUrl = res.data;
             let newComment = {
                 username: user,
                 comment: writtenComment,

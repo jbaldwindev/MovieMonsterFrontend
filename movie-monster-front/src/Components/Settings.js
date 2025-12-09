@@ -78,7 +78,7 @@ function Settings() {
 
     useEffect(() => {
         UserService.getIcon(sessionStorage.getItem("username")).then((res) => {
-            setIconUrl(URL.createObjectURL(res.data));
+            setIconUrl(res.data);
         }).catch(error => {
           console.error("Error fetching image:", error);
         });

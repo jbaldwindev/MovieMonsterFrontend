@@ -100,7 +100,7 @@ const Friends = (props) => {
       
         if (hasPendingRequest) {
             if (senderUsername != null) {
-                if (senderUsername == sessionStorage.getItem('username')) {
+                if (senderUsername === sessionStorage.getItem('username')) {
                     return <Button onClick={() => cancelFriendRequest(targetUsername)}>Cancel Request</Button>;
                 } else {
                     return (<>

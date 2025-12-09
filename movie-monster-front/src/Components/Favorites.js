@@ -8,7 +8,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import "../Styles/Favorites.css";
 
 const Favorites = (props) => {
-    const [searchText, setSearchText] = useState("");
     const [favoriteIds, setFavoriteIds] = useState([]);
     const [favoriteMovies, setFavoriteMovies] = useState([]);
     const [movieList, setMovieList] = useState([]);
@@ -131,7 +130,7 @@ const Favorites = (props) => {
                                     <td className="text-centered control-col">
                                         <div className="inline-buttons">
                                             
-                                            {index == 9 ? 
+                                            {index === 9 ? 
                                                 <></>
                                                 :
                                                 <span className="monster-green" onClick={() => rank(movie.data.id, rankDirection.DOWN)}>
@@ -139,7 +138,7 @@ const Favorites = (props) => {
                                                 </span>
                                             }
 
-                                            {index == 0 ? 
+                                            {index === 0 ? 
                                                 <></>
                                                 :
                                                 <span className="monster-green" onClick={() => rank(movie.data.id, rankDirection.DOWN)}>

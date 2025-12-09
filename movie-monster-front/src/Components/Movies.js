@@ -1,4 +1,3 @@
-import Button from 'react-bootstrap/Button';
 import React, { useState, useEffect } from 'react';
 import MovieService from '../Services/MovieService';
 import Card from 'react-bootstrap/Card';
@@ -12,8 +11,6 @@ import MoviePagination from './MoviePagination';
 import '../Styles/Movies.css';
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-//import Pagination from 'react-bootstrap/Pagination';
 
 const Movies = (props) => {
     const [movieList, setMovieList] = useState([]);
