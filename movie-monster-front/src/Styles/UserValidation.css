@@ -23,8 +23,8 @@
   align-self: stretch;
 }
 
-    body {
-        background-image: url('login-background-image.jpg');
-        background-repeat: no-repeat;
-        background-size: cover;
-    }
+body {
+    background-image: url('../assets/login-background-image.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+}
