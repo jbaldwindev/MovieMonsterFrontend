@@ -29,4 +29,7 @@ body {
     background-image: url('../Assets/login-background-image.jpg');
     background-repeat: no-repeat;
     background-size: cover;
+    height: 100%;
+    margin: 0;
+    padding: 0;
 }
