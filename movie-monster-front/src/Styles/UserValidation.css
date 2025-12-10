@@ -22,9 +22,3 @@
   height: auto;
   align-self: stretch;
 }
-
-body {
-    background-image: url('/login-background-image.jpg');
-    background-repeat: no-repeat;
-    background-size: cover;
-}
