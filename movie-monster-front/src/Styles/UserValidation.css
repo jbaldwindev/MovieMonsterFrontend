@@ -7,6 +7,8 @@
     padding: 10px;
     border-radius: 10px;
     margin: 20px 20px;
+    background-color: white;
+    opacity: .5;
 }
 
 .page-container {
@@ -17,6 +19,7 @@
     background-image: url('../Assets/login-background-image.jpg');
     background-repeat: no-repeat;
     background-size: cover;
+    height: 100%
 }
 
 .divider {
