@@ -16,10 +16,6 @@
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
-    background-image: url('../Assets/login-background-image.jpg');
-    background-repeat: no-repeat;
-    background-size: cover;
-    height: 100%
 }
 
 .divider {
@@ -27,4 +23,10 @@
   background-color: #ccc;
   height: auto;
   align-self: stretch;
+}
+
+body {
+    background-image: url('../Assets/login-background-image.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
 }
