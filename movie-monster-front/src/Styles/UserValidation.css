@@ -32,3 +32,10 @@
   height: auto;
   align-self: stretch;
 }
+
+.logo-img {
+    max-width: 600px;
+    max-height: 600px;
+    width: auto;
+    height: auto;
+}

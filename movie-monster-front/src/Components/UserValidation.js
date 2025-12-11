@@ -18,7 +18,7 @@ const UserValidation = () => {
 
     return (
         <div className="page-container">
-            <img src={logo} alt="Movie Monster logo"></img>
+            <img className="logo-img" src={logo} alt="Movie Monster logo"></img>
             <Alert show={loginErrorExists} variant="danger">Username or password are incorrect.</Alert>
             <Alert show={signupOccured} variant="success">Account successfully created. Please log in!</Alert>
             <div className="validation-container">
