@@ -41,6 +41,7 @@ const Movies = (props) => {
     }
 
     const loadMovies = (page) => {
+        console.log('Loading movies for page:', page);
         if (currentTab === "popular") {
             setCurrentPopularPage(page);
             MovieService.getPopular(page).then((res) => {
