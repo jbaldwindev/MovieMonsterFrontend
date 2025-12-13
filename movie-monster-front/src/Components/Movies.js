@@ -35,7 +35,7 @@ const Movies = (props) => {
         } else if (currentTab === "playing") {
             loadMovies(currentPlayingPage);
         }
-    }, [currentTab]);
+    }, [currentTab, currentPopularPage, currentTopPage, currentPlayingPage]);
 
     const onCardClick = (movieId) => {
         let newPath = "/movie/" + movieId;
