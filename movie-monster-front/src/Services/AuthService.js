@@ -10,7 +10,6 @@ class AuthService {
     }
 
     register(user, pass) {
-        console.log(BASE_URL);
         return axios.post(BASE_URL + "register",{
             username: user,
             password: pass
