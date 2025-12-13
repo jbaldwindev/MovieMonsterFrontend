@@ -25,13 +25,13 @@ const MoviePagination = ({currentPage, maxPage, onPageChange}) => {
         } else if (currentPage === 1) {
             for (let i = currentPage + 1; i < currentPage + 4; i++) {
                 itemList.push(
-                    <Pagination.Item active={currentPage === i} onClick={() => handlePageChange(i)}>{i}</Pagination.Item>
+                    <Pagination.Item key={i} active={currentPage === i} onClick={() => handlePageChange(i)}>{i}</Pagination.Item>
                 );
             }
         } else if (currentPage === maxPage) {
             for (let i = currentPage - 2; i < currentPage; i++) {
                 itemList.push(
-                    <Pagination.Item active={currentPage === i} onClick={() => handlePageChange(i)}>{i}</Pagination.Item>
+                    <Pagination.Item key={i} active={currentPage === i} onClick={() => handlePageChange(i)}>{i}</Pagination.Item>
                 )
             }
         }

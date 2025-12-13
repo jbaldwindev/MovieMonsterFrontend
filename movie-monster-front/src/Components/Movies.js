@@ -129,7 +129,7 @@ const Movies = (props) => {
                                 
                                 <Row xs={2} md={5} className="g-4">
                                     {popularLoaded ?  movieList.map((movie) => (
-                                        <Col>
+                                        <Col key={movie.id}>
                                             <Card className="hover-color hide-overflow" onClick={() => {onCardClick(movie.id)}}>
                                                 <Card.Img variant="top" src={movie.posterPath} className="movie-card-img "/>
                                             </Card>
