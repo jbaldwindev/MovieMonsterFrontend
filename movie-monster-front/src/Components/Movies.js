@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import MovieService from '../Services/MovieService';
 import Card from 'react-bootstrap/Card';
 import Col from 'react-bootstrap/Col';
@@ -24,23 +24,7 @@ const Movies = (props) => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        loadMovies(1);
-    }, []);
-
-    useEffect(() => {
-        loadMovies(currentTabPage);
-    }, [currentTab, currentTabPage]);
-
-    const onCardClick = (movieId) => {
-        let newPath = "/movie/" + movieId;
-        navigate(newPath);
-    }
-
-    const pageChangeDebug = (page) => {
-        setCurrentTabPage(page);
-    }
-
-    const loadMovies = (page) => {
+        const loadMovies = (page) => {
         console.log('Loading movies for page:', page);
         if (currentTab === "popular") {
             setCurrentPopularPage(page);
@@ -90,6 +74,20 @@ const Movies = (props) => {
         }
     }
 
+        loadMovies(currentTabPage);
+    }, [currentTab, currentTabPage]);
+
+    const onCardClick = (movieId) => {
+        let newPath = "/movie/" + movieId;
+        navigate(newPath);
+    }
+
+    const pageChangeDebug = useCallback((page) => {
+        setCurrentTabPage(page);
+    }, []);
+
+    
+
     const onTabSelect = (selectedTab, lastTab) => {
         if (selectedTab === "1") {
             setCurrentTabPage(currentPopularPage);
@@ -120,8 +118,8 @@ const Movies = (props) => {
                             <Tab eventKey="1" title="Popular">
                                 
                                 <Row xs={2} md={5} className="g-4">
-                                    {popularLoaded ?  movieList.map((movie) => (
-                                        <Col key={movie.id}>
+                                    {popularLoaded ?  movieList.map((movie, index) => (
+                                        <Col key={index}>
                                             <Card className="hover-color hide-overflow" onClick={() => {onCardClick(movie.id)}}>
                                                 <Card.Img variant="top" src={movie.posterPath} className="movie-card-img "/>
                                             </Card>
@@ -138,8 +136,8 @@ const Movies = (props) => {
                             </Tab>
                             <Tab eventKey="2" title="Top Rated">
                                 <Row xs={2} md={5} className="g-4">
-                                    {popularLoaded ?  movieList.map((movie) => (
-                                        <Col key={movie.id}>
+                                    {popularLoaded ?  movieList.map((movie, index) => (
+                                        <Col key={index}>
                                             <Card className="hover-color hide-overflow" onClick={() => {onCardClick(movie.id)}}>
                                                 <Card.Img variant="top" src={movie.posterPath} className="movie-card-img "/>
                                             </Card>
@@ -156,8 +154,8 @@ const Movies = (props) => {
                             </Tab>
                             <Tab eventKey="3" title="Now Playing">
                                 <Row xs={2} md={5} className="g-4">
-                                    {popularLoaded ?  movieList.map((movie) => (
-                                        <Col key={movie.id}>
+                                    {popularLoaded ?  movieList.map((movie, index) => (
+                                        <Col key={index}>
                                             <Card className="hover-color hide-overflow" onClick={() => {onCardClick(movie.id)}}>
                                                 <Card.Img variant="top" src={movie.posterPath} className="movie-card-img "/>
                                             </Card>

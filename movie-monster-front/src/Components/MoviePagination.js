@@ -1,8 +1,13 @@
-import {useState, useEffect} from 'react';
+import {useState, useEffect, useCallback} from 'react';
 import Pagination from 'react-bootstrap/Pagination';
 
 const MoviePagination = ({currentPage, maxPage, onPageChange}) => {
     const [items, setItems] = useState([]);
+    
+    const handlePageChange = useCallback((page) => {
+        onPageChange(page);
+    }, [onPageChange]);
+
     useEffect(() => {
         let itemList = []
         if (currentPage > 1 && currentPage < maxPage) {
@@ -36,11 +41,7 @@ const MoviePagination = ({currentPage, maxPage, onPageChange}) => {
             }
         }
         setItems(itemList);
-    }, [currentPage, maxPage]);
-
-    const handlePageChange = (page) => {
-        onPageChange(page);
-    }
+    }, [currentPage, maxPage, handlePageChange]);
 
     return(
         <div className="pagination-container">
