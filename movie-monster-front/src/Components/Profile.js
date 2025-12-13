@@ -76,7 +76,7 @@ const Profile = () => {
     return (
         <div>
             <CustomNav></CustomNav>
-            <Container>
+            <Container className="profile-page">
                 <Row>
                     <Col className="text-center">
                         <Image className="icon-image" src={iconUrl} roundedCircle></Image>

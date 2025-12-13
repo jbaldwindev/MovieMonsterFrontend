@@ -23,20 +23,16 @@ const Movies = (props) => {
     const [totalPages, setTotalPages] = useState(1);
     const navigate = useNavigate();
 
-    //TODO delete the following states, used for testing purposes only
-    const [pagCurrentPage, setPagCurrentPage] = useState(1);
-    const [pagMaxPage, setPagMaxPage] = useState(100);
-
     useEffect(() => {
         loadMovies(1);
     }, []);
 
     useEffect(() => {
-        if (currentTab == "popular") {
+        if (currentTab === "popular") {
             loadMovies(currentPopularPage);
-        } else if (currentTab == "top") {
+        } else if (currentTab === "top") {
             loadMovies(currentTopPage);
-        } else if (currentTab == "playing") {
+        } else if (currentTab === "playing") {
             loadMovies(currentPlayingPage);
         }
     }, [currentTab]);
@@ -54,7 +50,7 @@ const Movies = (props) => {
 
     const loadMovies = (page) => {
         setCurrentTabPage(page);
-        if (currentTab == "popular") {
+        if (currentTab === "popular") {
             setCurrentPopularPage(page);
             MovieService.getPopular(page).then((res) => {
                 let retrievedMoviesList = [];
@@ -69,7 +65,7 @@ const Movies = (props) => {
                 setMovieList(retrievedMoviesList);
                 setPopularLoaded(true);
             });
-        } else if (currentTab == "top") {
+        } else if (currentTab === "top") {
             setCurrentTopPage(page);
             MovieService.getTop(page).then((res) => {
                 let retrievedMoviesList = [];
@@ -84,7 +80,7 @@ const Movies = (props) => {
                 setMovieList(retrievedMoviesList);
                 setPopularLoaded(true);
             });
-        } else if (currentTab == "playing") {
+        } else if (currentTab === "playing") {
             setCurrentPlayingPage(page);
             MovieService.getPlaying(page).then((res) => {
                 let retrievedMoviesList = [];
@@ -103,15 +99,15 @@ const Movies = (props) => {
     }
 
     const onTabSelect = (selectedTab, lastTab) => {
-        if (selectedTab == "1") {
+        if (selectedTab === "1") {
             setCurrentTabPage(currentPopularPage);
             setCurrentTab("popular");
             
-        } else if (selectedTab == "2") {
+        } else if (selectedTab === "2") {
             setCurrentTabPage(currentTopPage);
             setCurrentTab("top");
             
-        } else if (selectedTab == "3") {
+        } else if (selectedTab === "3") {
             setCurrentTabPage(currentPlayingPage);
             setCurrentTab("playing");
             
@@ -151,7 +147,7 @@ const Movies = (props) => {
                             <Tab eventKey="2" title="Top Rated">
                                 <Row xs={2} md={5} className="g-4">
                                     {popularLoaded ?  movieList.map((movie) => (
-                                        <Col>
+                                        <Col key={movie.id}>
                                             <Card className="hover-color hide-overflow" onClick={() => {onCardClick(movie.id)}}>
                                                 <Card.Img variant="top" src={movie.posterPath} className="movie-card-img "/>
                                             </Card>
@@ -169,7 +165,7 @@ const Movies = (props) => {
                             <Tab eventKey="3" title="Now Playing">
                                 <Row xs={2} md={5} className="g-4">
                                     {popularLoaded ?  movieList.map((movie) => (
-                                        <Col>
+                                        <Col key={movie.id}>
                                             <Card className="hover-color hide-overflow" onClick={() => {onCardClick(movie.id)}}>
                                                 <Card.Img variant="top" src={movie.posterPath} className="movie-card-img "/>
                                             </Card>
