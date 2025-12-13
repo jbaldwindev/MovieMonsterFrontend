@@ -28,14 +28,8 @@ const Movies = (props) => {
     }, []);
 
     useEffect(() => {
-        if (currentTab === "popular") {
-            loadMovies(currentPopularPage);
-        } else if (currentTab === "top") {
-            loadMovies(currentTopPage);
-        } else if (currentTab === "playing") {
-            loadMovies(currentPlayingPage);
-        }
-    }, [currentTab, currentPopularPage, currentTopPage, currentPlayingPage]);
+        loadMovies(currentTabPage);
+    }, [currentTab, currentTabPage]);
 
     const onCardClick = (movieId) => {
         let newPath = "/movie/" + movieId;
@@ -44,12 +38,9 @@ const Movies = (props) => {
 
     const pageChangeDebug = (page) => {
         setCurrentTabPage(page);
-        loadMovies(page);
-        console.log("page was changed!");
     }
 
     const loadMovies = (page) => {
-        setCurrentTabPage(page);
         if (currentTab === "popular") {
             setCurrentPopularPage(page);
             MovieService.getPopular(page).then((res) => {
