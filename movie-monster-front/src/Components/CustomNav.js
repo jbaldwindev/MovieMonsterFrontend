@@ -5,11 +5,9 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import Image from 'react-bootstrap/Image';
 import NavDropdown from 'react-bootstrap/NavDropdown';
-import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
-import Tooltip from 'react-bootstrap/Tooltip';
 import Overlay from 'react-bootstrap/Overlay';
 import Popover from 'react-bootstrap/Popover';
-import React, { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import MovieService from '../Services/MovieService';
 import UserService from '../Services/UserService';
 import { useNavigate } from 'react-router-dom';
@@ -29,11 +27,6 @@ function CustomNav() {
         setTarget(event.target);
         setShow(true);
         
-    }
-
-    const searchBlur = (event) => {
-        setShow(false);
-        setMovieList([]);
     }
 
     const handleResize = (width) => {
@@ -89,6 +82,9 @@ function CustomNav() {
             <Nav.Link href="/Movies">Movies</Nav.Link>
             <Nav.Link href="/MyList">My List</Nav.Link>
             <Nav.Link href="/Friends">Friends</Nav.Link>
+            <Nav.Link href={"/Profile/" + sessionStorage.getItem("username")} className="d-lg-none">Profile</Nav.Link>
+            <Nav.Link href="/Settings" className="d-lg-none">Settings</Nav.Link>
+            <Nav.Link className="d-lg-none">Sign Out</Nav.Link>
           </Nav>
           <Form className="d-flex" onSubmit={searchMovie} >
             <Form.Control
