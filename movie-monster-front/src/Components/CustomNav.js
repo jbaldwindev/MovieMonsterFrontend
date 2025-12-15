@@ -66,6 +66,13 @@ function CustomNav() {
       }
     }
 
+    const signOut = () => {
+      sessionStorage.removeItem("authToken");
+      sessionStorage.removeItem("refreshToken");
+      sessionStorage.removeItem("username");
+      navigate("/", { replace: true });
+    }
+
 
   return (
     <Navbar expand="lg" className="bg-body-tertiary" ref={ref}>
@@ -84,7 +91,7 @@ function CustomNav() {
             <Nav.Link href="/Friends">Friends</Nav.Link>
             <Nav.Link href={"/Profile/" + sessionStorage.getItem("username")} className="d-lg-none">Profile</Nav.Link>
             <Nav.Link href="/Settings" className="d-lg-none">Settings</Nav.Link>
-            <Nav.Link className="d-lg-none">Sign Out</Nav.Link>
+            <Nav.Link className="d-lg-none" onClick={signOut}>Sign Out</Nav.Link>
           </Nav>
           <Form className="d-flex" onSubmit={searchMovie} >
             <Form.Control
@@ -109,7 +116,7 @@ function CustomNav() {
             <NavDropdown.Divider/>
             <NavDropdown.Item href="/Settings">Settings</NavDropdown.Item>
             <NavDropdown.Divider/>
-            <NavDropdown.Item>Sign Out</NavDropdown.Item>
+            <NavDropdown.Item onClick={signOut}>Sign Out</NavDropdown.Item>
           </NavDropdown>
           : 
           <></>
