@@ -1,5 +1,9 @@
 import './App.css';
+import ProtectedRoute from "./Components/ProtectedRoute";
+import AuthContext from "./Components/AuthContext";
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import api from './api/axios';
 import Dashboard from './Components/Dashboard';
 import Movie from './Components/Movie';
 import Movies from './Components/Movies';
@@ -11,58 +15,57 @@ import Favorites from './Components/Favorites';
 import UserValidation from './Components/UserValidation';
 import DisplayFriends from './Components/DisplayFriends';
 import MovieSearch from './Components/MovieSearch';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import ImageUpload from './Components/ImageUpload';
 import Bio from './Components/Bio';
-import './Services/AxiosSetup';
-import { faRegular, library } from '@fortawesome/fontawesome-svg-core';
-import { 
-  faThumbsUp as fasThumbsUp, 
-  faStar, 
-  faAngleUp, 
-  faAngleDown, 
-  faAngleRight, 
-  faAngleLeft, 
-  faTrashCan, 
-  faPlus, 
-  faXmark } from '@fortawesome/free-solid-svg-icons';
-import { faStar as farStar, faThumbsUp} from '@fortawesome/free-regular-svg-icons';
-
-library.add(
-  farStar, 
-  faStar, 
-  faAngleUp, 
-  faAngleDown, 
-  faAngleRight, 
-  faAngleLeft, 
-  faTrashCan, 
-  faPlus, 
-  faThumbsUp, 
-  fasThumbsUp, 
-  faXmark
-);
 
 function App() {
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    api.get('/auth/me')
+      .then(res => {
+        setUser(res.data);
+      })
+      .catch(() => {
+        setUser(null);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  }, []);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route exact path="/" element={<UserValidation/>}/>
-        <Route exact path="/Login" element={<UserValidation/>}/>
-        <Route exact path="/Dashboard" element={<Dashboard/>}/>
-        <Route exact path="/Movies" element={<Movies/>}/>
-        <Route exact path="MovieSearch/:title" element={<MovieSearch/>}/>
-        <Route exact path="/List/:accountName" element={<UserList/>}/>
-        <Route exact path="/MyList" element={<UserList/>}/>
-        <Route exact path="/Movie/:movieId" element={<Movie/>}/>
-        <Route exact path="/display-friends/:username" element={<DisplayFriends/>}/>
-        <Route exact path="Friends" element={<Friends/>}></Route>
-        <Route exact path="Profile/:username" element={<Profile/>}/>
-        <Route exact path="profile-picture" element={<ImageUpload/>}/>
-        <Route exact path="Settings" element={<Settings/>}/>
-        <Route exact path="/Favorites" element={<Favorites/>}/>
-        <Route exact path="/Bio" element={<Bio/>}/>
-      </Routes>
-    </BrowserRouter>
+    <AuthContext.Provider value={{ user, setUser }}>
+      <BrowserRouter>
+        <Routes>
+
+          <Route path="/" element={<UserValidation />} />
+          <Route path="/login" element={<UserValidation />} />
+
+          <Route element={<ProtectedRoute user={user} />}>
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/movies" element={<Movies />} />
+            <Route path="/MovieSearch/:title" element={<MovieSearch />} />
+            <Route path="/list/:accountName" element={<UserList />} />
+            <Route path="/mylist" element={<UserList />} />
+            <Route path="/movie/:movieId" element={<Movie />} />
+            <Route path="/display-friends/:username" element={<DisplayFriends />} />
+            <Route path="/friends" element={<Friends />} />
+            <Route path="/profile/:username" element={<Profile />} />
+            <Route path="/profile-picture" element={<ImageUpload />} />
+            <Route path="/settings" element={<Settings />} />
+            <Route path="/favorites" element={<Favorites />} />
+            <Route path="/bio" element={<Bio />} />
+          </Route>
+
+        </Routes>
+      </BrowserRouter>
+    </AuthContext.Provider>
   );
 }
 

@@ -7,6 +7,7 @@ import 'react-image-crop/dist/ReactCrop.css';
 import Image from 'react-bootstrap/Image';
 import Button from 'react-bootstrap/Button';
 import UserService from "../Services/UserService";
+import { useAuth } from '../Components/AuthContext';
 
 const ImageUpload = (props) => {
     const [uploadedImage, setUploadedImage] = useState();
@@ -15,6 +16,7 @@ const ImageUpload = (props) => {
     const [file, setFile] = useState();
     const [retrievedImageURL, setRetrievedImageUrl] = useState();
     const imageRef = useRef(null);
+    const { user } = useAuth();
     const [crop, setCrop] = useState({
         unit: 'px',
         x: 25,
@@ -63,13 +65,13 @@ const ImageUpload = (props) => {
         if (croppedImageBlob) {
             const formData = new FormData();
             formData.append("file", croppedImageBlob);
-            UserService.uploadImage(formData, sessionStorage.getItem("username")).then(() => {
+            UserService.uploadImage(formData, user).then(() => {
                 console.log("Image successfully uploaded");
             })
         }
     }
     useEffect(() => {
-        UserService.getIcon(sessionStorage.getItem("username")).then((res) => {
+        UserService.getIcon(user).then((res) => {
             setRetrievedImageUrl(URL.createObjectURL(res.data));
         }).catch(error => {
             console.error("Error fetching image:", error);

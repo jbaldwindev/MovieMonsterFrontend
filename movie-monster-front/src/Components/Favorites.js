@@ -4,6 +4,7 @@ import Form from 'react-bootstrap/Form';
 import UserService from "../Services/UserService";
 import MovieService from "../Services/MovieService";
 import Table from 'react-bootstrap/Table';
+import { useAuth } from '../Context/AuthContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import "../Styles/Favorites.css";
 
@@ -11,6 +12,7 @@ const Favorites = (props) => {
     const [favoriteIds, setFavoriteIds] = useState([]);
     const [favoriteMovies, setFavoriteMovies] = useState([]);
     const [movieList, setMovieList] = useState([]);
+    const { user } = useAuth();
     const rankDirection = {
         UP: "UP",
         DOWN: "DOWN"
@@ -27,25 +29,25 @@ const Favorites = (props) => {
     }
 
     const rank = (movieId, direction) => {
-        UserService.rankFavorite(movieId, direction).then((res) => {
+        UserService.rankFavorite(user, movieId, direction).then((res) => {
             reloadFavorites();
         });
     }
 
     const reloadFavorites = () => {
-        UserService.getFavorites(sessionStorage.getItem('username')).then((res) => {
+        UserService.getFavorites(user).then((res) => {
             setFavoriteIds(res.data);
         });
     }
 
     const removeFavorite = (movieId) => {
-        UserService.removeFavorite(movieId).then((res) => {
+        UserService.removeFavorite(user, movieId).then((res) => {
             reloadFavorites();
         });
     }
 
     const addFavorite = (movieId) => {
-        UserService.addFavorite(movieId).then((res) => {
+        UserService.addFavorite(user, movieId).then((res) => {
             reloadFavorites();
         }).catch((error) => {
             console.log("Failed to add favorite: " + error.response.data);

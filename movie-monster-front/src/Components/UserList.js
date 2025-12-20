@@ -5,33 +5,34 @@ import CustomNav from './CustomNav';
 import '../Styles/UserList.css';
 import { useParams } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useAuth } from '../Context/AuthContext';
 import Button from 'react-bootstrap/Button';
 
 const UserList = (props) => {
     let { accountName } = useParams();
     const [ratingList, setRatingList] = useState([]);
     const [order, setOrder] = useState("desc");
+    const { user } = useAuth();
 
     useEffect(() => {
         getRatings();
     }, [order])
 
     const getRatings = () => {
-        let user = "";
+        let username = "";
         console.log(order);
         if (accountName) {
-            user = accountName;
+            username = accountName;
         } else {
-            user = sessionStorage.getItem("username");
+            username = user;
         }
-        MovieService.getList(user, order).then((res) => {
+        MovieService.getList(username, order).then((res) => {
             setRatingList(res.data);
         });
     }
 
     const deleteEntry = (ratingId) => {
-        console.log("deleting rating with id " + ratingId);
-        MovieService.removeRating(sessionStorage.getItem("username"), ratingId).then((res) => {
+        MovieService.removeRating(user, ratingId).then((res) => {
             getRatings();
         });
     }

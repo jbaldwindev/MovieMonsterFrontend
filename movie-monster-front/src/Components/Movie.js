@@ -7,6 +7,7 @@ import CustomNav from './CustomNav';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import UserService from '../Services/UserService';
 import StarRating from './StarRating';
+import { useAuth } from '../Context/AuthContext';
 
 const Movie = (props) => {
     let { movieId } = useParams();
@@ -22,6 +23,7 @@ const Movie = (props) => {
     const [runtime, setRuntime] = useState(0);
     const [productionCompanies, setProductionCompanies] = useState([]);
     const [genres, setGenres] = useState([]);
+    const { user } = useAuth();
 
     useEffect(() => {
         MovieService.getMovieById(movieId).then(res => {
@@ -51,12 +53,11 @@ const Movie = (props) => {
         e.preventDefault();
         MovieService.submitComment(
             movieId, 
-            sessionStorage.getItem("username"),
+            user,
             writtenComment
         );
-        let user = sessionStorage.getItem("username");
         let iconUrl;
-        UserService.getIcon(sessionStorage.getItem("username")).then((res) => {
+        UserService.getIcon(user).then((res) => {
             iconUrl = res.data;
             let newComment = {
                 username: user,
@@ -73,7 +74,7 @@ const Movie = (props) => {
     }
 
     const loadCommentList = () => {
-        MovieService.getCommentList(movieId, sessionStorage.getItem("username")).then(res => {
+        MovieService.getCommentList(movieId, user).then(res => {
             let movieComments = [];
             for (const comment of res.data.commentList) {
                 movieComments = [...movieComments, comment];
@@ -90,7 +91,7 @@ const Movie = (props) => {
     }
 
     const likeComment = (comment) => {
-        MovieService.likeComment(sessionStorage.getItem("username"), comment.commentId).then(res => {
+        MovieService.likeComment(user, comment.commentId).then(res => {
             loadCommentList();
         }).catch(error => {
             console.log("Failed to like comment");
@@ -98,7 +99,7 @@ const Movie = (props) => {
     }
 
      const unlikeComment = (comment) => {
-        MovieService.unlikeComment(sessionStorage.getItem("username"), comment.commentId).then(res => {
+        MovieService.unlikeComment(user, comment.commentId).then(res => {
             loadCommentList();
         }).catch(error => {
             console.log("Failed to remove like");
@@ -110,7 +111,7 @@ const Movie = (props) => {
             <CustomNav/>
             <div className="movie-content-container">
                 <div className="backdrop-wrapper">
-                    <img className="backdrop" src={backdropPath}></img>
+                    <img className="backdrop" src={backdropPath} alt=""></img>
                     <div className="grid">
                         <div className="poster-child centered-cell">
                             <img className="movie-poster" src={posterPath}></img>
@@ -129,14 +130,14 @@ const Movie = (props) => {
                                     <span className="bold">Genres: </span>
                                     <span>
                                         {genres.map((genre, index) => (
-                                            <span>{genre}{index != genres.length - 1 ? <>,</> : <></>}</span>
+                                            <span>{genre}{index !== genres.length - 1 ? <>,</> : <></>}</span>
                                         ))}
                                     </span>
                                 </div>
                                 <div className="info-item">
                                     <span className="bold">Production Companies: </span>
                                     {productionCompanies.map((company, index) => (
-                                        <span>{company}{index != productionCompanies.length - 1 ? <>,</> : <></>} </span>
+                                        <span>{company}{index !== productionCompanies.length - 1 ? <>,</> : <></>} </span>
                                     ))}
                                 </div>
                                 <div className="info-item"><span className="bold">Runtime:</span> <span>{runtime} mins</span></div>

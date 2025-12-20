@@ -4,12 +4,14 @@ import { Container, Row, Col, Image, Modal, Button, Form } from 'react-bootstrap
 import ReactCrop from 'react-image-crop';
 import { useEffect, useState, useRef } from 'react';
 import '../Styles/Settings.css';
+import { useAuth } from '../Context/AuthContext';
 function Settings() {
     const [iconUrl, setIconUrl] = useState();
     const [show, setShow] = useState(false);
     const [uploadedImage, setUploadedImage] = useState();
     const [croppedImageBlob, setCroppedImageBlob] = useState();
     const imageRef = useRef(null);
+    const { user } = useAuth();
     const [crop, setCrop] = useState({
         unit: 'px',
         x: 25,
@@ -36,7 +38,7 @@ function Settings() {
             if (croppedImageBlob) {
                 const formData = new FormData();
                 formData.append("file", croppedImageBlob);
-                UserService.uploadImage(formData, sessionStorage.getItem("username")).then(() => {
+                UserService.uploadImage(formData, user).then(() => {
                     console.log("Image successfully uploaded");
                 })
             }
@@ -77,7 +79,7 @@ function Settings() {
     }
 
     useEffect(() => {
-        UserService.getIcon(sessionStorage.getItem("username")).then((res) => {
+        UserService.getIcon(user).then((res) => {
             setIconUrl(res.data);
         }).catch(error => {
           console.error("Error fetching image:", error);
@@ -127,7 +129,7 @@ function Settings() {
         <Row>
             <Col></Col>
             <Col className="d-flex flex-column align-items-center" sm={6}>
-                <h4>{sessionStorage.getItem("username")}</h4>
+                <h4>{user}</h4>
                 <Image className="icon-image" src={iconUrl} roundedCircle></Image>
                 <a href="#" onClick={() => setShow(true)}>Change Profile Picture</a>
             </Col>

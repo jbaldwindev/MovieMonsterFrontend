@@ -1,208 +1,89 @@
-import axios from "axios";
+import api from "../Services/AxiosSetup";
 
-const BASE_URL = process.env.REACT_APP_API_URL + "api/user";
 class UserService { 
     searchUsers(searchTerm, username) {
-        return axios.get(BASE_URL + "/" + username +  "/search-users/" + searchTerm, {
-            headers: {
-                Authorization: `Bearer ${sessionStorage.getItem("authToken")}`
-            }
-        });
+        return api.get("/user/" + username +  "/search-users/" + searchTerm);
     }
 
     sendRequest(sender, receiver) {
-        return axios({
-            method: 'post',
-            url: BASE_URL + "/send-request",
-            headers: {
-                Authorization: `Bearer ${sessionStorage.getItem("authToken")}`
-            },
-            data: {
-                senderUsername: sender,
-                receiverUsername: receiver
-            }
+        return api.post("/user/send-request", {
+            senderUsername: sender,
+            receiverUsername: receiver
         });
     }
 
     respondRequest(requestId, isAccepted) {
-        return axios({
-            method: 'post',
-            url: BASE_URL + "/request-response",
-            headers: {
-                Authorization: `Bearer ${sessionStorage.getItem("authToken")}`
-            },
-            data: {
-                requestId: requestId,
-                isAccepted: isAccepted
-            }
+        return api.post("/user/request-response", {
+            requestId: requestId,
+            isAccepted: isAccepted
         });
     }
 
     getFriendList(username) {
-        return axios({
-            method: 'get',
-            url: BASE_URL + "/get-friends/" + username,
-            headers: {
-                Authorization: `Bearer ${sessionStorage.getItem("authToken")}`
-            }
-        });
+        return api.get("/user/get-friends/" + username);
     }
 
     getReceivedRequests(username) {
-        return axios({
-            method: 'get',
-            url: BASE_URL + "/received-requests/" + username,
-            headers: {
-                Authorization: `Bearer ${sessionStorage.getItem("authToken")}`
-            }
-        });
+        return api.get("/user/received-requests/" + username);
     }
 
     cancelRequest(sender, receiver) {
-        return axios({
-            method: 'delete',
-            url: BASE_URL + "/" + sender + "/requests/" + receiver,
-            headers: {
-                Authorization: `Bearer ${sessionStorage.getItem("authToken")}`
-            }
-        });
+        return api.delete("/user/" + sender + "/requests/" + receiver);
     }
 
-    unfriend(targetUsername) {
-        return axios({
-            method: 'delete',
-            url: BASE_URL + "/" + sessionStorage.getItem('username') + "/friends/" + targetUsername,
-            headers: {
-                Authorization: `Bearer ${sessionStorage.getItem("authToken")}`
-            }
-        });
+    unfriend(username, targetUsername) {
+        return api.delete("/user/" + username + "/friends/" + targetUsername);
     }
 
     getSentRequests(username) {
-        return axios({
-            method: 'get',
-            url: BASE_URL + "/sent-requests/" + username,
-            headers: {
-                Authorization: `Bearer ${sessionStorage.getItem("authToken")}`
-            }
-        })
+        return api.get("/user/sent-requests/" + username);
     }
 
     getProfileInfo(username) {
-        return axios({
-            method: 'get',
-            url: BASE_URL + "/profile/" + username,
-            headers: {
-                Authorization: `Bearer ${sessionStorage.getItem("authToken")}`
-            }
-        })
+        return api.get("/user/profile/" + username);
     }
 
     getIcon(username) {
-        return axios({
-            method: 'get',
-            url: BASE_URL + "/icon/" + username,
-            headers: {
-                Authorization: `Bearer ${sessionStorage.getItem("authToken")}`
-            }
-        })
+        return api.get("/user/icon/" + username);
     }
 
     uploadImage(imageFormData, username) {
-        return axios({
-            method: 'post',
-            url: BASE_URL + "/upload-icon/" + username,
-            headers: {
-                Authorization: `Bearer ${sessionStorage.getItem("authToken")}`,
-                "Content-Type": "multipart/form-data"
-            },
-            data: imageFormData
-        })
+        return api.post("/user/upload-icon/" + username, imageFormData);
     }
 
     getFavorites(username) {
-        return axios({
-            method: 'get',
-            url: BASE_URL + '/' + username + '/favorites/all',
-            headers: {
-                Authorization: `Bearer ${sessionStorage.getItem("authToken")}`
-            }
-        })
+        return api.get("/user/" + username + "/favorites/all")
     }
 
-    rankFavorite(movieId, direction) {
-        return axios({
-            method: 'post',
-            url: BASE_URL + "/favorites/rank",
-            headers: {
-                Authorization: `Bearer ${sessionStorage.getItem("authToken")}`
-            },
-            data: {
-                username: sessionStorage.getItem('username'),
-                movieId: movieId,
-                rankingDirection: direction
-            }
-        })
+    rankFavorite(username, movieId, direction) {
+        return api.post("/user/favorites/rank", {
+            username: username,
+            movieId: movieId,
+            rankingDirection: direction
+        });
     }
 
-    removeFavorite(movieId) {
-        return axios({
-            method: "delete",
-            url: BASE_URL 
-                + "/" 
-                + sessionStorage.getItem('username') 
-                + "/favorites/remove?movieId=" + movieId,
-            headers: {
-                Authorization: `Bearer ${sessionStorage.getItem("authToken")}`
-            }
-        })
+    removeFavorite(username, movieId) {
+        return api.delete("/user/" + username + "/favorites/remove?movieId=" + movieId)
     }
 
-    addFavorite(movieId) {
-        return axios({
-            method: 'post',
-            url: BASE_URL 
-                + "/" 
-                + sessionStorage.getItem('username') 
-                + "/favorites/add?movieId=" 
-                + movieId,
-            headers: {
-                Authorization: `Bearer ${sessionStorage.getItem("authToken")}`
-            }
-        })
+    addFavorite(username, movieId) {
+        return api.post("/user/" + username + "/favorites/add?movieId=" + movieId)
     }
 
     getBio(username) {
-        return axios({
-            method: 'get',
-            url: BASE_URL + "/" + username + "/bio",
-            headers: {
-                Authorization: `Bearer ${sessionStorage.getItem("authToken")}`
-            }
-        })
+        return api.get("/user/" + username + "/bio");
     }
 
     setBio(username, bio) {
-        return axios({
-                method: 'post',
-                url: BASE_URL + '/bio',
-                headers: {
-                    Authorization: `Bearer ${sessionStorage.getItem("authToken")}`
-                },
-                data: {
-                    username: username,
-                    bio: bio
-                }
-            }
-        );
+        return api.post("/user/bio", {
+            username: username,
+            bio: bio
+        });
     }
 
     isUsernameTaken(username) {
-        return axios({
-                method: 'get',
-                url: BASE_URL + '/auth/user-exists/' + username
-            }
-        );
+        return api.get("/user/auth/user-exists/" + username);
     }
 }
 const userService = new UserService();

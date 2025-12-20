@@ -10,7 +10,9 @@ import Popover from 'react-bootstrap/Popover';
 import { useState, useEffect, useRef } from 'react';
 import MovieService from '../Services/MovieService';
 import UserService from '../Services/UserService';
+import AuthService from '../Services/AuthService';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../Context/AuthContext';
 import "../Styles/CustomNav.css";
 
 function CustomNav() {
@@ -22,6 +24,7 @@ function CustomNav() {
     const navigate = useNavigate();
     const [width, setWidth] = useState(window.innerWidth);
     const [searchValue, setSearchValue] = useState("");
+    const { user, setUser } = useAuth();
 
     const searchFocus = (event) => {
         setTarget(event.target);
@@ -36,7 +39,7 @@ function CustomNav() {
     useEffect(() => {
       const resizeListener = () => handleResize(window.innerWidth);
       window.addEventListener("resize", resizeListener);
-      UserService.getIcon(sessionStorage.getItem("username")).then((res) => {
+      UserService.getIcon(user).then((res) => {
           setIconUrl(res.data);
       }).catch(error => {
           console.error("Error fetching image:", error);
@@ -66,12 +69,11 @@ function CustomNav() {
       }
     }
 
-    const signOut = () => {
-      sessionStorage.removeItem("authToken");
-      sessionStorage.removeItem("refreshToken");
-      sessionStorage.removeItem("username");
-      navigate("/", { replace: true });
-    }
+    const logout = async () => {
+      await AuthService.logout();
+      setUser(null);
+      navigate("/login", { replace: true });
+    };
 
 
   return (
@@ -89,9 +91,9 @@ function CustomNav() {
             <Nav.Link href="/Movies">Movies</Nav.Link>
             <Nav.Link href="/MyList">My List</Nav.Link>
             <Nav.Link href="/Friends">Friends</Nav.Link>
-            <Nav.Link href={"/Profile/" + sessionStorage.getItem("username")} className="d-lg-none">Profile</Nav.Link>
+            <Nav.Link href={"/Profile/" + user} className="d-lg-none">Profile</Nav.Link>
             <Nav.Link href="/Settings" className="d-lg-none">Settings</Nav.Link>
-            <Nav.Link className="d-lg-none" onClick={signOut}>Sign Out</Nav.Link>
+            <Nav.Link className="d-lg-none" onClick={logout}>Sign Out</Nav.Link>
           </Nav>
           <Form className="d-flex" onSubmit={searchMovie} >
             <Form.Control
@@ -112,11 +114,11 @@ function CustomNav() {
           title={
             <span><Image src={iconUrl} className="profile-pic" roundedCircle /></span>
           }>
-            <NavDropdown.Item href={"/Profile/" + sessionStorage.getItem("username")}>Profile</NavDropdown.Item>
+            <NavDropdown.Item href={"/Profile/" + user}>Profile</NavDropdown.Item>
             <NavDropdown.Divider/>
             <NavDropdown.Item href="/Settings">Settings</NavDropdown.Item>
             <NavDropdown.Divider/>
-            <NavDropdown.Item onClick={signOut}>Sign Out</NavDropdown.Item>
+            <NavDropdown.Item onClick={logout}>Sign Out</NavDropdown.Item>
           </NavDropdown>
           : 
           <></>

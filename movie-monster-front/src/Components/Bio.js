@@ -7,13 +7,15 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import '../Styles/Bio.css';
+import { useAuth } from '../Context/AuthContext';
 
 const Bio = (props) => {
     const [writtenBio, setWrittenBio] = useState("");
     const [currentBio, setCurrentBio] = useState("");
+    const { user } = useAuth();
     
     const submitBio = () => {
-        UserService.setBio(sessionStorage.getItem('username'), writtenBio).then((res) => {
+        UserService.setBio(user, writtenBio).then((res) => {
             getBio();
         });
     }
@@ -23,7 +25,7 @@ const Bio = (props) => {
     }
 
     const getBio = () => {
-        UserService.getBio(sessionStorage.getItem('username')).then((res) => {
+        UserService.getBio(user).then((res) => {
             setCurrentBio(res.data)
         });
     }

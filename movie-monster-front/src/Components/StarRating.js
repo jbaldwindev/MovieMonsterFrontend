@@ -2,15 +2,17 @@
 import {useState, useEffect} from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import MovieService from '../Services/MovieService';
+import { useAuth } from '../Context/AuthContext';
 import '../Styles/StarRating.css';
 
 const StarRating = (props) => {
     const [rating, setRating] = useState(0);
     const [ratingId, setRatingId] = useState();
     const [hoverRating, setHoverRating] = useState(0);
+    const { user } = useAuth();
 
     useEffect(() => {
-        MovieService.getRating(sessionStorage.getItem("username"), props.movieId).then(res => {
+        MovieService.getRating(user, props.movieId).then(res => {
             if (res.data != null) {
                 setRating(res.data.movieRating);
                 console.log(res.data.ratingId);
@@ -23,7 +25,7 @@ const StarRating = (props) => {
 
     const starClicked = (selectedRating) => {
         setRating(selectedRating);
-        MovieService.rateMovie(sessionStorage.getItem("username"), props.movieTitle, props.movieId, selectedRating)
+        MovieService.rateMovie(user, props.movieTitle, props.movieId, selectedRating)
             .then(() => {
                 console.log("Rating saved successfully");
             }).catch((err) => {
@@ -33,7 +35,7 @@ const StarRating = (props) => {
 
     const removeRating = () => {
         setRating(0);
-        MovieService.removeRating(sessionStorage.getItem("username"), ratingId)
+        MovieService.removeRating(user, ratingId)
             .then(() => {
                 console.log("Rating successfully removed");
             }).catch((err) => {

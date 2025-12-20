@@ -7,6 +7,7 @@ import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
 import Image from 'react-bootstrap/Image';
 import '../Styles/Friends.css';
+import { useAuth } from '../Conext/AuthContext';
 
 const Friends = (props) => {
     const [userSearchList, setUserSearchList] = useState([]);
@@ -14,6 +15,7 @@ const Friends = (props) => {
     const [friendList, setFriendList] = useState([]);
     const [sentRequestsList, setSentRequestsList] = useState([]);
     const searchRef = useRef(null);
+    const { user } = useAuth();
 
     const searchChange = (e) => {
         if (e.target.value) {
