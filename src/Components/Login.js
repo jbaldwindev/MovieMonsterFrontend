@@ -34,9 +34,7 @@ const Login = (props) => {
 
         AuthService.login(username, password)
             .then((res) => {
-                console.log("login data retrieved:")
-                console.log(res.data);
-                setUser(res.data);
+                setUser(res.data.username);
                 navigate("/dashboard");
             })
             .catch(err => {
