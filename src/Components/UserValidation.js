@@ -28,6 +28,8 @@ const UserValidation = () => {
             authService.get('/auth/me').then(res => {
                 setUser(res.data);
                 navigate("/dashboard");
+            }).catch(() => {
+                console.log("User not logged in");
             });
         } else {
             navigate("/dashboard");
