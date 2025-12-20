@@ -3,6 +3,7 @@ import AuthService from "../Services/AuthService"
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../Context/AuthContext';
 import "../Styles/Login.css";
 
 const Login = (props) => {
@@ -10,6 +11,7 @@ const Login = (props) => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [canSubmit, setCanSubmit] = useState(false);
+    const { setUser } = useAuth();
 
     const usernameChange = (e) => {
         setUsername(e.target.value);
@@ -31,7 +33,8 @@ const Login = (props) => {
         e.preventDefault();
 
         AuthService.login(username, password)
-            .then(() => {
+            .then((res) => {
+                setUser(res.data);
                 navigate("/dashboard");
             })
             .catch(err => {
