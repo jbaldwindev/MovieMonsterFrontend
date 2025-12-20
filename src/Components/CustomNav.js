@@ -69,8 +69,8 @@ function CustomNav() {
       }
     }
 
-    const logout = () => {
-      AuthService.logout();
+    const logout = async () => {
+      await AuthService.logout();
       setUser(null);
       navigate("/", { replace: true });
     };
