@@ -1,6 +1,6 @@
 import './App.css';
 import ProtectedRoute from "./Components/ProtectedRoute";
-import AuthContext from "./Components/AuthContext";
+import AuthContext from "./Context/AuthContext";
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import api from './api/axios';
