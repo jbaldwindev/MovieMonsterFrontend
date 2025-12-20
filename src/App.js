@@ -3,7 +3,7 @@ import ProtectedRoute from "./Components/ProtectedRoute";
 import AuthContext from "./Context/AuthContext";
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import api from './api/axios';
+import api from './Services/AxiosSetup';
 import Dashboard from './Components/Dashboard';
 import Movie from './Components/Movie';
 import Movies from './Components/Movies';
