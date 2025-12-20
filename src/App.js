@@ -17,6 +17,32 @@ import DisplayFriends from './Components/DisplayFriends';
 import MovieSearch from './Components/MovieSearch';
 import ImageUpload from './Components/ImageUpload';
 import Bio from './Components/Bio';
+import { faRegular, library } from '@fortawesome/fontawesome-svg-core';
+import { 
+  faThumbsUp as fasThumbsUp, 
+  faStar, 
+  faAngleUp, 
+  faAngleDown, 
+  faAngleRight, 
+  faAngleLeft, 
+  faTrashCan, 
+  faPlus, 
+  faXmark } from '@fortawesome/free-solid-svg-icons';
+import { faStar as farStar, faThumbsUp} from '@fortawesome/free-regular-svg-icons';
+
+library.add(
+  farStar, 
+  faStar, 
+  faAngleUp, 
+  faAngleDown, 
+  faAngleRight, 
+  faAngleLeft, 
+  faTrashCan, 
+  faPlus, 
+  faThumbsUp, 
+  fasThumbsUp, 
+  faXmark
+);
 
 function App() {
   const [user, setUser] = useState(null);
