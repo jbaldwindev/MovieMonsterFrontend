@@ -5,7 +5,7 @@ import Login from './Login.js';
 import '../Styles/UserValidation.css';
 import Alert from 'react-bootstrap/Alert';
 import logo from '../Assets/MMLogo.png';
-import authService from '../Services/AuthService';
+import AuthService from '../Services/AuthService';
 import { useAuth } from '../Context/AuthContext';
 
 const UserValidation = () => {
@@ -25,11 +25,9 @@ const UserValidation = () => {
 
     useEffect(() => {
         if(!user) {
-            authService.get('/auth/me').then(res => {
-                setUser(res.data);
+            AuthService.get('/auth/me').then(res => {
+                setUser(res.data.username);
                 navigate("/dashboard");
-            }).catch(() => {
-                console.log("User not logged in");
             });
         } else {
             navigate("/dashboard");
