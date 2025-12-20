@@ -26,6 +26,7 @@ const UserValidation = () => {
     useEffect(() => {
         if(!user) {
             AuthService.getMe().then(res => {
+                console.log(res.data.username);
                 setUser(res.data.username);
                 navigate("/dashboard");
             });

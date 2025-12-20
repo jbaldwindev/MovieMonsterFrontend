@@ -70,7 +70,7 @@ function CustomNav() {
     }
 
     const logout = async () => {
-      await AuthService.logout();
+      AuthService.logout();
       setUser(null);
       navigate("/login", { replace: true });
     };
