@@ -1,7 +1,7 @@
 import './App.css';
 import ProtectedRoute from "./Components/ProtectedRoute";
 import AuthContext from "./Context/AuthContext";
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import api from './Services/AxiosSetup';
 import Dashboard from './Components/Dashboard';
@@ -50,6 +50,7 @@ function App() {
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
+
   useEffect(() => {
     api.get('/auth/me')
       .then(res => {
@@ -70,12 +71,9 @@ function App() {
 
   return (
     <AuthContext.Provider value={{ user, setUser }}>
-      <BrowserRouter>
         <Routes>
-
           <Route path="/" element={<UserValidation />} />
           <Route path="/login" element={<UserValidation />} />
-
           <Route element={<ProtectedRoute user={user} />}>
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/movies" element={<Movies />} />
@@ -92,7 +90,6 @@ function App() {
             <Route path="/bio" element={<Bio />} />
           </Route>
         </Routes>
-      </BrowserRouter>
     </AuthContext.Provider>
   );
 }
