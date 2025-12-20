@@ -18,6 +18,7 @@ import MovieSearch from './Components/MovieSearch';
 import ImageUpload from './Components/ImageUpload';
 import Bio from './Components/Bio';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../Context/AuthContext';
 import { faRegular, library } from '@fortawesome/fontawesome-svg-core';
 import { 
   faThumbsUp as fasThumbsUp, 
@@ -46,9 +47,9 @@ library.add(
 );
 
 function App() {
-  const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
+  const { user, setUser } = useAuth();
 
 
   useEffect(() => {

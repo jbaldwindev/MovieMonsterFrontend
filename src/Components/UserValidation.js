@@ -31,6 +31,7 @@ const UserValidation = () => {
                 navigate("/dashboard");
             });
         } else {
+            console.log("User is " + user);
             navigate("/dashboard");
         }
     }, [navigate, user, setUser]);
