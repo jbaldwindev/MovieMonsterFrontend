@@ -29,19 +29,16 @@ const Login = (props) => {
 
     const submitLogin = (e) => {
         e.preventDefault();
-        AuthService.login(username, password).then((res) => {
-            let info = res.data;
-            let retrievedToken = info["accessToken"];
-            let refreshToken = info["refreshToken"];
-            sessionStorage.setItem("authToken", retrievedToken);
-            sessionStorage.setItem("refreshToken", refreshToken);
-            sessionStorage.setItem("username", username);
-            navigate("/dashboard");
-        }).catch(err => {
-            console.log(err);
-            props.errorFn();
-        });
-    }
+
+        AuthService.login(username, password)
+            .then(() => {
+                navigate("/dashboard");
+            })
+            .catch(err => {
+                console.log(err);
+                props.errorFn();
+            });
+    };
 
     return (
         <div>

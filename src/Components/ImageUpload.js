@@ -7,7 +7,7 @@ import 'react-image-crop/dist/ReactCrop.css';
 import Image from 'react-bootstrap/Image';
 import Button from 'react-bootstrap/Button';
 import UserService from "../Services/UserService";
-import { useAuth } from '../Components/AuthContext';
+import { useAuth } from '../Context/AuthContext';
 
 const ImageUpload = (props) => {
     const [uploadedImage, setUploadedImage] = useState();

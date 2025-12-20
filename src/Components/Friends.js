@@ -7,7 +7,7 @@ import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
 import Image from 'react-bootstrap/Image';
 import '../Styles/Friends.css';
-import { useAuth } from '../Conext/AuthContext';
+import { useAuth } from '../Context/AuthContext';
 
 const Friends = (props) => {
     const [userSearchList, setUserSearchList] = useState([]);
@@ -19,7 +19,7 @@ const Friends = (props) => {
 
     const searchChange = (e) => {
         if (e.target.value) {
-            UserService.searchUsers(e.target.value, sessionStorage.getItem('username')).then( res => {
+            UserService.searchUsers(e.target.value, user).then( res => {
                 setUserSearchList(res.data.userConnections);
                 console.log(res.data)
             });
@@ -29,19 +29,19 @@ const Friends = (props) => {
     }
 
     const getPendingRequests = () => {
-        UserService.getReceivedRequests(sessionStorage.getItem('username')).then( res => {
+        UserService.getReceivedRequests(user).then( res => {
             setPendingRequestList(res.data.friendRequestList);
         });
     }
 
     const getSentRequests = () => {
-        UserService.getSentRequests(sessionStorage.getItem('username')).then( res => {
+        UserService.getSentRequests(user).then( res => {
             setSentRequestsList(res.data.friendRequestList);
         });
     }
 
     const getFriendList = () => {
-        UserService.getFriendList(sessionStorage.getItem('username')).then(res => {
+        UserService.getFriendList(user).then(res => {
             setFriendList(res.data.friends);
         });
     }
@@ -54,7 +54,7 @@ const Friends = (props) => {
         if (searchRef.current) {
             console.log(searchRef.current.value);
             if (searchRef.current.value) {
-                UserService.searchUsers(searchRef.current.value, sessionStorage.getItem('username')).then( res => {
+                UserService.searchUsers(searchRef.current.value, user).then( res => {
                     setUserSearchList(res.data.userConnections);
                     console.log(res.data);
                 })
@@ -65,14 +65,14 @@ const Friends = (props) => {
     }
 
     const cancelFriendRequest = (targetUsername) => {
-        UserService.cancelRequest(sessionStorage.getItem('username'), targetUsername)
+        UserService.cancelRequest(user, targetUsername)
         .then( res => {
             refreshLists();
         });
     }
 
     const sendFriendRequest = (targetUsername) => {
-        UserService.sendRequest(sessionStorage.getItem('username'), targetUsername)
+        UserService.sendRequest(user, targetUsername)
         .then(res => {
             refreshLists();
         });
@@ -92,7 +92,7 @@ const Friends = (props) => {
     }
 
     const unfriend = (targetUsername) => {
-        UserService.unfriend(targetUsername).then(res => {
+        UserService.unfriend(user, targetUsername).then(res => {
             refreshLists();
         });
     }
@@ -104,7 +104,7 @@ const Friends = (props) => {
       
         if (hasPendingRequest) {
             if (senderUsername != null) {
-                if (senderUsername === sessionStorage.getItem('username')) {
+                if (senderUsername === user) {
                     return <Button onClick={() => cancelFriendRequest(targetUsername)}>Cancel Request</Button>;
                 } else {
                     return (<>
@@ -190,7 +190,7 @@ const Friends = (props) => {
                                                 <a href={"/Profile/" + request.receiver}>{request.receiver}</a> 
                                             </div>
                                             <div>
-                                                {renderFriendButton(false, true, request.receiver, sessionStorage.getItem('username'))}
+                                                {renderFriendButton(false, true, request.receiver, user)}
                                             </div>
                                         </div>
                                     ))

@@ -9,6 +9,7 @@ import { useNavigate } from 'react-router-dom';
 import UserService from '../Services/UserService';
 import MovieService from '../Services/MovieService';
 import Table from "react-bootstrap/Table";
+import { useAuth } from '../Context/AuthContext';
 import '../Styles/Profile.css';
 
 const Profile = () => {
@@ -20,6 +21,7 @@ const Profile = () => {
     const [bio, setBio] = useState();
     const [favoriteMovies, setFavoriteMovies] = useState([]);
     const navigate = useNavigate();
+    const { user } = useAuth();
 
     useEffect(() => {
         UserService.getIcon(username).then((res) => {
@@ -66,7 +68,7 @@ const Profile = () => {
     }
 
     const openFriends = () => {
-        if (username === sessionStorage.getItem("username")) {
+        if (username === user) {
             navigate("/friends");
         } else {
             navigate("/display-friends/" + username);
@@ -90,7 +92,7 @@ const Profile = () => {
                             <div className="header-underline text-centered">
                                 <h6 className="inline">Bio</h6>
                                 {
-                                username === sessionStorage.getItem('username') ? 
+                                username === user ? 
                                     <a href="/Bio" className="right-align settings-link">{"edit->"}</a> 
                                     : 
                                     <></>
@@ -105,7 +107,7 @@ const Profile = () => {
                             <div className="section-header">
                                 <span>Favorite Movies</span>
                                 {
-                                username === sessionStorage.getItem('username') ? 
+                                username === user ? 
                                     <a href="/Favorites" className="settings-link">{"edit->"}</a> 
                                     : 
                                     <></>

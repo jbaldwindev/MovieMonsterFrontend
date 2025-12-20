@@ -15,6 +15,10 @@ class AuthService {
             password: pass
         });
     }
+
+    logout() {
+        return api.post(BASE_URL + "logout");
+    }
 }
 const authService = new AuthService();
 export default authService;
