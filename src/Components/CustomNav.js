@@ -72,7 +72,7 @@ function CustomNav() {
     const logout = () => {
       AuthService.logout();
       setUser(null);
-      navigate("/login", { replace: true });
+      navigate("/", { replace: true });
     };
 
 
