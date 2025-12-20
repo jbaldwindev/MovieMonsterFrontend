@@ -1,13 +1,20 @@
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
+import { useNavigate } from 'react-router-dom';
 import Signup from './Signup.js';
 import Login from './Login.js';
 import '../Styles/UserValidation.css';
 import Alert from 'react-bootstrap/Alert';
 import logo from '../Assets/MMLogo.png';
+import authService from '../Services/AuthService';
+import { useAuth } from '../Context/AuthContext';
 
 const UserValidation = () => {
     const [loginErrorExists, setLoginErrorExists] = useState(false);
     const [signupOccured, setSignupOccured] = useState(false);
+    const { user, setUser } = useAuth();
+
+    const navigate = useNavigate();
+
     const loginError = () => {
         setLoginErrorExists(true);
     }
@@ -15,6 +22,15 @@ const UserValidation = () => {
     const successfulSignup = () => {
         setSignupOccured(true);
     }
+
+    useEffect(() => {
+        if(!user) {
+            authService.get('/auth/me').then(res => {
+                setUser(res.data);
+                navigate("/dashboard");
+            });
+        }
+    }, [navigate, user, setUser]);
 
     return (
         <div className="page-container">

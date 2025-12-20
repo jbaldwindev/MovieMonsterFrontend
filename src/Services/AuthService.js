@@ -19,6 +19,9 @@ class AuthService {
     logout() {
         return api.post(BASE_URL + "logout");
     }
+    getMe() {
+        return api.get(BASE_URL + "me")
+    }
 }
 const authService = new AuthService();
 export default authService;
