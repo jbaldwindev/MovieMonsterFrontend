@@ -29,6 +29,8 @@ const UserValidation = () => {
                 setUser(res.data);
                 navigate("/dashboard");
             });
+        } else {
+            navigate("/dashboard");
         }
     }, [navigate, user, setUser]);
 
