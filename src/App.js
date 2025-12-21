@@ -55,7 +55,9 @@ function App() {
     api.get('/auth/me')
       .then(res => {
         setUser(res.data);
-        navigate("/dashboard");
+        if (window.location.pathname === "/" || window.location.pathname === "/login") {
+          navigate("/dashboard");
+        }
       })
       .catch(() => {
         setUser(null);
