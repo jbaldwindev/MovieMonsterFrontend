@@ -85,6 +85,7 @@ function CustomNav() {
           <Nav
             className="me-auto my-2 my-lg-0"
             style={{ maxHeight: '100px' }}
+            activeKey={window.location.pathname}
             navbarScroll
           >
             <Nav.Link href="/Dashboard">Home</Nav.Link>
@@ -111,6 +112,7 @@ function CustomNav() {
           <NavDropdown
           className="ms-3"
           align="end"
+          activeKey={window.location.pathname}
           title={
             <span><Image src={iconUrl} className="profile-pic" roundedCircle /></span>
           }>
