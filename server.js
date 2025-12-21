@@ -2,6 +2,18 @@ const express = require('express');
 const path = require('path');
 const app = express();
 
+app.set('trust proxy', 1);
+
+app.use((req, res, next) => {
+  if (req.headers['x-forwarded-proto'] !== 'https') {
+    return res.redirect(
+      301,
+      'https://' + req.headers.host + req.originalUrl
+    );
+  }
+  next();
+});
+
 app.use(express.static(path.join(__dirname, 'build')));
 
 app.get('*', (req, res) => {
