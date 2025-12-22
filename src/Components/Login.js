@@ -30,18 +30,23 @@ const Login = (props) => {
     }
 
     const submitLogin = (e) => {
-        e.preventDefault();
+  e.preventDefault();
 
-        AuthService.login(username, password)
-        .then((res) => {
-            setUser(res.data.username);
-            setTimeout(() => {
-            navigate("/dashboard");
-            }, 300);
-        });
+  AuthService.login(username, password)
+    .then(() => {
+      // Immediately verify cookies
+      return AuthService.me();
+    })
+    .then((res) => {
+      setUser(res.data); // username from /me
+      navigate("/dashboard");
+    })
+    .catch((err) => {
+      console.error("Login failed", err);
+      props.errorFn?.();
+    });
+};
 
-
-    };
 
     return (
         <div>
