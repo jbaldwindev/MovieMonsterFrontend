@@ -1,27 +1,27 @@
 import api from "../Services/AxiosSetup";
 
-const BASE_URL = process.env.REACT_APP_API_URL + "api/auth/";
 class AuthService {
-    login(user, pass) {
-        return api.post(BASE_URL + "login", {
-            username: user,
-            password: pass
-        });
-    }
+  login(user, pass) {
+    return api.post("/auth/login", {
+      username: user,
+      password: pass,
+    });
+  }
 
-    register(user, pass) {
-        return api.post(BASE_URL + "register",{
-            username: user,
-            password: pass
-        });
-    }
+  register(user, pass) {
+    return api.post("/auth/register", {
+      username: user,
+      password: pass,
+    });
+  }
 
-    logout() {
-        return api.post(BASE_URL + "logout");
-    }
-    getMe() {
-        return api.get(BASE_URL + "me")
-    }
+  logout() {
+    return api.post("/auth/logout");
+  }
+
+  getMe() {
+    return api.get("/auth/me");
+  }
 }
-const authService = new AuthService();
-export default authService;
+
+export default new AuthService();
