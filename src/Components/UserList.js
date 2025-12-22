@@ -48,7 +48,8 @@ const UserList = (props) => {
         <div>
             <CustomNav/>
             <div className="list-container">
-                <h6>{accountName}'s Films</h6>
+                <div className="list-header"></div>
+                <h3>{accountName}'s Films</h3>
                 <div className="list">
                     <Table striped bordered hover size="sm">
                         <thead>
