@@ -49,7 +49,8 @@ const UserList = (props) => {
             <CustomNav/>
             <div className="list-container">
                 <div className="list-header"></div>
-                <h3>{accountName}'s Films</h3>
+                { accountName ? <h3>{accountName}'s Films</h3> : <h3>{user}'s Films</h3>}
+                
                 <div className="list">
                     <Table striped bordered hover size="sm">
                         <thead>
