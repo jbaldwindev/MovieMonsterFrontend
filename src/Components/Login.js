@@ -39,7 +39,7 @@ const Login = (props) => {
     })
     .then((res) => {
       setUser(res.data); // username from /me
-      navigate("/dashboard");
+      setTimeout(() => navigate("/dashboard"), 0);
     })
     .catch((err) => {
       console.error("Login failed", err);
