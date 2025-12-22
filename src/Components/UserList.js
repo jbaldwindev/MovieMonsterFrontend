@@ -6,7 +6,6 @@ import '../Styles/UserList.css';
 import { useParams } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useAuth } from '../Context/AuthContext';
-import Button from 'react-bootstrap/Button';
 
 const UserList = (props) => {
     let { accountName } = useParams();
@@ -38,9 +37,9 @@ const UserList = (props) => {
     }
 
     const sortChange = () => {
-        if (order == "desc") {
+        if (order === "desc") {
             setOrder("asc");
-        } else if (order == "asc") {
+        } else if (order === "asc") {
             setOrder("desc");
         }
     }
@@ -49,19 +48,20 @@ const UserList = (props) => {
         <div>
             <CustomNav/>
             <div className="list-container">
+                <h6>{accountName}'s Films</h6>
                 <div className="list">
                     <Table striped bordered hover size="sm">
                         <thead>
                             <tr>
                                 <th>#</th>
                                 <th>Title</th>
-                                {order == "desc" ? 
+                                {order === "desc" ? 
                                 <th><div className="click-text" onClick={sortChange}>Rating <FontAwesomeIcon icon="fa-angle-down"/></div></th> 
                                 : 
                                 <th><div className="click-text" onClick={sortChange}>Rating <FontAwesomeIcon icon="fa-angle-up"/></div></th>
                                 }
+                                {accountName === user ? <th></th> : <></>}
                                 
-                                <th></th>
                                 
                             </tr>
                         </thead>
@@ -71,8 +71,15 @@ const UserList = (props) => {
                                     <td>{index+1}</td>
                                     <td><a href={"/Movie/" + rating.movieId}>{rating.movieTitle}</a></td>
                                     <td>{rating.movieRating}</td>
+                                    {accountName === user ? 
+                                    <td className="text-centered control-col">
+                                        <div className="delete-button" onClick={() => deleteEntry(rating.ratingId)}>
+                                            <FontAwesomeIcon className="resized-button" icon="fa-solid fa-trash-can"/>
+                                        </div>
+                                    </td> 
+                                    : 
+                                    <></>}
                                     
-                                    <td className="text-centered control-col"><div className="delete-button" onClick={() => deleteEntry(rating.ratingId)}><FontAwesomeIcon className="resized-button" icon="fa-solid fa-trash-can"/></div></td>
                                 </tr>
                             ))}
                         </tbody>
