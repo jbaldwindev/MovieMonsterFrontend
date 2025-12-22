@@ -53,14 +53,22 @@ function App() {
 
 
   useEffect(() => {
+    console.log("Running /auth/me check...");
     api.get('/auth/me')
       .then(res => {
+        console.log("AUTH ME SUCCESS:", res.status, res.data);
         setUser(res.data);
         if (window.location.pathname === "/" || window.location.pathname === "/login") {
           navigate("/dashboard");
         }
       })
-      .catch(() => {
+      .catch((err) => {
+        console.log(
+        "AUTH ME FAILED:",
+        err?.response?.status,
+        err?.response?.data,
+        err?.message
+      );
         setUser(null);
       })
       .finally(() => {
