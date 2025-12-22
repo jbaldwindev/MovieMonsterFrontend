@@ -26,14 +26,12 @@ const UserValidation = () => {
     useEffect(() => {
         if(!user) {
             AuthService.getMe().then(res => {
-                console.log("user was found, navigating to dash");
                 setUser(res.data);
                 navigate("/dashboard");
             }).catch(() => {
                 setUser(null);
             });
         } else {
-            console.log("User is present, navigating to dash")
             navigate("/dashboard");
         }
     }, [navigate, user, setUser]);

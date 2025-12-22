@@ -18,6 +18,7 @@ import MovieSearch from './Components/MovieSearch';
 import ImageUpload from './Components/ImageUpload';
 import Bio from './Components/Bio';
 import { useNavigate } from 'react-router-dom';
+import logo from './Assets/MMLogo.png';
 import { faRegular, library } from '@fortawesome/fontawesome-svg-core';
 import { 
   faThumbsUp as fasThumbsUp, 
@@ -68,7 +69,11 @@ function App() {
   }, []);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return (
+      <div className="loading-container">
+        <img className="mmlogo" src={logo}></img>
+      </div>
+    );
   }
 
   return (
