@@ -67,22 +67,30 @@ const UserList = (props) => {
                             </tr>
                         </thead>
                             <tbody>
-                            {ratingList.map((rating, index) => (
-                                <tr key={rating}>
-                                    <td>{index+1}</td>
-                                    <td><a href={"/Movie/" + rating.movieId}>{rating.movieTitle}</a></td>
-                                    <td>{rating.movieRating}</td>
-                                    {accountName === user ? 
-                                    <td className="text-centered control-col">
-                                        <div className="delete-button" onClick={() => deleteEntry(rating.ratingId)}>
-                                            <FontAwesomeIcon className="resized-button" icon="fa-solid fa-trash-can"/>
-                                        </div>
-                                    </td> 
-                                    : 
-                                    <></>}
-                                    
+                                {ratingList.length === 0 ? (
+                                <tr>
+                                    <td colSpan={accountName === user ? 4 : 3} style={{ textAlign: "center" }}>
+                                    No ratings yet.
+                                    </td>
                                 </tr>
-                            ))}
+                                ) : (
+                                    ratingList.map((rating, index) => (
+                                        <tr key={rating}>
+                                            <td>{index+1}</td>
+                                            <td><a href={"/Movie/" + rating.movieId}>{rating.movieTitle}</a></td>
+                                            <td>{rating.movieRating}</td>
+                                            {accountName === user ? 
+                                            <td className="text-centered control-col">
+                                                <div className="delete-button" onClick={() => deleteEntry(rating.ratingId)}>
+                                                    <FontAwesomeIcon className="resized-button" icon="fa-solid fa-trash-can"/>
+                                                </div>
+                                            </td> 
+                                            : 
+                                            <></>}
+                                            
+                                        </tr>
+                                    ))
+                                )}
                         </tbody>
                     </Table>
                 </div>
