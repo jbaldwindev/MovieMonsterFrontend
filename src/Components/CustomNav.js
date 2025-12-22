@@ -120,7 +120,7 @@ function CustomNav() {
             <NavDropdown.Divider/>
             <NavDropdown.Item href="/Settings">Settings</NavDropdown.Item>
             <NavDropdown.Divider/>
-            <NavDropdown.Item onClick={logout}>Sign Out</NavDropdown.Item>
+            <NavDropdown.Item as="button" onClick={logout}>Sign Out</NavDropdown.Item>
           </NavDropdown>
           : 
           <></>
