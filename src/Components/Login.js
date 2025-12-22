@@ -33,14 +33,16 @@ const Login = (props) => {
         e.preventDefault();
 
         AuthService.login(username, password)
-            .then((res) => {
-                setUser(res.data.username);
-                navigate("/dashboard");
-            })
-            .catch(err => {
-                console.log(err);
-                props.errorFn();
-            });
+        .then(() => AuthService.me())
+        .then((meRes) => {
+            setUser(meRes.data);
+            navigate("/dashboard");
+        })
+        .catch(err => {
+            console.log(err);
+            props.errorFn();
+        });
+
     };
 
     return (
