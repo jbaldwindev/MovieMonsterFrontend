@@ -3,7 +3,6 @@ import ProtectedRoute from "./Components/ProtectedRoute";
 import AuthContext from "./Context/AuthContext";
 import { Routes, Route } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import api from './Services/AxiosSetup';
 import Dashboard from './Components/Dashboard';
 import Movie from './Components/Movie';
 import Movies from './Components/Movies';
@@ -17,9 +16,11 @@ import DisplayFriends from './Components/DisplayFriends';
 import MovieSearch from './Components/MovieSearch';
 import ImageUpload from './Components/ImageUpload';
 import Bio from './Components/Bio';
+import AuthService from './Services/AuthService';
 import { useNavigate } from 'react-router-dom';
 import logo from './Assets/MMLogo.png';
-import { faRegular, library } from '@fortawesome/fontawesome-svg-core';
+import { extractAuthenticatedUsername } from './utils/auth';
+import { library } from '@fortawesome/fontawesome-svg-core';
 import { 
   faThumbsUp as fasThumbsUp, 
   faStar, 
@@ -54,10 +55,16 @@ function App() {
 
   useEffect(() => {
     console.log("Running /auth/me check...");
-    api.get('/auth/me')
+    AuthService.getMe()
       .then(res => {
+        const authenticatedUsername = extractAuthenticatedUsername(res.data);
+
+        if (!authenticatedUsername) {
+          throw new Error("Invalid /auth/me payload");
+        }
+
         console.log("AUTH ME SUCCESS:", res.status, res.data);
-        setUser(res.data);
+        setUser(authenticatedUsername);
         if (window.location.pathname === "/" || window.location.pathname === "/login") {
           navigate("/dashboard");
         }
@@ -74,12 +81,12 @@ function App() {
       .finally(() => {
         setLoading(false);
       });
-  }, []);
+  }, [navigate]);
 
   if (loading) {
     return (
       <div className="loading-container">
-        <img className="mmlogo" src={logo}></img>
+        <img className="mmlogo" src={logo} alt="Movie Monster logo"></img>
       </div>
     );
   }

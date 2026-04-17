@@ -7,6 +7,7 @@ import Alert from 'react-bootstrap/Alert';
 import logo from '../Assets/MMLogo.png';
 import AuthService from '../Services/AuthService';
 import { useAuth } from '../Context/AuthContext';
+import { extractAuthenticatedUsername } from '../utils/auth';
 
 const UserValidation = () => {
     const [loginErrorExists, setLoginErrorExists] = useState(false);
@@ -26,7 +27,13 @@ const UserValidation = () => {
     useEffect(() => {
         if(!user) {
             AuthService.getMe().then(res => {
-                setUser(res.data);
+                const authenticatedUsername = extractAuthenticatedUsername(res.data);
+
+                if (!authenticatedUsername) {
+                    throw new Error("Invalid /auth/me payload");
+                }
+
+                setUser(authenticatedUsername);
                 navigate("/dashboard");
             }).catch(() => {
                 setUser(null);
