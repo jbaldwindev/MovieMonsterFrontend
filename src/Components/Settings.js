@@ -5,6 +5,7 @@ import ReactCrop from 'react-image-crop';
 import { useEffect, useState, useRef } from 'react';
 import '../Styles/Settings.css';
 import { useAuth } from '../Context/AuthContext';
+import { buildAssetUrl } from "../config/api";
 function Settings() {
     const [iconUrl, setIconUrl] = useState();
     const [show, setShow] = useState(false);
@@ -80,7 +81,7 @@ function Settings() {
 
     useEffect(() => {
         UserService.getIcon(user).then((res) => {
-            setIconUrl(res.data);
+            setIconUrl(buildAssetUrl(res.data));
         }).catch(error => {
           console.error("Error fetching image:", error);
         });

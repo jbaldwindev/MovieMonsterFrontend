@@ -14,6 +14,7 @@ import AuthService from '../Services/AuthService';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../Context/AuthContext';
 import "../Styles/CustomNav.css";
+import { buildAssetUrl } from "../config/api";
 
 function CustomNav() {
     const [show, setShow] = useState(false);
@@ -40,7 +41,7 @@ function CustomNav() {
       const resizeListener = () => handleResize(window.innerWidth);
       window.addEventListener("resize", resizeListener);
       UserService.getIcon(user).then((res) => {
-          setIconUrl(res.data);
+          setIconUrl(buildAssetUrl(res.data));
       }).catch(error => {
           console.error("Error fetching image:", error);
       });

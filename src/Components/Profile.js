@@ -11,6 +11,7 @@ import MovieService from '../Services/MovieService';
 import Table from "react-bootstrap/Table";
 import { useAuth } from '../Context/AuthContext';
 import '../Styles/Profile.css';
+import { buildAssetUrl } from "../config/api";
 
 const Profile = () => {
     let { username } = useParams();
@@ -25,7 +26,7 @@ const Profile = () => {
 
     useEffect(() => {
         UserService.getIcon(username).then((res) => {
-            setIconUrl(res.data);
+            setIconUrl(buildAssetUrl(res.data));
         }).catch(error => {
           console.error("Error fetching image:", error);
         });

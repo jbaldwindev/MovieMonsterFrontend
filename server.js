@@ -5,7 +5,10 @@ const app = express();
 app.set('trust proxy', 1);
 
 app.use((req, res, next) => {
-  if (req.headers['x-forwarded-proto'] !== 'https') {
+  if (
+    process.env.NODE_ENV === 'production' &&
+    req.headers['x-forwarded-proto'] === 'http'
+  ) {
     return res.redirect(
       301,
       'https://' + req.headers.host + req.originalUrl

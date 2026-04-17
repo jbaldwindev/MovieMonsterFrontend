@@ -8,6 +8,7 @@ import Tabs from 'react-bootstrap/Tabs';
 import Image from 'react-bootstrap/Image';
 import '../Styles/Friends.css';
 import { useAuth } from '../Context/AuthContext';
+import { buildAssetUrl } from "../config/api";
 
 const Friends = (props) => {
     const [userSearchList, setUserSearchList] = useState([]);
@@ -132,7 +133,7 @@ const Friends = (props) => {
                         { userSearchList[0] ? userSearchList.map((user, index) => (
                             <div key={`friend-${user.requestedUsername}`} className={userSearchList.length - 1 !== index ? "friend-element friend-padding space-between-container" : "friend-padding space-between-container"}>
                                 <div>
-                                    <Image src={user.searchedUserIcon} className="profile-pic friend-pic" roundedCircle />
+                                    <Image src={buildAssetUrl(user.searchedUserIcon)} className="profile-pic friend-pic" roundedCircle />
                                     <a href={"/Profile/" + user.requestedUsername}> {user.requestedUsername} </a>
                                 </div>
                                 <div>
@@ -153,7 +154,7 @@ const Friends = (props) => {
                             { friendList[0] ? friendList.map((friend, index) => (
                                 <div className={index !== friendList.length - 1 ? "friend-element friend-padding space-between-container" : "friend-padding space-between-container"}>
                                     <div>
-                                        <Image src={friend.iconPath} className="profile-pic friend-pic" roundedCircle />
+                                        <Image src={buildAssetUrl(friend.iconPath)} className="profile-pic friend-pic" roundedCircle />
                                         <a href={"/Profile/" + friend.username}>{friend.username}</a> 
                                     </div>
                                     <div>
@@ -169,7 +170,7 @@ const Friends = (props) => {
                                 { pendingRequestList[0] ? pendingRequestList.map((request, index) => (
                                     <div className={index !== pendingRequestList.length - 1 ? "friend-element friend-padding space-between-container" : "friend-padding space-between-container"}>
                                         <div>
-                                            <Image src={request.senderIcon} className="profile-pic friend-pic" roundedCircle />
+                                            <Image src={buildAssetUrl(request.senderIcon)} className="profile-pic friend-pic" roundedCircle />
                                             <a href={"/Profile/" + request.sender}>{request.sender}</a> 
                                         </div>
                                         <div>
@@ -186,7 +187,7 @@ const Friends = (props) => {
                                     sentRequestsList.map((request, index) => (
                                         <div className={index !== sentRequestsList.length - 1 ? "friend-element friend-padding space-between-container" : "friend-padding space-between-container"}>
                                             <div>
-                                                <Image src={request.receiverIcon} className="profile-pic friend-pic" roundedCircle />
+                                                <Image src={buildAssetUrl(request.receiverIcon)} className="profile-pic friend-pic" roundedCircle />
                                                 <a href={"/Profile/" + request.receiver}>{request.receiver}</a> 
                                             </div>
                                             <div>

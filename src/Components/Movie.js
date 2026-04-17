@@ -8,6 +8,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import UserService from '../Services/UserService';
 import StarRating from './StarRating';
 import { useAuth } from '../Context/AuthContext';
+import { buildAssetUrl } from "../config/api";
 
 const Movie = (props) => {
     let { movieId } = useParams();
@@ -58,7 +59,7 @@ const Movie = (props) => {
         );
         let iconUrl;
         UserService.getIcon(user).then((res) => {
-            iconUrl = res.data;
+            iconUrl = buildAssetUrl(res.data);
             let newComment = {
                 username: user,
                 comment: writtenComment,
@@ -77,7 +78,10 @@ const Movie = (props) => {
         MovieService.getCommentList(movieId, user).then(res => {
             let movieComments = [];
             for (const comment of res.data.commentList) {
-                movieComments = [...movieComments, comment];
+                movieComments = [...movieComments, {
+                    ...comment,
+                    userIconPath: buildAssetUrl(comment.userIconPath)
+                }];
             }
             movieComments.sort((a, b) => b.likeCount - a.likeCount);
             setCommentList(movieComments);
