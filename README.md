@@ -22,7 +22,8 @@ Movie Monster is a React frontend for browsing movies, managing personal movie l
 - Font Awesome React icons
 - Create React App build tooling
 - Express static server for production hosting
-- Docker and GitHub Actions CI support
+- Docker support for local homelab deployment
+- GitHub Actions CI support
 
 ## Requirements
 
@@ -89,18 +90,9 @@ npm run start:prod
 
 Serves the production build with the Express server in `server.js`.
 
-```bash
-npm run heroku-postbuild
-```
-
-Runs the production build step used by Heroku deployments.
-
 ## Production Deployment
 
-This repository includes two production paths:
-
-- Heroku-style deployment through `Procfile`, which runs `npm run start:prod`
-- Docker deployment through the included `Dockerfile`
+This project is no longer hosted on Heroku. Production builds are intended to run locally on homelab infrastructure, typically as a Docker container behind a local reverse proxy.
 
 The production server:
 
@@ -108,20 +100,32 @@ The production server:
 - Falls back to `index.html` for client-side routes
 - Redirects HTTP to HTTPS when `NODE_ENV=production` and the request arrives through a proxy with `x-forwarded-proto: http`
 
-### Docker
+### Local Homelab Docker Deployment
 
-Build an image:
+Build the frontend image with the backend API origin used by your homelab:
 
 ```bash
 docker build \
-  --build-arg REACT_APP_API_ORIGIN=https://your-api.example.com \
+  --build-arg REACT_APP_API_ORIGIN=https://api.your-homelab.example \
   -t moviemonster-frontend .
 ```
 
-Run the container:
+Run the container locally:
 
 ```bash
 docker run -p 5000:5000 moviemonster-frontend
+```
+
+For a persistent homelab deployment, publish port `5000` to your preferred internal host port or route it through your reverse proxy. Set `REACT_APP_API_ORIGIN` at image build time unless the frontend and backend are served behind the same origin, in which case the app can use relative `/api` requests.
+
+### Local Production Run Without Docker
+
+You can also build and serve the production bundle directly on a homelab host:
+
+```bash
+npm ci
+npm run build
+PORT=5000 npm run start:prod
 ```
 
 ## Project Structure
@@ -137,7 +141,7 @@ src/
   utils/         Shared utility functions
 server.js        Express production server
 Dockerfile       Multi-stage production Docker build
-Procfile         Heroku process definition
+Procfile         Legacy process definition; not used for homelab deployment
 ```
 
 ## API Integration
