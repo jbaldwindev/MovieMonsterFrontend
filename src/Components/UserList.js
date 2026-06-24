@@ -3,7 +3,7 @@ import React, {useState, useEffect} from 'react';
 import MovieService from '../Services/MovieService';
 import CustomNav from './CustomNav';
 import '../Styles/UserList.css';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useAuth } from '../Context/AuthContext';
 
@@ -78,7 +78,7 @@ const UserList = (props) => {
                                     ratingList.map((rating, index) => (
                                         <tr key={rating}>
                                             <td>{index+1}</td>
-                                            <td><a href={"/Movie/" + rating.movieId}>{rating.movieTitle}</a></td>
+                                            <td><Link to={"/movie/" + rating.movieId}>{rating.movieTitle}</Link></td>
                                             <td>{rating.movieRating}</td>
                                             {accountName === user ? 
                                             <td className="text-centered control-col">

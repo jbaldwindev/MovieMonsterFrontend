@@ -1,6 +1,6 @@
 import CustomNav from "./CustomNav";
 import { useEffect, useState } from "react";
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import Image from 'react-bootstrap/Image';
 import "../Styles/DisplayFriends.css";
 import UserService from '../Services/UserService';
@@ -32,7 +32,7 @@ const DisplayFriends = () => {
                     <div className={index !== friendList.length - 1 ? "display-friend-element friend-padding friend-disp-w" : "display-friend-element friend-padding friend-disp-w"}>
                         <div>
                             <Image src={buildAssetUrl(friend.iconPath)} className="profile-pic friend-pic" roundedCircle />
-                            <a href={"/Profile/" + friend.username} className="friend-username">{friend.username}</a> 
+                            <Link to={"/profile/" + friend.username} className="friend-username">{friend.username}</Link>
                         </div>
                     </div>
                 )) 

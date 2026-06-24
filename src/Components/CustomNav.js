@@ -11,7 +11,7 @@ import { useState, useEffect, useRef } from 'react';
 import MovieService from '../Services/MovieService';
 import UserService from '../Services/UserService';
 import AuthService from '../Services/AuthService';
-import { useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../Context/AuthContext';
 import "../Styles/CustomNav.css";
 import { buildAssetUrl } from "../config/api";
@@ -23,6 +23,7 @@ function CustomNav() {
     const [iconUrl, setIconUrl] = useState();
     const ref = useRef(null);
     const navigate = useNavigate();
+    const location = useLocation();
     const [width, setWidth] = useState(window.innerWidth);
     const [searchValue, setSearchValue] = useState("");
     const { user, setUser } = useAuth();
@@ -61,12 +62,14 @@ function CustomNav() {
 
     const searchClick = (id) => {
         navigate("/Movie/" + id);
-        navigate(0);
+        setShow(false);
     }
 
-    const searchMovie = () => {
+    const searchMovie = (event) => {
+      event?.preventDefault();
       if (searchValue) {
         navigate("/MovieSearch/" + searchValue);
+        setShow(false);
       }
     }
 
@@ -80,21 +83,21 @@ function CustomNav() {
   return (
     <Navbar expand="lg" className="bg-body-tertiary" ref={ref}>
       <Container fluid>
-        <Navbar.Brand href="/" className="colored">MovieMonster</Navbar.Brand>
+        <Navbar.Brand as={Link} to="/dashboard" className="colored">MovieMonster</Navbar.Brand>
         <Navbar.Toggle aria-controls="navbarScroll" />
         <Navbar.Collapse id="navbarScroll">
           <Nav
             className="me-auto my-2 my-lg-0"
             style={{ maxHeight: '100px' }}
-            activeKey={window.location.pathname}
+            activeKey={location.pathname.toLowerCase()}
             navbarScroll
           >
-            <Nav.Link href="/Dashboard">Home</Nav.Link>
-            <Nav.Link href="/Movies">Movies</Nav.Link>
-            <Nav.Link href="/MyList">My List</Nav.Link>
-            <Nav.Link href="/Friends">Friends</Nav.Link>
-            <Nav.Link href={"/Profile/" + user} className="d-lg-none">Profile</Nav.Link>
-            <Nav.Link href="/Settings" className="d-lg-none">Settings</Nav.Link>
+            <Nav.Link as={Link} to="/dashboard" eventKey="/dashboard">Home</Nav.Link>
+            <Nav.Link as={Link} to="/movies" eventKey="/movies">Movies</Nav.Link>
+            <Nav.Link as={Link} to="/mylist" eventKey="/mylist">My List</Nav.Link>
+            <Nav.Link as={Link} to="/friends" eventKey="/friends">Friends</Nav.Link>
+            <Nav.Link as={Link} to={"/profile/" + user} className="d-lg-none">Profile</Nav.Link>
+            <Nav.Link as={Link} to="/settings" className="d-lg-none">Settings</Nav.Link>
             <Nav.Link className="d-lg-none" onClick={logout}>Sign Out</Nav.Link>
           </Nav>
           <Form className="d-flex" onSubmit={searchMovie} >
@@ -113,13 +116,13 @@ function CustomNav() {
           <NavDropdown
           className="ms-3"
           align="end"
-          activeKey={window.location.pathname}
+          activeKey={location.pathname.toLowerCase()}
           title={
             <span><Image src={iconUrl} className="profile-pic" roundedCircle /></span>
           }>
-            <NavDropdown.Item href={"/Profile/" + user}>Profile</NavDropdown.Item>
+            <NavDropdown.Item as={Link} to={"/profile/" + user}>Profile</NavDropdown.Item>
             <NavDropdown.Divider/>
-            <NavDropdown.Item href="/Settings">Settings</NavDropdown.Item>
+            <NavDropdown.Item as={Link} to="/settings">Settings</NavDropdown.Item>
             <NavDropdown.Divider/>
             <NavDropdown.Item as="button" onClick={logout}>Sign Out</NavDropdown.Item>
           </NavDropdown>

@@ -18,7 +18,6 @@ import ImageUpload from './Components/ImageUpload';
 import Bio from './Components/Bio';
 import AuthService from './Services/AuthService';
 import { useNavigate } from 'react-router-dom';
-import logo from './Assets/MMLogo.png';
 import { extractAuthenticatedUsername } from './utils/auth';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { 
@@ -83,13 +82,10 @@ function App() {
       });
   }, [navigate]);
 
-  if (loading) {
-    return (
-      <div className="loading-container">
-        <img className="mmlogo" src={logo} alt="Movie Monster logo"></img>
-      </div>
-    );
-  }
+  // Do not render protected routes until the current session is known. This
+  // prevents a false redirect to /login without showing the old Heroku wake-up
+  // screen.
+  if (loading) return null;
 
   return (
     <AuthContext.Provider value={{ user, setUser }}>

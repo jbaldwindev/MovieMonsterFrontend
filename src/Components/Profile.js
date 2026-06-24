@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import CustomNav from "./CustomNav";
 import Container from "react-bootstrap/Container";
@@ -94,7 +94,7 @@ const Profile = () => {
                                 <h6 className="inline">Bio</h6>
                                 {
                                 username === user ? 
-                                    <a href="/Bio" className="right-align settings-link">{"edit->"}</a> 
+                                    <Link to="/bio" className="right-align settings-link">{"edit->"}</Link>
                                     : 
                                     <></>
                                 }
@@ -109,7 +109,7 @@ const Profile = () => {
                                 <span>Favorite Movies</span>
                                 {
                                 username === user ? 
-                                    <a href="/Favorites" className="settings-link">{"edit->"}</a> 
+                                    <Link to="/favorites" className="settings-link">{"edit->"}</Link>
                                     : 
                                     <></>
                                 }
@@ -129,7 +129,7 @@ const Profile = () => {
                                             <tr key={movie.data.id}>
                                                 <td>{index + 1}</td>
                                                 <td>
-                                                    <a className="movie-link" href={"/Movie/" + movie.data.id}>{movie.data.title}</a>
+                                                    <Link className="movie-link" to={"/movie/" + movie.data.id}>{movie.data.title}</Link>
                                                 </td>
                                             </tr>
                                         ))

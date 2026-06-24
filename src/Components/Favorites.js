@@ -7,6 +7,7 @@ import Table from 'react-bootstrap/Table';
 import { useAuth } from '../Context/AuthContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import "../Styles/Favorites.css";
+import { Link } from 'react-router-dom';
 
 const Favorites = (props) => {
     const [favoriteIds, setFavoriteIds] = useState([]);
@@ -87,7 +88,7 @@ const Favorites = (props) => {
                             movieList.map((movieEntry) => (
                                 <tr>
                                     <td>
-                                    <a className="movie-link" href={"/Movie/" + movieEntry.id}>{movieEntry.title}</a>
+                                    <Link className="movie-link" to={"/movie/" + movieEntry.id}>{movieEntry.title}</Link>
                                     </td>
                                     <td className="text-centered control-col">
                                         
@@ -127,7 +128,7 @@ const Favorites = (props) => {
                                 <tr>
                                     <td className="text-centered">{index + 1}</td>
                                     <td>
-                                        <a className="movie-link" href={"/Movie/" + movie.data.id}>{movie.data.title}</a>
+                                        <Link className="movie-link" to={"/movie/" + movie.data.id}>{movie.data.title}</Link>
                                     </td>
                                     <td className="text-centered control-col">
                                         <div className="inline-buttons">

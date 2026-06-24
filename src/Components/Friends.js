@@ -9,6 +9,7 @@ import Image from 'react-bootstrap/Image';
 import '../Styles/Friends.css';
 import { useAuth } from '../Context/AuthContext';
 import { buildAssetUrl } from "../config/api";
+import { Link } from 'react-router-dom';
 
 const Friends = (props) => {
     const [userSearchList, setUserSearchList] = useState([]);
@@ -134,7 +135,7 @@ const Friends = (props) => {
                             <div key={`friend-${user.requestedUsername}`} className={userSearchList.length - 1 !== index ? "friend-element friend-padding space-between-container" : "friend-padding space-between-container"}>
                                 <div>
                                     <Image src={buildAssetUrl(user.searchedUserIcon)} className="profile-pic friend-pic" roundedCircle />
-                                    <a href={"/Profile/" + user.requestedUsername}> {user.requestedUsername} </a>
+                                    <Link to={"/profile/" + user.requestedUsername}> {user.requestedUsername} </Link>
                                 </div>
                                 <div>
                                     {renderFriendButton(user.isFriend, user.requestPending, user.requestedUsername, user.senderUsername)}
@@ -155,7 +156,7 @@ const Friends = (props) => {
                                 <div className={index !== friendList.length - 1 ? "friend-element friend-padding space-between-container" : "friend-padding space-between-container"}>
                                     <div>
                                         <Image src={buildAssetUrl(friend.iconPath)} className="profile-pic friend-pic" roundedCircle />
-                                        <a href={"/Profile/" + friend.username}>{friend.username}</a> 
+                                        <Link to={"/profile/" + friend.username}>{friend.username}</Link>
                                     </div>
                                     <div>
                                         {renderFriendButton(true, false, friend.username)}
@@ -171,7 +172,7 @@ const Friends = (props) => {
                                     <div className={index !== pendingRequestList.length - 1 ? "friend-element friend-padding space-between-container" : "friend-padding space-between-container"}>
                                         <div>
                                             <Image src={buildAssetUrl(request.senderIcon)} className="profile-pic friend-pic" roundedCircle />
-                                            <a href={"/Profile/" + request.sender}>{request.sender}</a> 
+                                            <Link to={"/profile/" + request.sender}>{request.sender}</Link>
                                         </div>
                                         <div>
                                             {renderFriendButton(false, true, request.sender, request.sender, request.id)}
@@ -188,7 +189,7 @@ const Friends = (props) => {
                                         <div className={index !== sentRequestsList.length - 1 ? "friend-element friend-padding space-between-container" : "friend-padding space-between-container"}>
                                             <div>
                                                 <Image src={buildAssetUrl(request.receiverIcon)} className="profile-pic friend-pic" roundedCircle />
-                                                <a href={"/Profile/" + request.receiver}>{request.receiver}</a> 
+                                                <Link to={"/profile/" + request.receiver}>{request.receiver}</Link>
                                             </div>
                                             <div>
                                                 {renderFriendButton(false, true, request.receiver, user)}
