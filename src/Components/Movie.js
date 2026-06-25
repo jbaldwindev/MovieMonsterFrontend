@@ -9,6 +9,7 @@ import UserService from '../Services/UserService';
 import StarRating from './StarRating';
 import { useAuth } from '../Context/AuthContext';
 import { buildAssetUrl } from "../config/api";
+import LoadingState from './LoadingState';
 
 const Movie = (props) => {
     let { movieId } = useParams();
@@ -24,31 +25,80 @@ const Movie = (props) => {
     const [runtime, setRuntime] = useState(0);
     const [productionCompanies, setProductionCompanies] = useState([]);
     const [genres, setGenres] = useState([]);
+    const [isPageLoading, setIsPageLoading] = useState(true);
+    const [pageError, setPageError] = useState("");
     const { user } = useAuth();
 
     useEffect(() => {
-        MovieService.getMovieById(movieId).then(res => {
+        let isCurrent = true;
+        setIsPageLoading(true);
+        setPageError("");
+
+        const movieRequest = MovieService.getMovieById(movieId).then(res => {
             let jsonData = res.data;
-            setMovieTitle(jsonData.title);
-            setMovieOverview(jsonData.overview);
-            setPosterPath("https://image.tmdb.org/t/p/w500" + jsonData.posterPath);
-            setBackdropPath("https://image.tmdb.org/t/p/w1280" + jsonData.backdropPath);
-            setTagline(jsonData.tagline);
-            setReleaseDate(jsonData.releaseDate);
-            setRuntime(jsonData.runtime);
-            setProductionCompanies(jsonData.productionCompanies);
-            setGenres(jsonData.genres);
             let retrievedCastMembers = [];
             for (const member of res.data.cast) {
                 if (member.profilePath != null) {
                     retrievedCastMembers = [...retrievedCastMembers, member];
                 }
             }
-            setCastList(retrievedCastMembers);
+
+            return {
+                title: jsonData.title,
+                overview: jsonData.overview,
+                posterPath: jsonData.posterPath ? "https://image.tmdb.org/t/p/w500" + jsonData.posterPath : "",
+                backdropPath: jsonData.backdropPath ? "https://image.tmdb.org/t/p/w1280" + jsonData.backdropPath : "",
+                tagline: jsonData.tagline,
+                releaseDate: jsonData.releaseDate,
+                runtime: jsonData.runtime,
+                productionCompanies: jsonData.productionCompanies || [],
+                genres: jsonData.genres || [],
+                castList: retrievedCastMembers
+            };
         });
 
-        loadCommentList();
-        }, []);
+        const commentsRequest = MovieService.getCommentList(movieId, user).then(res => {
+            let movieComments = [];
+            for (const comment of res.data.commentList) {
+                movieComments = [...movieComments, {
+                    ...comment,
+                    userIconPath: buildAssetUrl(comment.userIconPath)
+                }];
+            }
+            movieComments.sort((a, b) => b.likeCount - a.likeCount);
+            return movieComments;
+        }).catch(error => {
+            console.log("No comments retrieved");
+            return [];
+        });
+
+        Promise.all([movieRequest, commentsRequest]).then(([movieData, movieComments]) => {
+            if (!isCurrent) return;
+            setMovieTitle(movieData.title);
+            setMovieOverview(movieData.overview);
+            setPosterPath(movieData.posterPath);
+            setBackdropPath(movieData.backdropPath);
+            setTagline(movieData.tagline);
+            setReleaseDate(movieData.releaseDate);
+            setRuntime(movieData.runtime);
+            setProductionCompanies(movieData.productionCompanies);
+            setGenres(movieData.genres);
+            setCastList(movieData.castList);
+            setCommentList(movieComments);
+        }).catch(error => {
+            if (!isCurrent) return;
+            console.log("Failed to load movie", error);
+            setPageError("Unable to load this movie.");
+        }).finally(() => {
+            if (isCurrent) {
+                setIsPageLoading(false);
+            }
+        });
+
+        return () => {
+            isCurrent = false;
+        };
+    }, [movieId, user]);
 
     const submitComment = (e) => {
         e.preventDefault();
@@ -113,12 +163,17 @@ const Movie = (props) => {
     return (
         <div>
             <CustomNav/>
+            {isPageLoading ? (
+                <LoadingState label="Loading movie..." />
+            ) : pageError ? (
+                <p className="movie-load-error">{pageError}</p>
+            ) : (
             <div className="movie-content-container">
                 <div className="backdrop-wrapper">
-                    <img className="backdrop" src={backdropPath} alt=""></img>
+                    {backdropPath && <img className="backdrop" src={backdropPath} alt=""></img>}
                     <div className="grid">
                         <div className="poster-child centered-cell">
-                            <img className="movie-poster" src={posterPath}></img>
+                            {posterPath && <img className="movie-poster" src={posterPath} alt={movieTitle}></img>}
                         </div>
                         <div className="title-child centered-cell">
                             <p className="movie-title">{movieTitle}</p>
@@ -134,14 +189,14 @@ const Movie = (props) => {
                                     <span className="bold">Genres: </span>
                                     <span>
                                         {genres.map((genre, index) => (
-                                            <span>{genre}{index !== genres.length - 1 ? <>,</> : <></>}</span>
+                                            <span key={genre}>{genre}{index !== genres.length - 1 ? <>,</> : <></>}</span>
                                         ))}
                                     </span>
                                 </div>
                                 <div className="info-item">
                                     <span className="bold">Production Companies: </span>
                                     {productionCompanies.map((company, index) => (
-                                        <span>{company}{index !== productionCompanies.length - 1 ? <>,</> : <></>} </span>
+                                        <span key={company}>{company}{index !== productionCompanies.length - 1 ? <>,</> : <></>} </span>
                                     ))}
                                 </div>
                                 <div className="info-item"><span className="bold">Runtime:</span> <span>{runtime} mins</span></div>
@@ -153,8 +208,8 @@ const Movie = (props) => {
                             </div>
                             <div className="cast-container">
                                 {castList.map((castMember) => (
-                                    <div className="cast-card">
-                                        <img className="cast-img" src={"https://image.tmdb.org/t/p/w500" + castMember.profilePath}/>
+                                    <div className="cast-card" key={`${castMember.name}-${castMember.character}`}>
+                                        <img className="cast-img" src={"https://image.tmdb.org/t/p/w500" + castMember.profilePath} alt={castMember.name}/>
                                         <div className="cast-card-body">
                                             <h5 className="card-title">{castMember.name}</h5>
                                             <p className="card-text">{castMember.character}</p>
@@ -170,7 +225,7 @@ const Movie = (props) => {
                             <div className="comments-container">
                                 {commentList.length > 0 ? 
                                     commentList.map((movieComment) => (
-                                        <div className="comment">
+                                        <div className="comment" key={movieComment.commentId || `${movieComment.username}-${movieComment.comment}`}>
                                             <div className="comment-user">
                                                 <Image
                                                     className="comment-user-icon"
@@ -216,6 +271,7 @@ const Movie = (props) => {
                     </div>
                 </div>
             </div>
+            )}
         </div>  
     );
 }

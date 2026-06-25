@@ -4,10 +4,10 @@ import Card from 'react-bootstrap/Card';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import Container from 'react-bootstrap/Container';
-import Spinner from'react-bootstrap/Spinner';
 import { useNavigate } from 'react-router-dom';
 import CustomNav from './CustomNav';
 import MoviePagination from './MoviePagination';
+import LoadingState from './LoadingState';
 import '../Styles/Movies.css';
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
@@ -26,6 +26,7 @@ const Movies = (props) => {
     useEffect(() => {
         const loadMovies = (page) => {
         console.log('Loading movies for page:', page);
+        setPopularLoaded(false);
         if (currentTab === "popular") {
             setCurrentPopularPage(page);
             MovieService.getPopular(page).then((res) => {
@@ -126,11 +127,7 @@ const Movies = (props) => {
                                         </Col>
                                     )) 
                                     :
-                                    <div className="centered">
-                                        <Spinner animation="border" role="status" variant="info" className="centered">
-                                            <span className="visually-hidden">Loading...</span>
-                                        </Spinner>
-                                    </div>
+                                    <LoadingState label="Loading movies..." className="compact" />
                                     }
                                 </Row>
                             </Tab>
@@ -144,11 +141,7 @@ const Movies = (props) => {
                                         </Col>
                                     )) 
                                     :
-                                    <div className="centered">
-                                        <Spinner animation="border" role="status" variant="info" className="centered">
-                                            <span className="visually-hidden">Loading...</span>
-                                        </Spinner>
-                                    </div>
+                                    <LoadingState label="Loading movies..." className="compact" />
                                     }
                                 </Row>
                             </Tab>
@@ -162,11 +155,7 @@ const Movies = (props) => {
                                         </Col>
                                     )) 
                                     :
-                                    <div className="centered">
-                                        <Spinner animation="border" role="status" variant="info" className="centered">
-                                            <span className="visually-hidden">Loading...</span>
-                                        </Spinner>
-                                    </div>
+                                    <LoadingState label="Loading movies..." className="compact" />
                                     }
                                 </Row>
                             </Tab>

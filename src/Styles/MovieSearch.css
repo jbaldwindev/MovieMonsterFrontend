@@ -37,3 +37,15 @@
 .bold {
     font-weight: bold;
 }
+
+.search-status-message {
+    max-width: 90%;
+    margin: 24px auto;
+    text-align: center;
+    color: #4d565f;
+    font-weight: 600;
+}
+
+.show-more-spinner {
+    margin-right: 8px;
+}
